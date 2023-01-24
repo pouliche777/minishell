@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:17:48 by slord             #+#    #+#             */
-/*   Updated: 2023/01/22 23:52:27 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/23 20:26:25 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	ft_strcpy(char *dst, const char *src)
 	int	i;
 
 	i = 0;
-		while (src[i])
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
 }
 
 void	check_if_variable_exist(t_shell *shell, char *var)
@@ -34,21 +34,21 @@ void	check_if_variable_exist(t_shell *shell, char *var)
 	j = 0;
 	while (shell->env[i])
 	{
-		if (!(ft_strncmp(var, shell->env[i], ft_strlen(var))) && shell->env[i][ft_strlen(var)] == '=')
+		if (!(ft_strncmp(var, shell->env[i], ft_strlen(var)))
+			&& shell->env[i][ft_strlen(var)] == '=')
 		{
 			shell->variable = ft_strdup(&shell->env[i][ft_strlen(var) + 1]);
 			return ;
 		}
 		i++;
 	}
-	
 }
 
 void	replace_variable(t_shell *shell, int i, int j)
 {
-	int h;
-	char *temp;
-	
+	int		h;
+	char	*temp;
+
 	h = 0;
 	temp = ft_strdup(shell->cmds[i][j]);
 	free(shell->cmds[i][j]);
@@ -56,9 +56,9 @@ void	replace_variable(t_shell *shell, int i, int j)
 	while (temp[h] != '$')
 		h++;
 	check_if_variable_exist(shell, &temp[h + 1]);
-	shell->cmds[i][j] = calloc(1, 100 + h + 1);
+	shell->cmds[i][j] = calloc(1, 1000 + h + 1);
 	h = 0;
-	while (temp[h] != '$')
+	while (temp[h] != '$' && temp[h])
 	{
 		shell->cmds[i][j][h] = temp[h];
 		h++;
@@ -73,20 +73,20 @@ void	replace_variable(t_shell *shell, int i, int j)
 	free(temp);
 }
 
-
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd)
 {
 	int	j;
 	int	h;
 
 	j = 0;
+	h = 0;
 	while (cmd[j])
 	{
 		while (cmd[j][h])
 		{
 			if (cmd[j][h] == '$' && cmd[j][h + 1])
 			{
-				replace_variable(shell, i , j);
+				replace_variable(shell, i, j);
 				break ;
 			}	
 			h++;

@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/01/23 01:28:43 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/23 20:28:32 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	check_input(t_shell *shell, int i)
 
 void write_heredoc(char *input, int *file)
 {
-
 	ft_putstr_fd(input, file[1]);
 	ft_putchar_fd('\n', file[1]);
 }
@@ -97,18 +96,18 @@ void	heredoc(t_shell *shell, char *cmd, int i)
 	if (pipe(file) < 0)
 		return ;
 	shell->heredoc_input = readline(">");
-	while (ft_strncmp(shell->heredoc_input, cmd, ft_strlen(shell->heredoc_input)))
+	while (ft_strncmp(shell->heredoc_input, cmd,
+			ft_strlen(shell->heredoc_input)))
 	{
 		ft_putstr_fd(shell->heredoc_input, file[1]);
 		ft_putchar_fd('\n', file[1]);
 		free(shell->heredoc_input);
 		shell->heredoc_input = readline(">");
 	}
-
 	dup2(file[0], STDIN_FILENO);
 	close(file[1]);
 }
-
+/*
 void	heredoc_variable(t_shell *shell)
 {
 	char	*temp;
@@ -155,3 +154,4 @@ void	change_heredoc_input(t_shell *shell, char *input, int i;)
 		j++;
 	
 }
+*/

@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/01/20 22:53:06 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/23 20:33:59 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	separate_cmds(t_shell *info)
 		i++;
 	}
 }
+
 int	count_nb_tokens(char **cmd)
 {
 	int	i;
 
 	i = 0;
-
-	while(cmd[i] != NULL)
+	while (cmd[i] != NULL)
 	{
 		i++;
 	}
@@ -59,17 +59,17 @@ void	duplicate_cmds(t_shell *shell)
 
 	i = 0;
 	j = 0;
-
 	shell->cmds_exe = malloc(sizeof(char **) * 10 + 1);
 	while (shell->cmds[i]!= NULL)
 	{
-		shell->cmds_exe[i]  = malloc(count_nb_tokens(shell->cmds[i]) * sizeof(char *));
+		shell->cmds_exe[i]  = malloc(count_nb_tokens(shell->cmds[i])
+				* sizeof(char *));
 		while (shell->cmds[i][j] != NULL)
 		{
 			if (shell->cmds[i][j][0] == '>' || shell->cmds[i][j][0] == '<')
 			{
 				shell->cmds_exe[i][j] = NULL;
-				break;
+				break ;
 			}
 			shell->cmds_exe[i][j] = ft_strdup(shell->cmds[i][j]);
 			j++;
@@ -93,17 +93,12 @@ void	modify_command(t_shell *info, int i)
 		if (access(str, F_OK) == 0)
 		{
 			info->cmds_exe[0] = NULL;
-			//info->cmds_exe[i][0] = NULL;
 			info->cmds_exe[0] = realloc(info->cmds_exe[0], sizeof(str));
-			//info->cmds_exe[i][0] = realloc(info->cmds_exe[i][0], sizeof(str));
 			ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
-			//ft_strlcpy(info->cmds_exe[i][0], str, ft_strlen(str) + 1);
 		}
 		free(str);
 		j++;
 	}
-	//wrong_cmd(shell);
-	//lauch_terminal();
 }
 
 void	supress_operators(t_shell *shell, int i)
@@ -116,13 +111,13 @@ void	supress_operators(t_shell *shell, int i)
 	shell->cmds_exe = calloc(sizeof(char *), 10);
 	while (shell->cmds[i][j])
 	{
-		if(shell->cmds[i][j][0] == '>' || shell->cmds[i][j][0] == '<')
+		if (shell->cmds[i][j][0] == '>' || shell->cmds[i][j][0] == '<')
 		{
 			if (shell->cmds[i][j][0] == '>')
-				break;
+				break ;
 			if (shell->cmds[i][j][0] == '<')
-				break;
-			j = j + 2;		
+				break ;
+			j = j + 2;
 		}
 		else
 		{
@@ -136,6 +131,7 @@ void	supress_operators(t_shell *shell, int i)
 int	skip_quote(char *buffer, char c, t_shell *info)
 {
 	int	i;
+	
 	i = 0;
 	while (buffer[i])
 	{

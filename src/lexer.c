@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/01/20 18:37:39 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/23 21:16:24 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,64 +38,6 @@ int	next_quote(char *buffer, char c)
 	return (i + 1);
 }
 
-char ***lexer(char *buffer)
-{
-	char	***cmds;
-	int		i;
-	int		k;
-	int		ii;
-	int		jj;
-
-	i = 0;
-	k = 0;
-	ii = 0;
-	jj = 0;
-	cmds = malloc(sizeof(char **) * 10);
-	cmds[0] = malloc(sizeof(char *) * 10);
-	while (1)
-	{
-		if (buffer[i] == '\'' || buffer[i] == '\"')
-		{
-			i = i + next_quote(&buffer[i + 1], buffer[i]);
-		}
-		if (is_separator(buffer[i]))
-		{
-			cmds[ii][jj] = ft_substr(buffer, k, i - k);
-			jj++;
-			if (buffer[i] == '>' || buffer[i] == '<')
-			{
-				if (buffer[i + 1] == '>' || buffer[i + 1] == '<')
-				{
-					cmds[ii][jj] = ft_substr(buffer, i, 2);
-					i++;
-				}
-				else
-					cmds[ii][jj] = ft_substr(buffer, i, 1);
-				jj++;
-			}	
-			if (buffer[i] == '|')
-			{
-				ii++;
-				cmds[ii] = malloc(sizeof(char *) * 10);
-				jj = 0;
-				while (is_separator(buffer[i + 1]))
-					i++;
-			}
-			k = i + 1;
-		}
-		if (buffer[i] == '\0')
-		{
-			if (!is_separator(buffer[i - 1]))
-				cmds[ii][jj] = ft_substr(buffer, k, i - k);
-			break ;
-		}
-		while (is_space(buffer[i]))
-			i++;
-		i++;
-	}
-	return (cmds);
-}
-
 void make_tree(char *cmd, int row, t_shell *shell)
 {
 	int i;
@@ -103,7 +45,7 @@ void make_tree(char *cmd, int row, t_shell *shell)
 	int k;
 
 	i = 0;
-	j = 0;
+	j = 0;	
 	k = 0;
 	shell->cmds[row] = calloc(sizeof(char *), 10);
 	while (is_space(cmd[i]))
@@ -188,7 +130,7 @@ char ***lexer1(char *buffer, t_shell *shell)
 		i++;
 		j--;
 	}
-	while(pre_c[j])
+	while (pre_c[j])
 	{
 		free(pre_c[j]);
 		j++;

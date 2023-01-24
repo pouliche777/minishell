@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/01/22 23:59:19 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/23 21:13:42 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	execute(t_shell *shell)
 	while (shell->index-- > 0)
 	{
 		signals(1);
+		check_quotes(shell, i, 0);
 		check_dollar_in_command(shell, i, shell->cmds[i]);
 		shell->id[i] = fork();
 		if (shell->id[i] == 0)
@@ -46,7 +47,6 @@ void	execute(t_shell *shell)
 		if (i > 0)
 			close(shell->fd[i * 2 - 2]);
 		i++;
-		
 	}
 	launch_terminal(shell);
 }
@@ -61,13 +61,9 @@ void	launch_terminal(t_shell *shell)
 	shell->index = shell->nb_cmds;
 	set_pipes(shell);
 	execute(shell);
-	free(shell->buffer);
-	free(shell->cmds);
-	shell->cmds = NULL;
-	shell->buffer = NULL;
 }
 
-void 	init_env(t_shell *shell, char **env)
+void	init_env(t_shell *shell, char **env)
 {
 	int		j;
 
@@ -83,15 +79,15 @@ void 	init_env(t_shell *shell, char **env)
 		j--;
 	}
 }
+
 int	main(int argc, char **argv, char **env)
 {
-	t_shell *shell;
-	
+	t_shell	*shell;
+
 	shell = get_struc();
 	init_env(shell, env);
 	get_path(shell);
 	signals(0);
-	//init_struc(&shell)
 	launch_terminal(shell);
 }
 
