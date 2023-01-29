@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/01/23 20:33:59 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/28 19:22:16 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	duplicate_cmds(t_shell *shell)
 	i = 0;
 	j = 0;
 	shell->cmds_exe = malloc(sizeof(char **) * 10 + 1);
-	while (shell->cmds[i]!= NULL)
+	while (shell->cmds[i] != NULL)
 	{
-		shell->cmds_exe[i]  = malloc(count_nb_tokens(shell->cmds[i])
+		shell->cmds_exe[i] = malloc(count_nb_tokens(shell->cmds[i])
 				* sizeof(char *));
 		while (shell->cmds[i][j] != NULL)
 		{
@@ -108,17 +108,11 @@ void	supress_operators(t_shell *shell, int i)
 
 	h = 0;
 	j = 0;
-	shell->cmds_exe = calloc(sizeof(char *), 10);
+	shell->cmds_exe = calloc(sizeof(char *), 100);
 	while (shell->cmds[i][j])
 	{
 		if (shell->cmds[i][j][0] == '>' || shell->cmds[i][j][0] == '<')
-		{
-			if (shell->cmds[i][j][0] == '>')
-				break ;
-			if (shell->cmds[i][j][0] == '<')
-				break ;
 			j = j + 2;
-		}
 		else
 		{
 			shell->cmds_exe[h] = ft_strdup(shell->cmds[i][j]);
@@ -140,6 +134,7 @@ int	skip_quote(char *buffer, char c, t_shell *info)
 		i++;
 	}
 	printf("Invalid command\n");
+	//reset_terminal(info);
 	launch_terminal(info);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/01/23 19:00:12 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/28 23:21:41 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,6 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <string.h>
-
-typedef struct s_liste_vars
-{
-	char				*name;
-	char				*content;
-	struct s_liste_var			*next;
-}		t_liste_vars;
 
 typedef struct s_shell
 {
@@ -47,7 +39,6 @@ typedef struct s_shell
 	int 			index;
 	char 			*variable;
 	char			*heredoc_input;
-	t_liste_vars	*vars;
 }		t_shell;
 
 
@@ -59,14 +50,13 @@ void	separate_cmds(t_shell *info);
 void	modify_command(t_shell *info, int i);
 void	execute(t_shell *info);
 void	count_cmds(t_shell *shell);
-char	***lexer(char *buffer);
 char 	***lexer1(char *buffer, t_shell *shell);
 void	free_cmds(t_shell *shell);
 int 	set_pipes(t_shell *shell);
 void	change_in_and_out(t_shell *shell, int i);
 int		check_built_in(t_shell *shell, int i);
 int		pwd(t_shell *shell, char **cmds,int i);
-int		env(t_shell *shell, char **cmds, int i);
+int		env(t_shell *shell);
 int		check_redirection(t_shell *shell, int i);
 int		check_input(t_shell *shell, int i);
 void	duplicate_cmds(t_shell *shell);
@@ -85,5 +75,10 @@ int 	count_nb_cmds(char ***cmds);
 void	heredoc(t_shell *shell, char *cmd, int i);
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd);
 void	check_quotes(t_shell *shell, int i, int j);
+void	exit_built_in(t_shell *shell);
+void	close_fd(void);
+void	check_if_variable_exist(t_shell *shell, char *var);
+void	ft_strcpy(char *dst, const char *src);
+void	check_dollar_in_heredoc(t_shell *shell, char *heredoc);
 
 #endif

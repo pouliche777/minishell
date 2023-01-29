@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:17:48 by slord             #+#    #+#             */
-/*   Updated: 2023/01/23 20:26:25 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/29 02:37:06 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,27 @@ void	replace_variable(t_shell *shell, int i, int j)
 		shell->cmds[i][j][h] = '\0';
 	free(temp);
 }
+void	replace_variable_questionmark(t_shell *shell, int i, int j)
+{
+	int		h;
+	char	*temp;
 
+	h = 0;
+	temp = ft_strdup(shell->cmds[i][j]);
+	free(shell->cmds[i][j]);
+	shell->cmds[i][j] = NULL;
+	while (temp[h] != '$')
+		h++;
+	shell->cmds[i][j] = calloc(1, 1000 + h + 1);
+	h = 0;
+	while (temp[h] != '$' && temp[h])
+	{
+		shell->cmds[i][j][h] = temp[h];
+		h++;
+	}
+	ft_strcpy(&shell->cmds[i][j][h], ft_itoa(shell->status));
+	free(temp);
+}
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd)
 {
 	int	j;
@@ -86,9 +106,12 @@ void	check_dollar_in_command(t_shell *shell, int i, char **cmd)
 		{
 			if (cmd[j][h] == '$' && cmd[j][h + 1])
 			{
-				replace_variable(shell, i, j);
+				if (cmd[j][h + 1] == '?' && cmd[j][h + 2] == '\0')
+					replace_variable_questionmark(shell, i, j);
+				else
+					replace_variable(shell, i, j);
 				break ;
-			}	
+			}
 			h++;
 		}
 		h = 0;

@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/01/17 15:12:28 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/28 19:12:38 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	pwd(t_shell *shell, char **cmds, int i)
 	return (1);
 }
 
-int	env(t_shell *shell, char **cmds, int i)
+int	env(t_shell *shell)
 {
 	int		j;
 
@@ -63,11 +63,13 @@ int	echo(t_shell *shell, char **cmds, int i)
 
 int	export(t_shell *shell, char **cmds)
 {
-	if (cmds[2]== NULL)
+	if (cmds[1]== NULL)
+		env(shell);
+	else if (cmds[2]== NULL && ft_isdigit(cmds[1][0]) == 0)
 		modify_env(shell, cmds[1]);
 	else
 	{
-		printf("mauvais input \n");
+		printf("mauvais input pour export \n");
 		return (0);
 	}
 	return (1);
@@ -81,6 +83,13 @@ int	unset(t_shell *shell, char **cmds)
 		return (2);
 }
 
+void	exit_built_in(t_shell *shell)
+{
+	close_fd();
+	clear_history();
+	free (shell);
+	exit(0);
+}
 //int cd(t_shell *shell, char ***cmds)
 //{
 //	chdir()

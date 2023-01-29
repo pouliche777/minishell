@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/01/23 21:13:42 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/29 00:09:09 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	execute(t_shell *shell)
 	int	i;
 
 	i = 0;
-	while (shell->index-- > 0)
+	while (i < shell->nb_cmds)
 	{
 		signals(1);
 		check_quotes(shell, i, 0);
@@ -25,12 +25,12 @@ void	execute(t_shell *shell)
 		shell->id[i] = fork();
 		if (shell->id[i] == 0)
 		{
+			change_in_and_out(shell, i);
 			if (!check_redirection(shell, i))
 				return ;
 			if (!check_input(shell, i))
 				return ;
 			supress_operators(shell, i);
-			change_in_and_out(shell, i);
 			if (check_built_in(shell, i) == 0)
 			{
 				modify_command(shell, i);
@@ -38,28 +38,31 @@ void	execute(t_shell *shell)
 			}
 			return ;
 		}
-		else
-		{
-			wait(&shell->status);
-		}
+
 		signals(3);
 		close(shell->fd[(i * 2) + 1]);
 		if (i > 0)
 			close(shell->fd[i * 2 - 2]);
 		i++;
 	}
+	i = -1;
+	
+	while (shell->id[++i])
+		waitpid(shell->id[i], &shell->status, 0);
 	launch_terminal(shell);
 }
 
 void	launch_terminal(t_shell *shell)
 {
 	shell->buffer = readline("~");
+	if (shell->buffer == NULL)
+		launch_terminal(shell);
 	lexer1(shell->buffer, shell);
-	check_built_in_parent(shell);
 	add_history(shell->buffer);
 	printf("%s\n", shell->buffer);
 	shell->index = shell->nb_cmds;
 	set_pipes(shell);
+	check_built_in_parent(shell);
 	execute(shell);
 }
 

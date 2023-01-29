@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/01/22 23:34:04 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/28 19:11:14 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ int	check_built_in(t_shell *shell, int i)
 		return (echo(shell, shell->cmds_exe, i));
 	if (ft_strncmp(shell->cmds[0][0], "export", 6) == 0)
 		return (1);
-	//if (ft_strncmp(shell->cmds[i][0], "exit", 5))
-		//return (exit(shell, shell->cmds[i]), i, i);
 	if (ft_strncmp(shell->cmds_exe[0], "env", 3) == 0)
-		return (env(shell, shell->cmds_exe, i));
+		return (env(shell));
 	if (ft_strncmp(shell->cmds[0][0], "unset", 5) == 0)
 		return (1);
 	return (0);
@@ -34,12 +32,10 @@ int	check_built_in(t_shell *shell, int i)
 
 void	check_built_in_parent(t_shell *shell)
 {
-	//if (ft_strncmp(shell->cmds[i][0], "cd", 3))
-		//return (cd(shell, shell->cmds[i], i));
 	if (ft_strncmp(shell->cmds[0][0], "export", 6) == 0)
 		export(shell, shell->cmds[0]);
-	//if (ft_strncmp(shell->cmds[i][0], "exit", 5))
-		//return (exit(shell, shell->cmds[i]), i, i);
+	if (ft_strncmp(shell->cmds[0][0], "exit", 5) == 0)
+		exit_built_in(shell);
 	if (ft_strncmp(shell->cmds[0][0], "unset", 5) == 0)
 		unset(shell, shell->cmds[0]);
 }

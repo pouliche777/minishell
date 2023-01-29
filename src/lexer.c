@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/01/23 21:16:24 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/28 19:16:43 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void make_tree(char *cmd, int row, t_shell *shell)
 			{
 				shell->cmds[row][j] = ft_substr(cmd, i, 2);
 				i++;
-				//j++;
 			}
 			else
 				shell->cmds[row][j] = ft_substr(cmd, i, 1);
@@ -112,9 +111,9 @@ void make_tree(char *cmd, int row, t_shell *shell)
 	}
 }
 
-char ***lexer1(char *buffer, t_shell *shell)
+char	***lexer1(char *buffer, t_shell *shell)
 {
-	char**	pre_c;
+	char	**pre_c;
 	int		i;
 	int		j;
 

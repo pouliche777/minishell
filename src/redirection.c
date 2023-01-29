@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/01/23 20:28:32 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/29 02:35:39 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,13 @@ void	heredoc(t_shell *shell, char *cmd, int i)
 {
 	int		file[2];
 
+	shell->heredoc_input = readline(">");
 	if (pipe(file) < 0)
 		return ;
-	shell->heredoc_input = readline(">");
-	while (ft_strncmp(shell->heredoc_input, cmd,
+	while (shell->heredoc_input && ft_strncmp(shell->heredoc_input, cmd,
 			ft_strlen(shell->heredoc_input)))
 	{
+		check_dollar_in_heredoc(shell, shell->heredoc_input);
 		ft_putstr_fd(shell->heredoc_input, file[1]);
 		ft_putchar_fd('\n', file[1]);
 		free(shell->heredoc_input);
@@ -107,51 +108,48 @@ void	heredoc(t_shell *shell, char *cmd, int i)
 	dup2(file[0], STDIN_FILENO);
 	close(file[1]);
 }
-/*
-void	heredoc_variable(t_shell *shell)
+
+void	heredoc_variable(t_shell *shell, int j)
 {
 	char	*temp;
 	int		i;
+	int		h;
+	char 	*var;
 
-	i = -1;
-	while (shell->heredoc_input[++i])
-	{
-		if (shell->heredoc_input[i] == '$' && shell->heredoc_input[i + 1])
-		{
-			change_heredoc_input(shell,shell->heredoc_input+i+1, i);
-			i = -1;
-		}
-			
-	}
-
-}
-
-void	change_heredoc_input(t_shell *shell, char *input, int i;)
-{
-	char *temp;
-	int j;
-	int h;	
-	h=0;
-	j = 0;
-	while(shell->env[j])
-	{
-		if (!(ft_strncmp(input, shell->env[j], ft_strlen(input))) && shell->env[j][ft_strlen(input)] == '=')
-			break ;
-		j++;
-		if (!(shell->env[j]))
-			return ;
-	}
-	free (shell->heredoc_input);
-	while (h < i)
-	{
-		shell->heredoc_input[h] = input[h];
-		h++;
-	}
-	check_env_heredoc(&shell->heredoc_input[i])
 	temp = ft_strdup(shell->heredoc_input);
 	free(shell->heredoc_input);
 	
-		j++;
-	
+	h = j + 1;
+	while (temp[h] != '\0' && temp[h] != ' ')
+		h++;
+	var = ft_substr(temp, j + 1, h);
+	check_if_variable_exist(shell, var);
+	i = -1;
+	shell->heredoc_input = ft_calloc(ft_strlen(shell->variable) + ft_strlen(temp), 1);
+	while (temp[++i] != '$')
+		shell->heredoc_input[i] = temp[i];
+	if (shell->variable)
+		ft_strcpy(&shell->heredoc_input[i], shell->variable);
+	i = ft_strlen(shell->variable) + i;
+	ft_strcpy(&shell->heredoc_input[i], &temp[h]);
+	free (temp);
+	free (var);
 }
-*/
+
+void	check_dollar_in_heredoc(t_shell *shell, char *heredoc)
+{
+	int	j;
+
+	j = 0;
+	while (shell->heredoc_input[j])
+	{
+
+		if (shell->heredoc_input[j] == '$' && shell->heredoc_input[j + 1] && shell->heredoc_input[j + 1] != ' ')
+		{
+		//if (shell->heredoc_input[j + 1] == '?' && (shell->heredoc_input[j + 2] == '\0' || shell->heredoc_input[j + 2] == ' ' ))
+				heredoc_variable(shell, j);
+			j = -1;
+		}
+		j++;	
+	}
+}
