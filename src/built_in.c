@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/01/28 19:12:38 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/30 17:50:59 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,26 @@ int	echo(t_shell *shell, char **cmds, int i)
 
 int	export(t_shell *shell, char **cmds)
 {
+	char	*var;
+	int		i;
+
+	i = 0;
 	if (cmds[1]== NULL)
 		env(shell);
 	else if (cmds[2]== NULL && ft_isdigit(cmds[1][0]) == 0)
-		modify_env(shell, cmds[1]);
+	{
+		while (cmds[1][i] != '=' &&cmds[1][i])
+			i++;
+		var = ft_substr(cmds[1], 0, i);
+		if (check_v(shell, var) == 1)
+		{
+			replace_var(shell, var);
+			free(var);
+		}
+		else
+			if (ft_strchr(cmds[1], '=') != 0)
+				modify_env(shell, cmds[1]);
+	}
 	else
 	{
 		printf("mauvais input pour export \n");

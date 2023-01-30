@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:17:48 by slord             #+#    #+#             */
-/*   Updated: 2023/01/29 02:37:06 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/30 17:36:15 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,18 @@ void	ft_strcpy(char *dst, const char *src)
 	}
 	dst[i] = '\0';
 }
+void	replace_var(t_shell *shell, char *var)
+{
+	int	i;
 
-void	check_if_variable_exist(t_shell *shell, char *var)
+	i = 0;
+	while ((ft_strncmp(var, shell->env[i], ft_strlen(var))))
+		i++;
+	free(shell->env[i]);
+	shell->env[i] = ft_strdup(shell->cmds[0][1]);
+}
+
+int	check_v(t_shell *shell, char *var)
 {
 	int	i;
 	int	j;
@@ -38,10 +48,11 @@ void	check_if_variable_exist(t_shell *shell, char *var)
 			&& shell->env[i][ft_strlen(var)] == '=')
 		{
 			shell->variable = ft_strdup(&shell->env[i][ft_strlen(var) + 1]);
-			return ;
+			return (ft_strlen(shell->variable));
 		}
 		i++;
 	}
+	return (0);
 }
 
 void	replace_variable(t_shell *shell, int i, int j)
@@ -55,7 +66,7 @@ void	replace_variable(t_shell *shell, int i, int j)
 	shell->cmds[i][j] = NULL;
 	while (temp[h] != '$')
 		h++;
-	check_if_variable_exist(shell, &temp[h + 1]);
+	check_v(shell, &temp[h + 1]);
 	shell->cmds[i][j] = calloc(1, 1000 + h + 1);
 	h = 0;
 	while (temp[h] != '$' && temp[h])
@@ -72,6 +83,7 @@ void	replace_variable(t_shell *shell, int i, int j)
 		shell->cmds[i][j][h] = '\0';
 	free(temp);
 }
+
 void	replace_variable_questionmark(t_shell *shell, int i, int j)
 {
 	int		h;
@@ -93,6 +105,7 @@ void	replace_variable_questionmark(t_shell *shell, int i, int j)
 	ft_strcpy(&shell->cmds[i][j][h], ft_itoa(shell->status));
 	free(temp);
 }
+
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd)
 {
 	int	j;

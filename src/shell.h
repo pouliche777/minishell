@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/01/28 23:21:41 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/30 17:22:18 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "sys/ioctl.h"
 
 typedef struct s_shell
 {
@@ -42,7 +43,7 @@ typedef struct s_shell
 }		t_shell;
 
 
-
+int	ft_strcmp(char *s1, char *s2);
 void	get_path(t_shell *info);
 void	launch_terminal(t_shell *info);
 void	separate_input(t_shell *info);
@@ -77,8 +78,9 @@ void	check_dollar_in_command(t_shell *shell, int i, char **cmd);
 void	check_quotes(t_shell *shell, int i, int j);
 void	exit_built_in(t_shell *shell);
 void	close_fd(void);
-void	check_if_variable_exist(t_shell *shell, char *var);
+int		check_v(t_shell *shell, char *var);
 void	ft_strcpy(char *dst, const char *src);
 void	check_dollar_in_heredoc(t_shell *shell, char *heredoc);
+void	replace_var(t_shell *shell, char *var);
 
 #endif

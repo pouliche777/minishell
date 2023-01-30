@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/01/29 00:09:09 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/30 15:56:09 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	execute(t_shell *shell)
 			}
 			return ;
 		}
-
 		signals(3);
 		close(shell->fd[(i * 2) + 1]);
 		if (i > 0)
@@ -46,7 +45,6 @@ void	execute(t_shell *shell)
 		i++;
 	}
 	i = -1;
-	
 	while (shell->id[++i])
 		waitpid(shell->id[i], &shell->status, 0);
 	launch_terminal(shell);
