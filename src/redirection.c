@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/01/30 16:56:13 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/31 16:29:10 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	redirect_input(t_shell *shell, char *cmd, int i)
 	}
 }
 
-int	check_redirection(t_shell *shell, int i)
+int	check_output(t_shell *shell, int i)
 {
 	int		j;
 	char	**cmd;
@@ -95,7 +95,11 @@ int	check_input(t_shell *shell, int i)
 		if (cmd[j][0] == '<' && cmd[j][1] == '\0')
 			redirect_input(shell, cmd[j + 1], i);
 		else if (cmd[j][0] == '<' && cmd[j][1] == '<' && cmd[j][2] == '\0')
-			heredoc(shell, cmd[j + 1], i);
+		{
+			dup2(shell->heredoc_fd[0], STDIN_FILENO);
+			close(shell->heredoc_fd[1]);
+		}
+			
 		j++;
 	}
 	return (1);
@@ -109,21 +113,23 @@ void write_heredoc(char *input, int *file)
 
 void	heredoc(t_shell *shell, char *cmd, int i)
 {
-	int		file[2];
+
 
 	shell->heredoc_input = readline(">");
-	if (pipe(file) < 0)
+	if (pipe(shell->heredoc_fd) < 0)
 		return ;
 	while (shell->heredoc_input && ft_strcmp(shell->heredoc_input, cmd))
 	{
 		check_dollar_in_heredoc(shell, shell->heredoc_input);
-		ft_putstr_fd(shell->heredoc_input, file[1]);
-		ft_putchar_fd('\n', file[1]);
+		ft_putstr_fd(shell->heredoc_input, shell->heredoc_fd[1]);
+		ft_putchar_fd('\n', shell->heredoc_fd[1]);
 		free(shell->heredoc_input);
 		shell->heredoc_input = readline(">");
 	}
-	dup2(file[0], STDIN_FILENO);
-	close(file[1]);
+	close(shell->heredoc_fd[1]);
+	free(shell->heredoc_input);
+	//dup2(file[0], STDIN_FILENO);
+	
 }
 
 void	heredoc_variable(t_shell *shell, int j)
@@ -168,6 +174,21 @@ void	check_dollar_in_heredoc(t_shell *shell, char *heredoc)
 			heredoc_variable(shell, j);
 			j = -1;
 		}
+		j++;
+	}
+}
+
+void	check_heredoc_parent(t_shell *shell, int i)
+{
+	int		j;
+	char	**cmd;
+
+	cmd = shell->cmds[i];
+	j = 0;
+	while (cmd[j])
+	{
+		if (cmd[j][0] == '<' && cmd[j][1] == '<' && cmd[j][2] == '\0')
+			(heredoc(shell, cmd[j + 1], i));
 		j++;
 	}
 }

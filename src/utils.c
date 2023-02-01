@@ -77,3 +77,14 @@ int	count_nb_cmds(char ***cmds)
 	return (i);
 	printf("%d \n", i);
 }
+
+int	count_nb_token(char **cmds)
+{
+	int	i;
+
+	i = 1;
+	while (cmds[i])
+		i++;
+	return (i);
+	
+}

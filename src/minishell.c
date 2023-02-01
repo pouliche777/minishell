@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/01/30 15:56:09 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/01 14:36:49 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,28 @@ void	execute(t_shell *shell)
 	i = 0;
 	while (i < shell->nb_cmds)
 	{
-		signals(1);
 		check_quotes(shell, i, 0);
 		check_dollar_in_command(shell, i, shell->cmds[i]);
+		check_built_in_parent(shell, i);
+		check_heredoc_parent(shell, i);
 		shell->id[i] = fork();
 		if (shell->id[i] == 0)
 		{
 			change_in_and_out(shell, i);
-			if (!check_redirection(shell, i))
+			if (!check_output(shell, i))
 				return ;
 			if (!check_input(shell, i))
 				return ;
-			supress_operators(shell, i);
+			supress_operators(shell, i);			
 			if (check_built_in(shell, i) == 0)
 			{
-				modify_command(shell, i);
+				if (modify_command(shell, i) == 0)
+					printf("minishell: %s : command not found\n", shell->cmds[i][0]);
 				execve(shell->cmds_exe[0], shell->cmds_exe, shell->env);
 			}
 			return ;
 		}
-		signals(3);
+	//signals(3);
 		close(shell->fd[(i * 2) + 1]);
 		if (i > 0)
 			close(shell->fd[i * 2 - 2]);
@@ -52,15 +54,18 @@ void	execute(t_shell *shell)
 
 void	launch_terminal(t_shell *shell)
 {
+	if (shell->buffer)
+		free(shell->buffer);
 	shell->buffer = readline("~");
-	if (shell->buffer == NULL)
+	if (ft_strlen(shell->buffer)== 0)
+	{
+		free(shell->buffer);
 		launch_terminal(shell);
+	}
 	lexer1(shell->buffer, shell);
 	add_history(shell->buffer);
-	printf("%s\n", shell->buffer);
 	shell->index = shell->nb_cmds;
 	set_pipes(shell);
-	check_built_in_parent(shell);
 	execute(shell);
 }
 
@@ -88,7 +93,7 @@ int	main(int argc, char **argv, char **env)
 	shell = get_struc();
 	init_env(shell, env);
 	get_path(shell);
-	signals(0);
+	//signals(0);
 	launch_terminal(shell);
 }
 

@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/01/28 19:22:16 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/31 14:08:08 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	duplicate_cmds(t_shell *shell)
 	}
 }
 
-void	modify_command(t_shell *info, int i)
+int	modify_command(t_shell *info, int i)
 {
 	int		j;
 	char	*str;
@@ -95,10 +95,13 @@ void	modify_command(t_shell *info, int i)
 			info->cmds_exe[0] = NULL;
 			info->cmds_exe[0] = realloc(info->cmds_exe[0], sizeof(str));
 			ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
+			free(str);
+			return (1);
 		}
 		free(str);
 		j++;
 	}
+	return (0);
 }
 
 void	supress_operators(t_shell *shell, int i)

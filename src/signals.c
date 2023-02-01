@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2022/11/28 02:04:38 by slord            ###   ########.fr       */
+/*   Updated: 2023/01/31 16:35:32 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	handler_sigusr(int signalnb)
 
 void	sig_handler(int sig)
 {
+	t_shell	*shell;
+
 	if (sig == SIGQUIT)
 	{
 		sigignore(SIGQUIT);
 	}
 	if (sig == SIGINT)
 	{	
-		t_shell *shell;
-		
 		shell = get_struc();
 		if (shell->buffer)
 			free(shell->buffer);

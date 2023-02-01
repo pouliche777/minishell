@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:59 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/01 14:18:25 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,30 @@ int	unset(t_shell *shell, char **cmds)
 		return (2);
 }
 
-void	exit_built_in(t_shell *shell)
+void	exit_built_in(t_shell *shell, char *exit_arg)
 {
+	int	i;
+
+	i = 0;
 	close_fd();
 	clear_history();
-	free (shell);
-	exit(0);
+	free(shell);
+	if (!exit_arg)
+		exit(0);
+	while (ft_isdigit(exit_arg[i]))
+		i++;
+	if (exit_arg[i] == '\0')
+		exit(ft_atoi(exit_arg));
+	else
+	{
+		printf("bash: exit: dsaas: numeric argument required \n");
+		exit (255);
+	}
 }
-//int cd(t_shell *shell, char ***cmds)
-//{
-//	chdir()
-//}
+
+int	cd_built_in (t_shell *shell, char *path)
+{
+	if (chdir(path) != 0)
+		printf("cd, error \n");
+	return(1);
+}
