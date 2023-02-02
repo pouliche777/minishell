@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/01 14:18:25 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/01 19:07:24 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,16 @@ int	echo(t_shell *shell, char **cmds, int i)
 
 int	export(t_shell *shell, char **cmds)
 {
-	char	*var;
 	int		i;
 
 	i = 0;
 	if (cmds[1]== NULL)
+	{
 		env(shell);
-	else if (cmds[2]== NULL && ft_isdigit(cmds[1][0]) == 0)
+		return (1);
+	}
+		
+	/* else if (cmds[2]== NULL && ft_isdigit(cmds[1][0]) == 0)
 	{
 		while (cmds[1][i] != '=' &&cmds[1][i])
 			i++;
@@ -79,9 +82,12 @@ int	export(t_shell *shell, char **cmds)
 			replace_var(shell, var);
 			free(var);
 		}
-		else
-			if (ft_strchr(cmds[1], '=') != 0)
-				modify_env(shell, cmds[1]);
+	*/
+	
+	if (ft_strchr(cmds[1], '=') != 0 && ft_isdigit(cmds[1][0]) == 0 && cmds[2]== NULL)
+	{
+		printf("dsada\n");
+		add_env(shell, cmds[1]);
 	}
 	else
 	{
@@ -120,9 +126,50 @@ void	exit_built_in(t_shell *shell, char *exit_arg)
 	}
 }
 
-int	cd_built_in (t_shell *shell, char *path)
+char	*get_pwd(char **env)
 {
+	char	*pwd;
+	int		j;
+
+	j = 0;
+	while (ft_strncmp(env[j], "PWD=", 4))
+		j++;
+	pwd = env[j] + 4;
+	return (pwd);
+}
+char	*get_old_pwd(char **env)
+{
+	char	*old_pwd;
+	int		j;
+
+	j = 0;
+	while (ft_strncmp(env[j], "OLDPWD=", 7))
+		j++;
+	old_pwd = env[j] + 7;
+	return (old_pwd);
+}
+
+int	cd_built_in(t_shell *shell, char *path)
+{
+	char	*current_path;
+	char	*old_path;
+	char	buff[1024];
+
+	old_path = getcwd(buff, 1024);
 	if (chdir(path) != 0)
+	{
 		printf("cd, error \n");
-	return(1);
+		return (1);
+	}
+	old_path = ft_strjoin("OLDPWD=", old_path);
+	current_path = getcwd(buff, 1024);
+	current_path = ft_strjoin("PWD=", current_path);
+	if (path[0]== '.')
+		add_env(shell, current_path);
+	else
+		add_env(shell, current_path);
+	add_env(shell, old_path);
+	free(current_path);
+	free(old_path);
+	return (1);
 }

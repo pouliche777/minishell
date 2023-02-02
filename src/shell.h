@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/01 14:35:27 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/01 17:27:02 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_shell
 	int				*fd;
 	int				*id;
 	char			**temp;
+	char			*var_name;
+	char			*var;
 	int				status;
 	int 			index;
 	char 			*variable;
@@ -86,5 +88,7 @@ void	replace_var(t_shell *shell, char *var);
 int		count_nb_token(char **cmds);
 void	check_heredoc_parent(t_shell *shell, int i);
 int		cd_built_in(t_shell *shell, char *path);
+char	*get_pwd(char **env);
+void	add_env(t_shell *shell, char *var_line);
 
 #endif

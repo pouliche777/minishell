@@ -2,7 +2,7 @@ S = src/
 O = obj/
 L = libft/
 
-SOURCES = $Sminishell.c $Sutils.c $Sparsing.c $Slexer.c $Spipes.c $Sbuilt_in_utils.c $Sbuilt_in.c $Sredirection.c $Ssignals.c $Svariables.c $Squotes.c
+SOURCES = $Sminishell.c $Sutils.c $Sparsing.c $Slexer.c $Spipes.c $Sbuilt_in_utils.c $Sbuilt_in.c $Sredirection.c $Ssignals.c $Svariables.c $Squotes.c $Senv.c
 
 OBJS = $(SOURCES:$S%=$O%.o)
 
