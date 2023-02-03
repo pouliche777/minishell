@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/01 17:27:02 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/02 16:53:12 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		export(t_shell *shell, char **cmds);
 void	check_built_in_parent(t_shell *shell, int i);
 int 	check_var(t_shell *shell, char *var);
 void	modify_env_1(t_shell *shell, int i);
-int		unset(t_shell *shell, char **cmds);
+int		unset(t_shell *shell, char *cmds);
 int 	count_nb_cmds(char ***cmds);
 void	heredoc(t_shell *shell, char *cmd, int i);
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd);
@@ -89,6 +89,8 @@ int		count_nb_token(char **cmds);
 void	check_heredoc_parent(t_shell *shell, int i);
 int		cd_built_in(t_shell *shell, char *path);
 char	*get_pwd(char **env);
-void	add_env(t_shell *shell, char *var_line);
+void	add_env(t_shell *shell, char *var_line, int j);
+void	delete_env(t_shell *shell, char *var_name);
+void	free_env(t_shell *shell);
 
 #endif

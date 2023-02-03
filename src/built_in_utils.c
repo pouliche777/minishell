@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/01 14:57:33 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/02 16:52:14 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,42 +37,11 @@ void	check_built_in_parent(t_shell *shell, int i)
 	if (ft_strncmp(shell->cmds[i][0], "exit", 5) == 0)
 		exit_built_in(shell, shell->cmds[0][1]);
 	if (ft_strncmp(shell->cmds[i][0], "unset", 6) == 0)
-		unset(shell, shell->cmds[0]);
+		unset(shell, shell->cmds[i][1]);
 	if (ft_strncmp(shell->cmds[i][0], "cd", 2) == 0)
 		cd_built_in(shell, shell->cmds[0][1]);
 }
 
-void	modify_env(t_shell *shell, char *str)
-{
-	int		j;
-	int		h;
-	char	**temp;
-
-	j = 0;
-	while (shell->env[j])
-		j++;
-	h = j;
-	j--;
-	temp = malloc(sizeof(char *) * h + 1);
-	while (j >= 0)
-	{
-		temp[j] = ft_strdup(shell->env[j]);
-		free(shell->env[j]);
-		j--;
-	}
-	free(shell->env);
-	shell->env = malloc(sizeof(char *) * (h + 1));
-	j = 0;
-	while (j < h)
-	{
-		shell->env[j] = ft_strdup(temp[j]);
-		free(temp[j]);
-		j++;
-	}
-	shell->env[h] = ft_strdup(str);
-	shell->env[h + 1] = NULL;
-	free(temp);
-}
 
 void	modify_env_1(t_shell *shell, int i)
 {

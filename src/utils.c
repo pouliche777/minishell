@@ -31,7 +31,6 @@ void	free_cmds(t_shell *shell)
 
 	i = 0;
 	j = 0;
-
 	while (shell->cmds[i])
 	{
 		while (shell->cmds[i][j])
@@ -86,5 +85,19 @@ int	count_nb_token(char **cmds)
 	while (cmds[i])
 		i++;
 	return (i);
-	
+}
+
+void	free_env(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (shell->env[i])
+	{
+		shell->env[i] = NULL;
+		free(shell->env[i]);
+		i++;
+	}
+	shell->env = NULL;
+	free(shell->env);
 }

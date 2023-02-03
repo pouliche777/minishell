@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:37:24 by slord             #+#    #+#             */
-/*   Updated: 2023/01/22 21:46:26 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/02 15:25:17 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <limits.h>
+# include <unistd.h>
 
 typedef struct s_list
 {

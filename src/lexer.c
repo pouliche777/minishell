@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/01/31 14:36:41 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/02 18:17:52 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ char	***lexer1(char *buffer, t_shell *shell)
 
 	i = 0;
 	count_cmds(shell);
-	shell->id = malloc(sizeof(shell->nb_cmds * 4));
 	j = shell->nb_cmds;
 	shell->cmds = malloc(sizeof(char **) * j);
 	pre_c = ft_split(buffer, '|');

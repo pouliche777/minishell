@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/01/31 16:35:32 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/02 20:34:52 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,22 @@ void	handler_sigusr(int signalnb)
 void	sig_handler(int sig)
 {
 	t_shell	*shell;
-
+	
+	shell = get_struc();
 	if (sig == SIGQUIT)
 	{
+		
+		rl_on_new_line();
+		rl_redisplay();
+		
 		sigignore(SIGQUIT);
 	}
 	if (sig == SIGINT)
 	{	
-		shell = get_struc();
-		if (shell->buffer)
-			free(shell->buffer);
 		printf("\n");
 		launch_terminal(shell);
 	}
+	
 }
 
 void	signals(int i)

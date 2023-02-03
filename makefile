@@ -2,14 +2,14 @@ S = src/
 O = obj/
 L = libft/
 
-SOURCES = $Sminishell.c $Sutils.c $Sparsing.c $Slexer.c $Spipes.c $Sbuilt_in_utils.c $Sbuilt_in.c $Sredirection.c $Ssignals.c $Svariables.c $Squotes.c $Senv.c
+SOURCES = $Sminishell.c $Sutils.c $Sparsing.c $Slexer.c $Spipes.c $Sbuilt_in_utils.c $Sbuilt_in.c $Sredirection.c $Ssignals.c $Svariables.c $Squotes.c $Senv.c $Senv_1.c
 
 OBJS = $(SOURCES:$S%=$O%.o)
 
 LIB = libft/libft.a
 CC = gcc
 RM = rm -rf
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -g 
 
 NAME = minishell
 

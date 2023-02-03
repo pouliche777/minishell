@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:51:42 by slord             #+#    #+#             */
-/*   Updated: 2023/01/31 12:38:39 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/02 19:10:32 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	set_pipes(t_shell *shell)
 		}
 		i++;
 	}
+	return (0);
 }
 
 void	change_in_and_out(t_shell *shell, int i)

@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/01/31 14:08:08 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/02 19:12:46 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	modify_command(t_shell *info, int i)
 		if (access(str, F_OK) == 0)
 		{
 			info->cmds_exe[0] = NULL;
-			info->cmds_exe[0] = realloc(info->cmds_exe[0], sizeof(str));
+			info->cmds_exe[0] = realloc(info->cmds_exe[0],  ft_strlen(str));
 			ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
 			free(str);
 			return (1);

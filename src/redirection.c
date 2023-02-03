@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/01/31 16:29:10 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/02 19:44:50 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ int	check_output(t_shell *shell, int i)
 	j = 0;
 	while (cmd[j])
 	{
-		if (cmd[j][0] == '>' && cmd[j][1] == '>' && cmd[j + 2] == NULL)
+		if (cmd[j][0] == '>' && cmd[j][1] == '>' && cmd[j + 1] != NULL)
 		{
 			redirect_output_1(shell, cmd[j + 1], i);
 			if (cmd[j + 1] == NULL)
 				return (0);
 		}
-		else if (cmd[j][0] == '>' && cmd[j][1] == '\0')
+		else if (cmd[j][0] == '>' && cmd[j][1] == '\0' && cmd[j + 1] != NULL)
 		{
 			redirect_output(shell, cmd[j + 1], i);
 			if (cmd[j + 1] == NULL)
@@ -98,8 +98,7 @@ int	check_input(t_shell *shell, int i)
 		{
 			dup2(shell->heredoc_fd[0], STDIN_FILENO);
 			close(shell->heredoc_fd[1]);
-		}
-			
+		}	
 		j++;
 	}
 	return (1);
@@ -113,8 +112,6 @@ void write_heredoc(char *input, int *file)
 
 void	heredoc(t_shell *shell, char *cmd, int i)
 {
-
-
 	shell->heredoc_input = readline(">");
 	if (pipe(shell->heredoc_fd) < 0)
 		return ;
