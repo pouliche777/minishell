@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/02 16:52:14 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:27:46 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	check_built_in(t_shell *shell, int i)
 	if (ft_strncmp(shell->cmds[i][0], "cd", 3) == 0)
 		return (1);
 	if (ft_strncmp(shell->cmds_exe[0], "pwd", 4) == 0)
-		return (pwd(shell, shell->cmds_exe, i));
+		return (pwd(shell, i));
 	if (ft_strncmp(shell->cmds_exe[0], "echo", 5) == 0)
-		return (echo(shell, shell->cmds_exe, i));
+		return (echo(shell->cmds_exe));
 	if (ft_strncmp(shell->cmds[i][0], "export", 7) == 0)
 		return (1);
 	if (ft_strncmp(shell->cmds_exe[0], "env", 4) == 0)

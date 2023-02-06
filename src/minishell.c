@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/02 20:41:30 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:16:53 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void children(t_shell *shell, int i)
 	supress_operators(shell, i);
 	if (check_built_in(shell, i) == 0)
 	{
-		if (modify_command(shell, i) == 0)
+		if (modify_command(shell) == 0)
 			printf("minishell: %s : command not found\n", shell->cmds[i][0]);
 		execve(shell->cmds_exe[0], shell->cmds_exe, shell->env);
 	}
@@ -94,10 +94,13 @@ int	main(int argc, char **argv, char **env)
 {
 	t_shell	*shell;
 
-	shell = get_struc();
-	init_env(shell, env);
-	get_path(shell);
-	launch_terminal(shell);
+	if (argc == 1 && argv[0])
+	{
+		shell = get_struc();
+		init_env(shell, env);
+		get_path(shell);
+		launch_terminal(shell);
+	}
 }
 
 t_shell	*get_struc(void)

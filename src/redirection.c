@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/02/02 19:44:50 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:30:04 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-void	redirect_output(t_shell *shell, char *cmd, int i)
+void	redirect_output(char *cmd)
 {
 	int	file[2];
 
@@ -35,7 +35,7 @@ void	redirect_output(t_shell *shell, char *cmd, int i)
 	}
 }
 
-void	redirect_output_1(t_shell *shell, char *cmd, int i)
+void	redirect_output_1(char *cmd)
 {
 	int	file[2];
 
@@ -46,7 +46,7 @@ void	redirect_output_1(t_shell *shell, char *cmd, int i)
 	}
 }
 
-void	redirect_input(t_shell *shell, char *cmd, int i)
+void	redirect_input(char *cmd)
 {
 	int	file[2];
 
@@ -68,13 +68,13 @@ int	check_output(t_shell *shell, int i)
 	{
 		if (cmd[j][0] == '>' && cmd[j][1] == '>' && cmd[j + 1] != NULL)
 		{
-			redirect_output_1(shell, cmd[j + 1], i);
+			redirect_output_1(cmd[j + 1]);
 			if (cmd[j + 1] == NULL)
 				return (0);
 		}
 		else if (cmd[j][0] == '>' && cmd[j][1] == '\0' && cmd[j + 1] != NULL)
 		{
-			redirect_output(shell, cmd[j + 1], i);
+			redirect_output(cmd[j + 1]);
 			if (cmd[j + 1] == NULL)
 				return (0);
 		}
@@ -93,7 +93,7 @@ int	check_input(t_shell *shell, int i)
 	while (cmd[j])
 	{
 		if (cmd[j][0] == '<' && cmd[j][1] == '\0')
-			redirect_input(shell, cmd[j + 1], i);
+			redirect_input(cmd[j + 1]);
 		else if (cmd[j][0] == '<' && cmd[j][1] == '<' && cmd[j][2] == '\0')
 		{
 			dup2(shell->heredoc_fd[0], STDIN_FILENO);
@@ -110,14 +110,14 @@ void write_heredoc(char *input, int *file)
 	ft_putchar_fd('\n', file[1]);
 }
 
-void	heredoc(t_shell *shell, char *cmd, int i)
+void	heredoc(t_shell *shell, char *cmd)
 {
 	shell->heredoc_input = readline(">");
 	if (pipe(shell->heredoc_fd) < 0)
 		return ;
 	while (shell->heredoc_input && ft_strcmp(shell->heredoc_input, cmd))
 	{
-		check_dollar_in_heredoc(shell, shell->heredoc_input);
+		check_dollar_in_heredoc(shell);
 		ft_putstr_fd(shell->heredoc_input, shell->heredoc_fd[1]);
 		ft_putchar_fd('\n', shell->heredoc_fd[1]);
 		free(shell->heredoc_input);
@@ -125,8 +125,6 @@ void	heredoc(t_shell *shell, char *cmd, int i)
 	}
 	close(shell->heredoc_fd[1]);
 	free(shell->heredoc_input);
-	//dup2(file[0], STDIN_FILENO);
-	
 }
 
 void	heredoc_variable(t_shell *shell, int j)
@@ -158,7 +156,7 @@ void	heredoc_variable(t_shell *shell, int j)
 	free (var);
 }
 
-void	check_dollar_in_heredoc(t_shell *shell, char *heredoc)
+void	check_dollar_in_heredoc(t_shell *shell)
 {
 	int	j;
 
@@ -185,7 +183,7 @@ void	check_heredoc_parent(t_shell *shell, int i)
 	while (cmd[j])
 	{
 		if (cmd[j][0] == '<' && cmd[j][1] == '<' && cmd[j][2] == '\0')
-			(heredoc(shell, cmd[j + 1], i));
+			(heredoc(shell, cmd[j + 1]));
 		j++;
 	}
 }

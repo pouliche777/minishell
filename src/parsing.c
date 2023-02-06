@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/02/02 19:12:46 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:15:39 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,34 +52,8 @@ int	count_nb_tokens(char **cmd)
 	return (i);
 }
 
-void	duplicate_cmds(t_shell *shell)
-{
-	int	i;
-	int	j;
 
-	i = 0;
-	j = 0;
-	shell->cmds_exe = malloc(sizeof(char **) * 10 + 1);
-	while (shell->cmds[i] != NULL)
-	{
-		shell->cmds_exe[i] = malloc(count_nb_tokens(shell->cmds[i])
-				* sizeof(char *));
-		while (shell->cmds[i][j] != NULL)
-		{
-			if (shell->cmds[i][j][0] == '>' || shell->cmds[i][j][0] == '<')
-			{
-				shell->cmds_exe[i][j] = NULL;
-				break ;
-			}
-			shell->cmds_exe[i][j] = ft_strdup(shell->cmds[i][j]);
-			j++;
-		}
-		i++;
-		j = 0;
-	}
-}
-
-int	modify_command(t_shell *info, int i)
+int	modify_command(t_shell *info)
 {
 	int		j;
 	char	*str;

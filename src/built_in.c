@@ -6,13 +6,13 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/02 17:53:37 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:24:09 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	pwd(t_shell *shell, char **cmds, int i)
+int	pwd(t_shell *shell, int i)
 {
 	char	*pwd;
 	int		j;
@@ -31,7 +31,6 @@ int	env(t_shell *shell)
 	int		j;
 
 	j = 0;
-
 	while (shell->env[j])
 	{
 		printf("%s\n", shell->env[j]);
@@ -40,7 +39,7 @@ int	env(t_shell *shell)
 	return (1);
 }
 
-int	echo(t_shell *shell, char **cmds, int i)
+int	echo(char **cmds)
 {
 	int		j;
 
