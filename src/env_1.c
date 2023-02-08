@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:29:58 by slord             #+#    #+#             */
-/*   Updated: 2023/02/02 17:43:07 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:48:03 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,20 @@ void	delete_env(t_shell *shell, char *var_name)
 		j++;
 	}
 	free(temp);
+}
+
+void	init_env(t_shell *shell, char **env)
+{
+	int		j;
+
+	j = 0;
+	while (env[j])
+		j++;
+	j--;
+	shell->env = ft_calloc((j + 2), sizeof(char *));
+	while (j >= 0)
+	{
+		shell->env[j] = ft_strdup(env[j]);
+		j--;
+	}
 }

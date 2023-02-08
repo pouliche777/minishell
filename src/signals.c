@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/02/02 20:34:52 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/08 16:25:59 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	sig_handler(int sig)
 		printf("\n");
 		launch_terminal(shell);
 	}
-	
 }
 
 void	signals(int i)

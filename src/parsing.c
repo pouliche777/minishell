@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/02/06 16:15:39 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/06 18:31:04 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	count_nb_tokens(char **cmd)
 	return (i);
 }
 
-
 int	modify_command(t_shell *info)
 {
 	int		j;
@@ -60,6 +59,7 @@ int	modify_command(t_shell *info)
 	char	*ptr;
 
 	j = 0;
+	get_path(info);
 	ptr = ft_strjoin("/", info->cmds_exe[0]);
 	while (info->path[j])
 	{
@@ -67,7 +67,8 @@ int	modify_command(t_shell *info)
 		if (access(str, F_OK) == 0)
 		{
 			info->cmds_exe[0] = NULL;
-			info->cmds_exe[0] = realloc(info->cmds_exe[0],  ft_strlen(str));
+			free(info->cmds_exe[0]);
+			info->cmds_exe[0] = ft_calloc(1, ft_strlen(str));
 			ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
 			free(str);
 			return (1);
@@ -75,6 +76,7 @@ int	modify_command(t_shell *info)
 		free(str);
 		j++;
 	}
+	free (info->path);
 	return (0);
 }
 
