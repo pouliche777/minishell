@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/08 16:07:55 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:24:05 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	children(t_shell *shell, int i)
 	if (!check_output(shell, i))
 		return ;
 	if (!check_input(shell, i))
-		return ;
-	supress_operators(shell, i);
+		return ;	
 	if (check_built_in(shell, i) == 0)
 	{
+		supress_operators(shell, i);
+		check_quotes(shell);
 		if (modify_command(shell) == 0)
 			printf("minishell: %s : command not found\n", shell->cmds[i][0]);
 		execve(shell->cmds_exe[0], shell->cmds_exe, shell->env);
@@ -36,7 +37,6 @@ void	execute(t_shell *shell)
 	i = 0;
 	while (i < shell->nb_cmds)
 	{
-		check_quotes(shell, i, 0);
 		check_dollar_in_command(shell, i, shell->cmds[i]);
 		check_built_in_parent(shell, i);
 		check_heredoc_parent(shell, i);

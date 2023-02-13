@@ -9,7 +9,7 @@ OBJS = $(SOURCES:$S%=$O%.o)
 LIB = libft/libft.a
 CC = gcc
 RM = rm -rf
-CFLAGS = -Wall -Wextra -Werror -g 
+CFLAGS = -Wall -Wextra -g 
 
 NAME = minishell
 

@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/02/06 17:09:50 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:21:36 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,20 @@ int	ft_strcmp(char *s1, char *s2)
 void	redirect_output(char *cmd)
 {
 	int	file[2];
+	int	i;
 
+	if (cmd[0] == '\'' || cmd[0]  == '\"')
+		cmd++;
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i + 1] == '\0')
+		{
+			if (cmd[i] == '\'' || cmd[i]  == '\"')
+				cmd[i] = '\0';
+		}
+		i++;
+	}
 	if (cmd)
 	{
 		file[0] = open(cmd, O_WRONLY | O_CREAT | O_TRUNC, 0777);
@@ -36,7 +49,20 @@ void	redirect_output(char *cmd)
 void	redirect_output_1(char *cmd)
 {
 	int	file[2];
+	int	i;
 
+	if (cmd[0] == '\'' || cmd[0]  == '\"')
+		cmd++;
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i + 1] == '\0')
+		{
+			if (cmd[i] == '\'' || cmd[i]  == '\"')
+				cmd[i] = '\0';
+		}
+		i++;
+	}
 	if (cmd)
 	{
 		file[0] = open (cmd, O_CREAT | O_APPEND | O_WRONLY, 0777);
@@ -47,7 +73,20 @@ void	redirect_output_1(char *cmd)
 void	redirect_input(char *cmd)
 {
 	int	file[2];
+	int	i;
 
+	if (cmd[0] == '\'' || cmd[0]  == '\"')
+		cmd++;
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i + 1] == '\0')
+		{
+			if (cmd[i] == '\'' || cmd[i]  == '\"')
+				cmd[i] = '\0';
+		}
+		i++;
+	}
 	if (cmd)
 	{
 		file[0] = open (cmd, O_RDONLY, 0777);

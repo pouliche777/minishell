@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/06 16:58:45 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:35:42 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	env(t_shell *shell)
 int	check_built_in(t_shell *shell, int i)
 {
 	supress_operators(shell, i);
+	check_quotes(shell);
 	if (ft_strncmp(shell->cmds[i][0], "cd", 3) == 0)
 		return (1);
 	if (ft_strncmp(shell->cmds_exe[0], "pwd", 4) == 0)
@@ -80,6 +81,7 @@ int	check_built_in(t_shell *shell, int i)
 
 void	check_built_in_parent(t_shell *shell, int i)
 {
+	//enveler les quotes
 	if (ft_strncmp(shell->cmds[i][0], "export", 7) == 0)
 		export(shell, shell->cmds[0]);
 	if (ft_strncmp(shell->cmds[i][0], "exit", 5) == 0)

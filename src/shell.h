@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/06 16:48:29 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:23:40 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		unset(t_shell *shell, char *cmds);
 int 	count_nb_cmds(char ***cmds);
 void	heredoc(t_shell *shell, char *cmd);
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd);
-void	check_quotes(t_shell *shell, int i, int j);
+void	check_quotes(t_shell *shell);
 void	exit_built_in(t_shell *shell, char *exit_arg);
 void	close_fd(void);
 int		check_v(t_shell *shell, char *var);

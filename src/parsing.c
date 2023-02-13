@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/02/06 18:31:04 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/08 16:50:31 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	supress_operators(t_shell *shell, int i)
 
 	h = 0;
 	j = 0;
-	shell->cmds_exe = calloc(sizeof(char *), 100);
+	shell->cmds_exe = ft_calloc(sizeof(char *),
+			(count_nb_tokens(shell->cmds[i])) + 1);
 	while (shell->cmds[i][j])
 	{
 		if (shell->cmds[i][j][0] == '>' || shell->cmds[i][j][0] == '<')

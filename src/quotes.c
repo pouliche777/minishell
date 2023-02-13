@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:24:25 by slord             #+#    #+#             */
-/*   Updated: 2023/01/23 20:30:18 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:24:42 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	count_nb_quotes(char *str)
 	return (nb_quotes);
 }
 
-void	supress_quotes(t_shell *shell, char *temp, int i, int j)
+void	supress_quotes(t_shell *shell, char *temp, int i)
 {
 	int	h;
 	int	k;
@@ -54,7 +54,7 @@ void	supress_quotes(t_shell *shell, char *temp, int i, int j)
 			k++;
 			while (temp[k] != '\'')
 			{
-				shell->cmds[i][j][h] = temp[k];
+				shell->cmds_exe[i][h] = temp[k];
 				h++;
 				k++;
 			}		
@@ -64,37 +64,39 @@ void	supress_quotes(t_shell *shell, char *temp, int i, int j)
 			k++;
 			while (temp[k] != '\"')
 			{
-				shell->cmds[i][j][h] = temp[k];
+				shell->cmds_exe[i][h] = temp[k];
 				h++;
 				k++;
 			}	
 		}
 		else
 		{
-			shell->cmds[i][j][h] = temp[k];
+			shell->cmds_exe[i][h] = temp[k];
 			h++;
 		}
 		k++;
 	}
 }
 
-void	check_quotes(t_shell *shell, int i, int j)
+void	check_quotes(t_shell *shell)
 {
 	int		nb_quotes;
 	char	*temp;
+	int		i;
 
-	while (shell->cmds[i][j])
+	i = 0 ;
+	while (shell->cmds_exe[i])
 	{
-		nb_quotes = count_nb_quotes(shell->cmds[i][j]);
+		nb_quotes = count_nb_quotes(shell->cmds_exe[i]);
 		if (nb_quotes > 0)
 		{
-			temp = ft_strdup(shell->cmds[i][j]);
-			free (shell->cmds[i][j]);
-			shell->cmds[i][j] = NULL;
-			shell->cmds[i][j] = ft_calloc(1, ft_strlen(temp) - nb_quotes + 1);
-			supress_quotes(shell, temp, i, j);
+			temp = ft_strdup(shell->cmds_exe[i]);
+			free (shell->cmds_exe[i]);
+			shell->cmds_exe[i] = NULL;
+			shell->cmds_exe[i] = ft_calloc(1, ft_strlen(temp) - nb_quotes + 1);
+			supress_quotes(shell, temp, i);
 			free(temp);
 		}
-		j++;
+		i++;
 	}
 }
