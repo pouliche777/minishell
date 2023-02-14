@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/06 16:16:53 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/09 10:20:48 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,26 @@ void	execute(t_shell *shell)
 	i = -1;
 	while (shell->id[++i])
 		waitpid(shell->id[i], &shell->status, 0);
-	launch_terminal(shell);
+//	launch_terminal(shell);
 }
 
 void	launch_terminal(t_shell *shell)
 {
-	shell->buffer = readline("~");
-
-	if (ft_strlen(shell->buffer) == 0)
+	while (1)
 	{
-		free(shell->buffer);
-		launch_terminal(shell);
+		if (shell->buffer)
+		{
+			free(shell->buffer);
+			shell->buffer = NULL;
+		}
+		shell->buffer = readline("~");
+		if (shell->buffer == NULL)
+			exit(0);
+		add_history(shell->buffer);
+		lexer(shell->buffer, shell);
+		//set_pipes(shell);
+		//execute(shell);
 	}
-	lexer1(shell->buffer, shell);
-	add_history(shell->buffer);
-	set_pipes(shell);
-	execute(shell);
 }
 
 void	init_env(t_shell *shell, char **env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/06 16:31:16 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/13 11:35:16 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_shell
 	char			**path;
 	int				nb_cmds;
 	char			*buffer;
+	char			*hold;
 	char			**pre_command;
 	int				*fd;
 	int				*id;
@@ -43,10 +44,11 @@ typedef struct s_shell
 	char 			*variable;
 	char			*heredoc_input;
 	int				heredoc_fd[2];
+	int				last_var;
 }		t_shell;
 
 
-int	ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(char *s1, char *s2);
 void	get_path(t_shell *info);
 void	launch_terminal(t_shell *info);
 void	separate_input(t_shell *info);
@@ -54,7 +56,7 @@ void	separate_cmds(t_shell *info);
 int		modify_command(t_shell *info);
 void	execute(t_shell *info);
 void	count_cmds(t_shell *shell);
-char 	***lexer1(char *buffer, t_shell *shell);
+void 	lexer(char *buffer, t_shell *shell);
 void	free_cmds(t_shell *shell);
 int 	set_pipes(t_shell *shell);
 void	change_in_and_out(t_shell *shell, int i);
@@ -92,5 +94,30 @@ char	*get_pwd(char **env);
 void	add_env(t_shell *shell, char *var_line, int j);
 void	delete_env(t_shell *shell, char *var_name);
 void	free_env(t_shell *shell);
+
+//spaces.c
+char	*rm_spaces(char *cmd, int len, int singles, int doubles);
+int		quotes_error(int singles, int doubles);
+char	*space_quotes(char *cmd, int doubles, int singles, int i);
+char	*remove_spaces(char *cmd);
+void	trim(t_shell *shell, int row);
+
+//change_var.c
+void	loop_var(t_shell *shell, int i, int doubles, int singles);
+void	status(t_shell *shell, int i, int j, int k);
+void	find_var(t_shell *shell, int i);
+void	remove_var(t_shell *shell, int var_place, int size);
+void	change_var(t_shell *shell, int var_place, int env_place, int len);
+
+//change_var_utils.c
+int		redir_check(char *cmd, int i);
+int		end_while(t_shell *shell, int i, int j);
+int		find_var_len(t_shell *shell, int env_place);
+int		put_new_var(t_shell *shell, char *new, int var_place, int env_place);
+
+//redir.c
+int		count_redir(t_shell *shell, int singles, int doubles);
+int		find_size(t_shell *shell, int i, int doubles, int singles);
+void	check_redir(t_shell *shell, int row);
 
 #endif
