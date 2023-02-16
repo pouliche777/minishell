@@ -24,17 +24,18 @@ $(OBJS): $O%.o: $S%
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@make -C $(L) 
+	@make -sC $(L) 
 	@$(CC) $(CFLAGS) -lreadline $(LIB) $^ -o $@
 	@echo "\033[0;32m Compilation complétée"
 
 clean: 
-		@$(RM) $(OBJS)
-		@$(RM) $O
-		@echo "\033[0;31m Fichiers .o suprimmes"
+	@make -sC $(L) clean
+	@$(RM) $(OBJS)
+	@$(RM) $O
+	@echo "\033[0;31m Fichiers .o suprimmes"
 
 fclean:	clean
-
+	@make -sC $(L) fclean
 	@$(RM) $(NAME)
 	@echo "\033[0;31m executable suprime"
 

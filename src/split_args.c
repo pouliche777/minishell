@@ -6,11 +6,11 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:35:19 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/14 10:35:39 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 08:10:04 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"'
+#include "shell.h"
 
 int	count_args(char **cmd, int nb)
 {
@@ -82,9 +82,53 @@ void	split_args(t_shell *shell, int row, int i, int j)
 		while (size2-- > 0)
 			new[i][++k] = shell->cmds[row][0][j++];
 		j++;
-		printf("%s\n", new[i]);
 	}
-	new[i] = NULL;
 	free_pp((void *) shell->cmds[row]);
 	shell->cmds[row] = new;
+}
+
+int	cmd_lenght(char *cmd, int start)
+{
+	int	i;
+
+	i = start;
+	while(cmd[i] != '|' && cmd[i])
+	{
+		i++;
+		if (cmd[i] == '"')
+		{
+			i++;
+			while (cmd[i] != '"' && cmd[i])
+				i++;
+		}
+		if (cmd[i] == '\'')
+		{
+			i++;
+			while (cmd[i] != '\'' && cmd[i])
+				i++;
+		}
+	}
+	return (i - start);
+}
+
+char	**split_pipe(char *cmd, int nb)
+{
+	char	**split;
+	int		size;
+	int		i;
+	int		j;
+	int		k;
+
+	i = -1;
+	j = -1;
+	split = ft_calloc(nb, sizeof(char *));
+	while (cmd[++i])
+	{
+		k = -1;
+		size = cmd_lenght(cmd, i);
+		split[++j] = ft_calloc(sizeof(char), size + 1);
+		while (--size >= 0)
+			split[j][++k] = cmd[i++];
+	}
+	return (split);
 }

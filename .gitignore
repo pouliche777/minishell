@@ -1,6 +1,9 @@
 *.a
 *.o
+obj/*
 minishell
 old_minishell
 obj
 minishell*
+.DS_Store
+.vscode

@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/13 11:35:16 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 08:06:24 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,12 @@ int		put_new_var(t_shell *shell, char *new, int var_place, int env_place);
 int		count_redir(t_shell *shell, int singles, int doubles);
 int		find_size(t_shell *shell, int i, int doubles, int singles);
 void	check_redir(t_shell *shell, int row);
+
+//split_args.c
+int		count_args(char **cmd, int nb);
+int		find_arg_size(char *cmd, int start);
+void	split_args(t_shell *shell, int row, int i, int j);
+int		cmd_lenght(char *cmd, int start);
+char	**split_pipe(char *cmd, int nb);
 
 #endif
