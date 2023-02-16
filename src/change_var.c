@@ -6,11 +6,11 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 08:09:38 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/10 08:17:12 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 08:46:12 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 void	loop_var(t_shell *shell, int i, int doubles, int singles)
 {

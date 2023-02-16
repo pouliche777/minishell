@@ -6,11 +6,11 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 08:05:59 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 08:46:25 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 void	parsing(int row, t_shell *shell)
 {
@@ -23,8 +23,6 @@ void	parsing(int row, t_shell *shell)
 	trim(shell, row);
 	split_args(shell, row, -1, 0);
 }
-
-
 
 void	lexer(char *buffer, t_shell *shell)
 {

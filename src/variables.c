@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:17:48 by slord             #+#    #+#             */
-/*   Updated: 2023/01/30 17:36:15 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/16 08:48:32 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 void	ft_strcpy(char *dst, const char *src)
 {

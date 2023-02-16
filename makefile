@@ -10,6 +10,7 @@ LIB = libft/libft.a
 CC = gcc
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror -g 
+RL = -L./include/readline -lreadline
 
 NAME = minishell
 
@@ -25,7 +26,7 @@ $(OBJS): $O%.o: $S%
 
 $(NAME): $(OBJS)
 	@make -sC $(L) 
-	@$(CC) $(CFLAGS) -lreadline $(LIB) $^ -o $@
+	@$(CC) $(CFLAGS) $(RL) $(LIB) -lcurses $^ -o $@
 	@echo "\033[0;32m Compilation complétée"
 
 clean: 

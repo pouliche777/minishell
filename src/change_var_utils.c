@@ -6,11 +6,11 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 08:10:51 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/10 10:48:05 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 08:46:09 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 int	put_new_var(t_shell *shell, char *new, int var_place, int env_place)
 {

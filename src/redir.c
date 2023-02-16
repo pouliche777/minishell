@@ -6,11 +6,11 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:05:51 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/14 07:49:21 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 08:48:07 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 int	count_redir(t_shell *shell, int singles, int doubles)
 {

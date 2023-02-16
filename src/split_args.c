@@ -6,11 +6,11 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:35:19 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/16 08:10:04 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 08:48:25 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 int	count_args(char **cmd, int nb)
 {

@@ -6,11 +6,11 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:25:46 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/13 11:34:50 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 08:48:19 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 char	*rm_spaces(char *cmd, int len, int singles, int doubles)
 {
