@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:35:19 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/16 08:48:25 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 14:14:52 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,24 @@ void	split_args(t_shell *shell, int row, int i, int j)
 	int		size;
 	int		size2;
 	int		k;
+	int		m;
 	
 	size = count_args(shell->cmds[row], 1);
 	new = ft_calloc(size + 1, sizeof(char *));
+	m = 0;
 	while (size-- > 1)
 	{
 		k = -1;
-		size2 = find_arg_size(shell->cmds[row][0], j);
+		size2 = find_arg_size(shell->cmds[row][m], j);
 		new[++i] = ft_calloc(size2 + 1, sizeof(char));
 		while (size2-- > 0)
-			new[i][++k] = shell->cmds[row][0][j++];
+			new[i][++k] = shell->cmds[row][m][j++];
 		j++;
+		if (j >= (int) ft_strlen(shell->cmds[row][m]))
+		{
+			m++;
+			j = 0;
+		}
 	}
 	free_pp((void *) shell->cmds[row]);
 	shell->cmds[row] = new;
@@ -121,12 +128,12 @@ char	**split_pipe(char *cmd, int nb)
 
 	i = -1;
 	j = -1;
-	split = ft_calloc(nb, sizeof(char *));
+	split = ft_calloc(nb + 1, sizeof(char *));
 	while (cmd[++i])
 	{
 		k = -1;
 		size = cmd_lenght(cmd, i);
-		split[++j] = ft_calloc(sizeof(char), size + 1);
+		split[++j] = ft_calloc(sizeof(char), size);
 		while (--size >= 0)
 			split[j][++k] = cmd[i++];
 	}

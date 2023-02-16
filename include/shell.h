@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 08:58:47 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 10:54:34 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int		check_input(t_shell *shell, int i);
 void	duplicate_cmds(t_shell *shell);
 void	supress_operators(t_shell *shell, int i);
 int		echo(char **cmds);
-void	signals(int i);
 t_shell	*get_struc(void);
 void	check_vars(char *cmd, t_shell *shell);
 void	modify_env(t_shell *shell, char *str);
@@ -126,5 +125,12 @@ int		find_arg_size(char *cmd, int start);
 void	split_args(t_shell *shell, int row, int i, int j);
 int		cmd_lenght(char *cmd, int start);
 char	**split_pipe(char *cmd, int nb);
+
+//signals.c
+void	sighandlerc(int signum);
+void	sighush(int signum);
+void	sigheredoc(int signum);
+void	sigheredoc2(int signum);
+void	signal_handling(void);
 
 #endif

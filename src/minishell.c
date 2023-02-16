@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 09:08:36 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 13:46:18 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void children(t_shell *shell, int i)
 {
-	signals(2);
 	change_in_and_out(shell, i);
 	if (!check_output(shell, i))
 		return ;
@@ -24,9 +23,22 @@ void children(t_shell *shell, int i)
 	if (check_built_in(shell, i) == 0)
 	{
 		if (modify_command(shell) == 0)
+		{
 			printf("minishell: %s : command not found\n", shell->cmds[i][0]);
+			exit (127);
+		}
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		execve(shell->cmds_exe[0], shell->cmds_exe, shell->env);
 	}
+}
+
+void	get_return_value(t_shell *shell)
+{
+	if (WIFEXITED(shell->status))
+		shell->status = WEXITSTATUS(shell->status);
+	else if (WIFSIGNALED(shell->status))
+		shell->status = WTERMSIG(shell->status) + 128;
 }
 
 void	execute(t_shell *shell)
@@ -43,11 +55,9 @@ void	execute(t_shell *shell)
 		shell->id[i] = fork();
 		if (shell->id[i] == 0)
 		{
-			signals(2);
 			children(shell, i);
-			return ;
+			exit(1) ;
 		}
-		signals(0);
 		close(shell->fd[(i * 2) + 1]);
 		if (i > 0)
 			close(shell->fd[i * 2 - 2]);
@@ -56,26 +66,7 @@ void	execute(t_shell *shell)
 	i = -1;
 	while (shell->id[++i])
 		waitpid(shell->id[i], &shell->status, 0);
-//	launch_terminal(shell);
-}
-
-void	sighandlerc(int signum)
-{
-	int	pid;
-
-	pid = getpid();
-	if (pid == 0)
-		exit (0);
-	else
-	{
-		if (signum == SIGINT)
-		{
-			write(1, "\n", 1);
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
-	}
+	get_return_value(shell);
 }
 
 void	launch_terminal(t_shell *shell)
@@ -87,15 +78,21 @@ void	launch_terminal(t_shell *shell)
 			free(shell->buffer);
 			shell->buffer = NULL;
 		}
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, sighandlerc);
+		signal_handling();
 		shell->buffer = readline("MiniHell > ");
 		if (shell->buffer == NULL)
 			exit(0);
-		add_history(shell->buffer);
-		lexer(shell->buffer, shell);
-		//set_pipes(shell);
-		//execute(shell);
+		if (ft_strlen(shell->buffer) > 0)
+		{
+			add_history(shell->buffer);
+			signal(SIGQUIT, sighush);
+			signal(SIGINT, sighush);
+			lexer(shell->buffer, shell);
+			set_pipes(shell);
+			execute(shell);
+		}
+		free(shell->buffer);
+		shell->buffer = NULL;
 	}
 }
 
