@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 13:46:28 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 14:22:07 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ void	parsing(int row, t_shell *shell)
 	check_redir(shell, row);
 	trim(shell, row);
 	split_args(shell, row, -1, 0);
-	for (int i = 0; shell->cmds[i]; i++)
-		for (int j = 0; shell->cmds[i][j]; j++)
-			printf("%s\n", shell->cmds[i][j]);
 }
 
 void	lexer(char *buffer, t_shell *shell)
@@ -48,7 +45,6 @@ void	lexer(char *buffer, t_shell *shell)
 		shell->hold = NULL;
 		i++;
 	}
-	
 	free(pre_c);
 }
 

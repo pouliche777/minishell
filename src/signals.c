@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 09:39:46 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 14:28:58 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,15 @@ void	sighush(int signum)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	return ;
+}
+
+void	sigheredoc(int signum)
+{
+	(void) signum;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	launch_terminal(get_struc());
 }
 
 /* void	sigheredoc(int signum)

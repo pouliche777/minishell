@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 13:46:13 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/16 14:27:40 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void write_heredoc(char *input, int *file)
 
 void	heredoc(t_shell *shell, char *cmd)
 {
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sigheredoc);
 	shell->heredoc_input = readline(">");
 	if (pipe(shell->heredoc_fd) < 0)
 		return ;
