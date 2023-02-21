@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:11:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 08:46:21 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/21 11:05:55 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_if_var_exist(t_shell *shell)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;

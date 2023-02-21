@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 14:28:58 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/21 11:03:56 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	sig_handler(int sig)
 		printf("\n");
 		launch_terminal(shell);
 	}
-	
 }
 
 void	signals(int i)

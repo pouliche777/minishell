@@ -2,7 +2,7 @@ S = src/
 O = obj/
 L = libft/
 
-SOURCES = $Sutils2.c $Secho.c $Ssplit_args.c $Sredir.c $Sspaces.c $Schange_var.c $Schange_var_utils.c $Sminishell.c $Sutils.c $Sparsing.c $Slexer.c $Spipes.c $Sbuilt_in_utils.c $Sbuilt_in.c $Sredirection.c $Ssignals.c $Svariables.c $Squotes.c $Senv.c $Senv_1.c 
+SOURCES = $Sheredoc.c $Sutils2.c $Secho.c $Ssplit_args.c $Sredir.c $Sspaces.c $Schange_var.c $Schange_var_utils.c $Sminishell.c $Sutils.c $Sparsing.c $Slexer.c $Spipes.c $Sbuilt_in_utils.c $Sbuilt_in.c $Sredirection.c $Ssignals.c $Svariables.c $Squotes.c $Senv.c $Senv_1.c 
 
 OBJS = $(SOURCES:$S%=$O%.o)
 

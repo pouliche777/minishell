@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 10:22:24 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/21 11:02:43 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	launch_terminal(t_shell *info);
 void	separate_input(t_shell *info);
 void	separate_cmds(t_shell *info);
 int		modify_command(t_shell *info);
+void	init_env(t_shell *shell, char **env);
 void	execute(t_shell *info);
 void	count_cmds(t_shell *shell);
 void 	lexer(char *buffer, t_shell *shell);
@@ -73,13 +74,11 @@ void	check_vars(char *cmd, t_shell *shell);
 void	modify_env(t_shell *shell, char *str);
 int		export(t_shell *shell, char **cmds);
 void	check_built_in_parent(t_shell *shell, int i);
-int 	check_var(t_shell *shell, char *var);
-void	modify_env_1(t_shell *shell, int i);
 int		unset(t_shell *shell, char *cmds);
 int 	count_nb_cmds(char ***cmds);
 void	heredoc(t_shell *shell, char *cmd);
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd);
-void	check_quotes(t_shell *shell, int i, int j);
+void	check_quotes(t_shell *shell);
 void	exit_built_in(t_shell *shell, char *exit_arg);
 void	close_fd(void);
 int		check_v(t_shell *shell, char *var);

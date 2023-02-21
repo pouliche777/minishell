@@ -6,22 +6,23 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 10:58:43 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/21 11:05:46 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
 
-void children(t_shell *shell, int i)
+void	children(t_shell *shell, int i)
 {
 	change_in_and_out(shell, i);
 	if (!check_output(shell, i))
 		return ;
 	if (!check_input(shell, i))
-		return ;
-	supress_operators(shell, i);
+		return ;	
 	if (check_built_in(shell, i) == 0)
 	{
+		supress_operators(shell, i);
+		check_quotes(shell);
 		if (modify_command(shell) == 0)
 		{
 			printf("minishell: %s : command not found\n", shell->cmds[i][0]);
@@ -48,7 +49,6 @@ void	execute(t_shell *shell)
 	i = 0;
 	while (i < shell->nb_cmds)
 	{
-		//check_quotes(shell, i, 0);
 		//check_dollar_in_command(shell, i, shell->cmds[i]);
 		check_built_in_parent(shell, i);
 		check_heredoc_parent(shell, i);
@@ -93,22 +93,6 @@ void	launch_terminal(t_shell *shell)
 		}
 		free(shell->buffer);
 		shell->buffer = NULL;
-	}
-}
-
-void	init_env(t_shell *shell, char **env)
-{
-	int		j;
-
-	j = 0;
-	while (env[j])
-		j++;
-	j--;
-	shell->env = ft_calloc((j + 2), sizeof(char *));
-	while (j >= 0)
-	{
-		shell->env[j] = ft_strdup(env[j]);
-		j--;
 	}
 }
 

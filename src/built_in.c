@@ -6,59 +6,11 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 10:18:12 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/21 11:13:00 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
-
-int	pwd(t_shell *shell, int i)
-{
-	char	*pwd;
-	int		j;
-
-	j = 0;
-	while (ft_strncmp(shell->env[j], "PWD=", 4))
-		j++;
-	pwd = shell->env[j] + 4;
-	printf("%s\n", pwd);
-	change_in_and_out(shell, i);
-	return (1);
-}
-
-int	env(t_shell *shell)
-{
-	int		j;
-
-	j = 0;
-	while (shell->env[j])
-	{
-		printf("%s\n", shell->env[j]);
-		j++;
-	}
-	return (1);
-}
-
-/* int	echo(char **cmds)
-{
-	int		j;
-
-	j = 1;
-	if (!cmds[1])
-		printf("\n");
-	if (!ft_strncmp(cmds[1], "-n", 3))
-		j++;
-	while (cmds[j])
-	{
-		printf("%s", cmds[j]);
-		if (cmds[j + 1])
-			printf(" ");
-		j++;
-	}
-	if (ft_strncmp(cmds[1], "-n", 3))
-		printf("\n");
-	return (0);
-} */
 
 int	export(t_shell *shell, char **cmds)
 {
