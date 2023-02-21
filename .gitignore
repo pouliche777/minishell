@@ -7,3 +7,4 @@ obj
 minishell*
 .DS_Store
 .vscode
+*.DS_Store
