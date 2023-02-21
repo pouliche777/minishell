@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:17:48 by slord             #+#    #+#             */
-/*   Updated: 2023/01/30 17:36:15 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/21 11:03:48 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 void	ft_strcpy(char *dst, const char *src)
 {
@@ -24,6 +24,7 @@ void	ft_strcpy(char *dst, const char *src)
 	}
 	dst[i] = '\0';
 }
+
 void	replace_var(t_shell *shell, char *var)
 {
 	int	i;
@@ -42,6 +43,8 @@ int	check_v(t_shell *shell, char *var)
 
 	i = 0;
 	j = 0;
+	free(shell->variable);
+	shell->variable = NULL;
 	while (shell->env[i])
 	{
 		if (!(ft_strncmp(var, shell->env[i], ft_strlen(var)))
@@ -62,12 +65,15 @@ void	replace_variable(t_shell *shell, int i, int j)
 
 	h = 0;
 	temp = ft_strdup(shell->cmds[i][j]);
-	free(shell->cmds[i][j]);
-	shell->cmds[i][j] = NULL;
 	while (temp[h] != '$')
 		h++;
 	check_v(shell, &temp[h + 1]);
-	shell->cmds[i][j] = calloc(1, 1000 + h + 1);
+	if (shell->variable)
+	{
+		free(shell->cmds[i][j]);
+		shell->cmds[i][j] = NULL;
+		shell->cmds[i][j] = calloc(1, ft_strlen(shell->variable) + ft_strlen(temp) + 1);
+	}
 	h = 0;
 	while (temp[h] != '$' && temp[h])
 	{
@@ -75,10 +81,7 @@ void	replace_variable(t_shell *shell, int i, int j)
 		h++;
 	}
 	if (shell->variable)
-	{
 		ft_strcpy(&shell->cmds[i][j][h], shell->variable);
-		free (shell->variable);
-	}
 	else
 		shell->cmds[i][j][h] = '\0';
 	free(temp);
@@ -106,6 +109,20 @@ void	replace_variable_questionmark(t_shell *shell, int i, int j)
 	free(temp);
 }
 
+int	skip_single_quote(char *str, int i)
+{
+	int	h;
+
+	h = i;
+	while (str[i])
+	{
+		if (str[i] == '\'')
+			return (i);
+		i++;
+	}
+	return (h);
+}
+
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd)
 {
 	int	j;
@@ -117,6 +134,8 @@ void	check_dollar_in_command(t_shell *shell, int i, char **cmd)
 	{
 		while (cmd[j][h])
 		{
+			if (cmd[j][h] == '\'')
+				h = skip_single_quote(cmd[j], h + 1);
 			if (cmd[j][h] == '$' && cmd[j][h + 1])
 			{
 				if (cmd[j][h + 1] == '?' && cmd[j][h + 2] == '\0')

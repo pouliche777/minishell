@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:29:58 by slord             #+#    #+#             */
-/*   Updated: 2023/02/02 17:43:07 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/21 11:07:16 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 void	delete_env(t_shell *shell, char *var_name)
 {
@@ -38,4 +38,20 @@ void	delete_env(t_shell *shell, char *var_name)
 		j++;
 	}
 	free(temp);
+}
+
+void	init_env(t_shell *shell, char **env)
+{
+	int		j;
+
+	j = 0;
+	while (env[j])
+		j++;
+	j--;
+	shell->env = ft_calloc((j + 2), sizeof(char *));
+	while (j >= 0)
+	{
+		shell->env[j] = ft_strdup(env[j]);
+		j--;
+	}
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/02/02 20:34:52 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/21 11:03:56 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
-void	handler_sigusr(int signalnb)
+/* void	handler_sigusr(int signalnb)
 {
 	if (signalnb == SIGQUIT)
 		(void) SIGQUIT;
@@ -41,7 +41,6 @@ void	sig_handler(int sig)
 		printf("\n");
 		launch_terminal(shell);
 	}
-	
 }
 
 void	signals(int i)
@@ -59,4 +58,62 @@ void	signals(int i)
 	sigaction(SIGINT, &sa_signal, NULL);
 	sigaction(SIGTERM, &sa_signal, NULL);
 	sa_signal.sa_flags = SA_RESTART;
+} */
+
+void	sighandlerc(int signum)
+{
+	int	pid;
+
+	pid = getpid();
+	if (pid == 0)
+		exit (0);
+	else
+	{
+		if (signum == SIGINT)
+		{
+			write(1, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+	}
+}
+
+void	sighush(int signum)
+{
+	(void) signum;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	return ;
+}
+
+void	sigheredoc(int signum)
+{
+	(void) signum;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	launch_terminal(get_struc());
+}
+
+/* void	sigheredoc(int signum)
+{
+	(void) signum;
+	free_heredoc2(&g_vars);
+	exit(130);
+} */
+
+/* void	sigheredoc2(int signum)
+{
+	(void) signum;
+	g_vars.exit = 1;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+} */
+
+void	signal_handling(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sighandlerc);
 }

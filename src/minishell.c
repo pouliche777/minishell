@@ -3,30 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/06 16:16:53 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/21 11:05:46 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
-void children(t_shell *shell, int i)
+void	children(t_shell *shell, int i)
 {
-	signals(2);
 	change_in_and_out(shell, i);
 	if (!check_output(shell, i))
 		return ;
 	if (!check_input(shell, i))
-		return ;
-	supress_operators(shell, i);
+		return ;	
 	if (check_built_in(shell, i) == 0)
 	{
+		supress_operators(shell, i);
+		check_quotes(shell);
 		if (modify_command(shell) == 0)
+		{
 			printf("minishell: %s : command not found\n", shell->cmds[i][0]);
+			exit (127);
+		}
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		execve(shell->cmds_exe[0], shell->cmds_exe, shell->env);
 	}
+}
+
+void	get_return_value(t_shell *shell)
+{
+	if (WIFEXITED(shell->status))
+		shell->status = WEXITSTATUS(shell->status);
+	else if (WIFSIGNALED(shell->status))
+		shell->status = WTERMSIG(shell->status) + 128;
 }
 
 void	execute(t_shell *shell)
@@ -36,18 +49,15 @@ void	execute(t_shell *shell)
 	i = 0;
 	while (i < shell->nb_cmds)
 	{
-		check_quotes(shell, i, 0);
-		check_dollar_in_command(shell, i, shell->cmds[i]);
+		//check_dollar_in_command(shell, i, shell->cmds[i]);
 		check_built_in_parent(shell, i);
 		check_heredoc_parent(shell, i);
 		shell->id[i] = fork();
 		if (shell->id[i] == 0)
 		{
-			signals(2);
 			children(shell, i);
-			return ;
+			exit(1);
 		}
-		signals(0);
 		close(shell->fd[(i * 2) + 1]);
 		if (i > 0)
 			close(shell->fd[i * 2 - 2]);
@@ -56,37 +66,33 @@ void	execute(t_shell *shell)
 	i = -1;
 	while (shell->id[++i])
 		waitpid(shell->id[i], &shell->status, 0);
-	launch_terminal(shell);
+	get_return_value(shell);
 }
 
 void	launch_terminal(t_shell *shell)
 {
-	shell->buffer = readline("~");
-
-	if (ft_strlen(shell->buffer) == 0)
+	while (1)
 	{
+		if (shell->buffer)
+		{
+			free(shell->buffer);
+			shell->buffer = NULL;
+		}
+		signal_handling();
+		shell->buffer = readline("MiniHell > ");
+		if (shell->buffer == NULL)
+			exit(0);
+		if (ft_strlen(shell->buffer) > 0)
+		{
+			add_history(shell->buffer);
+			signal(SIGQUIT, sighush);
+			signal(SIGINT, sighush);
+			lexer(shell->buffer, shell);
+			set_pipes(shell);
+			execute(shell);
+		}
 		free(shell->buffer);
-		launch_terminal(shell);
-	}
-	lexer1(shell->buffer, shell);
-	add_history(shell->buffer);
-	set_pipes(shell);
-	execute(shell);
-}
-
-void	init_env(t_shell *shell, char **env)
-{
-	int		j;
-
-	j = 0;
-	while (env[j])
-		j++;
-	j--;
-	shell->env = ft_calloc((j + 2), sizeof(char *));
-	while (j >= 0)
-	{
-		shell->env[j] = ft_strdup(env[j]);
-		j--;
+		shell->buffer = NULL;
 	}
 }
 

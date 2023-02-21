@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 15:11:04 by slord             #+#    #+#             */
-/*   Updated: 2023/02/10 08:19:05 by bperron          ###   ########.fr       */
+/*   Created: 2023/02/21 10:19:29 by bperron           #+#    #+#             */
+/*   Updated: 2023/02/21 10:20:45 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/shell.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+int arr_size(char **arr)
 {
-	size_t	i;
-	size_t	j;
+	int i;
 
 	i = 0;
-	if (!needle[i])
-		return ((char *) haystack);
-	while (haystack[i] && len > i)
-	{
-		j = 0;
-		while ((i + j) < len && needle[j] == haystack[i + j])
-		{
-			++j;
-			if (needle[j] == '\0')
-				return ((char *) &haystack[i]);
-		}
-		++i;
-	}
-	return (0);
+	while (arr[i])
+		i++;
+	return (i);
 }

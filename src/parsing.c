@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/02/06 16:15:39 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/21 11:05:10 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../include/shell.h"
 
 void	separate_input(t_shell *info)
 {
@@ -52,7 +52,6 @@ int	count_nb_tokens(char **cmd)
 	return (i);
 }
 
-
 int	modify_command(t_shell *info)
 {
 	int		j;
@@ -60,6 +59,7 @@ int	modify_command(t_shell *info)
 	char	*ptr;
 
 	j = 0;
+	get_path(info);
 	ptr = ft_strjoin("/", info->cmds_exe[0]);
 	while (info->path[j])
 	{
@@ -67,7 +67,8 @@ int	modify_command(t_shell *info)
 		if (access(str, F_OK) == 0)
 		{
 			info->cmds_exe[0] = NULL;
-			info->cmds_exe[0] = realloc(info->cmds_exe[0],  ft_strlen(str));
+			free(info->cmds_exe[0]);
+			info->cmds_exe[0] = ft_calloc(1, ft_strlen(str));
 			ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
 			free(str);
 			return (1);
@@ -75,6 +76,7 @@ int	modify_command(t_shell *info)
 		free(str);
 		j++;
 	}
+	free (info->path);
 	return (0);
 }
 
@@ -85,7 +87,8 @@ void	supress_operators(t_shell *shell, int i)
 
 	h = 0;
 	j = 0;
-	shell->cmds_exe = calloc(sizeof(char *), 100);
+	shell->cmds_exe = ft_calloc(sizeof(char *),
+			(count_nb_tokens(shell->cmds[i])) + 1);
 	while (shell->cmds[i][j])
 	{
 		if (shell->cmds[i][j][0] == '>' || shell->cmds[i][j][0] == '<')
@@ -110,8 +113,7 @@ int	skip_quote(char *buffer, char c, t_shell *info)
 			return (i);
 		i++;
 	}
-	printf("Invalid command\n");
-	//reset_terminal(info);
+	printf("MiniHell: parse error near '\\%c'\n", c);
 	launch_terminal(info);
 	return (0);
 }
