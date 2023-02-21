@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 11:38:24 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/21 10:18:12 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	env(t_shell *shell)
 	return (1);
 }
 
-int	echo(char **cmds)
+/* int	echo(char **cmds)
 {
 	int		j;
 
@@ -58,7 +58,7 @@ int	echo(char **cmds)
 	if (ft_strncmp(cmds[1], "-n", 3))
 		printf("\n");
 	return (0);
-}
+} */
 
 int	export(t_shell *shell, char **cmds)
 {

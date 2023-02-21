@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 08:45:50 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/21 10:34:54 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,22 @@ int	check_built_in(t_shell *shell, int i)
 	if (ft_strncmp(shell->cmds[i][0], "cd", 3) == 0)
 		return (1);
 	if (ft_strncmp(shell->cmds_exe[0], "pwd", 4) == 0)
-		return (pwd(shell, i));
+	{
+		pwd(shell, i);
+		return (1);
+	}
 	if (ft_strncmp(shell->cmds_exe[0], "echo", 5) == 0)
-		return (echo(shell->cmds_exe));
+	{
+		echo(shell->cmds_exe);
+		return (1);
+	}
 	if (ft_strncmp(shell->cmds[i][0], "export", 7) == 0)
 		return (1);
 	if (ft_strncmp(shell->cmds_exe[0], "env", 4) == 0)
-		return (env(shell));
+	{
+		env(shell);
+		return (1);
+	}
 	if (ft_strncmp(shell->cmds[i][0], "unset", 6) == 0)
 		return (1);
 	return (0);

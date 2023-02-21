@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 13:46:18 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/21 10:58:43 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ void	execute(t_shell *shell)
 	i = 0;
 	while (i < shell->nb_cmds)
 	{
-		check_quotes(shell, i, 0);
-		check_dollar_in_command(shell, i, shell->cmds[i]);
+		//check_quotes(shell, i, 0);
+		//check_dollar_in_command(shell, i, shell->cmds[i]);
 		check_built_in_parent(shell, i);
 		check_heredoc_parent(shell, i);
 		shell->id[i] = fork();
 		if (shell->id[i] == 0)
 		{
 			children(shell, i);
-			exit(1) ;
+			exit(1);
 		}
 		close(shell->fd[(i * 2) + 1]);
 		if (i > 0)

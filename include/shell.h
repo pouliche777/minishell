@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/16 10:54:34 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/21 10:22:24 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,8 @@ void	sighush(int signum);
 void	sigheredoc(int signum);
 void	sigheredoc2(int signum);
 void	signal_handling(void);
+
+//utils2.c
+int		arr_size(char **arr);
 
 #endif
