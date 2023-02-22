@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 11:05:46 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/22 13:07:49 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	execute(t_shell *shell)
 	i = 0;
 	while (i < shell->nb_cmds)
 	{
-		//check_dollar_in_command(shell, i, shell->cmds[i]);
 		check_built_in_parent(shell, i);
 		check_heredoc_parent(shell, i);
 		shell->id[i] = fork();
@@ -64,8 +63,9 @@ void	execute(t_shell *shell)
 		i++;
 	}
 	i = -1;
-	while (shell->id[++i])
-		waitpid(shell->id[i], &shell->status, 0);
+	if (shell->id)
+		while (shell->id[++i])
+			waitpid(shell->id[i], &shell->status, 0);
 	get_return_value(shell);
 }
 
@@ -74,10 +74,8 @@ void	launch_terminal(t_shell *shell)
 	while (1)
 	{
 		if (shell->buffer)
-		{
 			free(shell->buffer);
-			shell->buffer = NULL;
-		}
+		shell->buffer = NULL;
 		signal_handling();
 		shell->buffer = readline("MiniHell > ");
 		if (shell->buffer == NULL)
@@ -90,9 +88,9 @@ void	launch_terminal(t_shell *shell)
 			lexer(shell->buffer, shell);
 			set_pipes(shell);
 			execute(shell);
+			free_arrarrarr(shell->cmds);
+			shell->cmds = NULL;
 		}
-		free(shell->buffer);
-		shell->buffer = NULL;
 	}
 }
 
@@ -114,6 +112,6 @@ t_shell	*get_struc(void)
 	static t_shell	*shell = NULL;
 
 	if (shell == NULL)
-		shell = malloc(sizeof(t_shell));
+		shell = ft_calloc(sizeof(t_shell), 1);
 	return (shell);
 }

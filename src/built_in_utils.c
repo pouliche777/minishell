@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 11:10:09 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/22 13:18:04 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,13 @@ int	check_built_in(t_shell *shell, int i)
 	if (ft_strncmp(shell->cmds[i][0], "cd", 3) == 0)
 		return (1);
 	if (ft_strncmp(shell->cmds_exe[0], "pwd", 4) == 0)
-	{
 		pwd(shell, i);
-		return (1);
-	}
 	if (ft_strncmp(shell->cmds_exe[0], "echo", 5) == 0)
-	{
 		echo(shell->cmds_exe);
-		return (1);
-	}
 	if (ft_strncmp(shell->cmds[i][0], "export", 7) == 0)
 		return (1);
 	if (ft_strncmp(shell->cmds_exe[0], "env", 4) == 0)
-	{
 		env(shell);
-		return (1);
-	}
 	if (ft_strncmp(shell->cmds[i][0], "unset", 6) == 0)
 		return (1);
 	return (0);
@@ -71,11 +62,10 @@ int	check_built_in(t_shell *shell, int i)
 
 void	check_built_in_parent(t_shell *shell, int i)
 {
-	//enveler les quotes
 	if (ft_strncmp(shell->cmds[i][0], "export", 7) == 0)
 		export(shell, shell->cmds[0]);
 	if (ft_strncmp(shell->cmds[i][0], "exit", 5) == 0)
-		exit_built_in(shell, shell->cmds[0][1]);
+		exit_built_in(shell, shell->cmds[0]);
 	if (ft_strncmp(shell->cmds[i][0], "unset", 6) == 0)
 		unset(shell, shell->cmds[i][1]);
 	if (ft_strncmp(shell->cmds[i][0], "cd", 2) == 0)

@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:35:19 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/21 10:58:38 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/22 11:02:36 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,16 +126,17 @@ char	**split_pipe(char *cmd, int nb)
 	int		j;
 	int		k;
 
-	i = -1;
+	i = 0;
 	j = -1;
 	split = ft_calloc(nb + 1, sizeof(char *));
-	while (cmd[++i])
+	while (i < (int) ft_strlen(cmd))
 	{
 		k = -1;
 		size = cmd_lenght(cmd, i);
-		split[++j] = ft_calloc(sizeof(char), size);
+		split[++j] = ft_calloc(sizeof(char), size + 1);
 		while (--size >= 0)
 			split[j][++k] = cmd[i++];
+		i++;
 	}
 	return (split);
 }
