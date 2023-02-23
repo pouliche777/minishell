@@ -6,35 +6,25 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 11:04:55 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:42:03 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while ((s1[i] && s2[i]) && (s1[i] == s2[i]))
-		i++;
-	return (s1[i] - s2[i]);
-}
 
 void	redirect_output(char *cmd)
 {
 	int	file[2];
 	int	i;
 
-	if (cmd[0] == '\'' || cmd[0]  == '\"')
+	if (cmd[0] == '\'' || cmd[0] == '\"')
 		cmd++;
 	i = 0;
 	while (cmd[i])
 	{
 		if (cmd[i + 1] == '\0')
 		{
-			if (cmd[i] == '\'' || cmd[i]  == '\"')
+			if (cmd[i] == '\'' || cmd[i] == '\"')
 				cmd[i] = '\0';
 		}
 		i++;
@@ -51,14 +41,14 @@ void	redirect_output_1(char *cmd)
 	int	file[2];
 	int	i;
 
-	if (cmd[0] == '\'' || cmd[0]  == '\"')
+	if (cmd[0] == '\'' || cmd[0] == '\"')
 		cmd++;
 	i = 0;
 	while (cmd[i])
 	{
 		if (cmd[i + 1] == '\0')
 		{
-			if (cmd[i] == '\'' || cmd[i]  == '\"')
+			if (cmd[i] == '\'' || cmd[i] == '\"')
 				cmd[i] = '\0';
 		}
 		i++;
@@ -75,14 +65,14 @@ void	redirect_input(char *cmd)
 	int	file[2];
 	int	i;
 
-	if (cmd[0] == '\'' || cmd[0]  == '\"')
+	if (cmd[0] == '\'' || cmd[0] == '\"')
 		cmd++;
 	i = 0;
 	while (cmd[i])
 	{
 		if (cmd[i + 1] == '\0')
 		{
-			if (cmd[i] == '\'' || cmd[i]  == '\"')
+			if (cmd[i] == '\'' || cmd[i] == '\"')
 				cmd[i] = '\0';
 		}
 		i++;

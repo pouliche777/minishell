@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:11:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 11:05:55 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:14:56 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_if_var_exist(t_shell *shell)
 	j = 0;
 	while (shell->env[i])
 	{
-		if (ft_strncmp(shell->var_name, shell->env[i], 
+		if (ft_strncmp(shell->var_name, shell->env[i],
 				ft_strlen(shell->var_name)) == 0)
 			return (1);
 		i++;

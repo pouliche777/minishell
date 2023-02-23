@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:37:24 by slord             #+#    #+#             */
-/*   Updated: 2023/02/14 10:34:09 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:42:31 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line(int fd);
 
 void	free_pp(void **pp);
+
+int		ft_strcmp(char *s1, char *s2);
 
 #endif

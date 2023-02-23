@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/22 13:19:13 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:43:58 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,14 @@ typedef struct s_shell
 	int				last_var;
 }		t_shell;
 
-
-int		ft_strcmp(char *s1, char *s2);
 void	get_path(t_shell *info);
 void	launch_terminal(t_shell *info);
 void	separate_input(t_shell *info);
 void	separate_cmds(t_shell *info);
-int		modify_command(t_shell *info);
 void	init_env(t_shell *shell, char **env);
 void	execute(t_shell *info);
 void	count_cmds(t_shell *shell);
 void 	lexer(char *buffer, t_shell *shell);
-void	free_cmds(t_shell *shell);
 int 	set_pipes(t_shell *shell);
 void	change_in_and_out(t_shell *shell, int i);
 int		check_built_in(t_shell *shell, int i);
@@ -67,7 +63,6 @@ int		env(t_shell *shell);
 int		check_output(t_shell *shell, int i);
 int		check_input(t_shell *shell, int i);
 void	duplicate_cmds(t_shell *shell);
-void	supress_operators(t_shell *shell, int i);
 void	echo(char **cmds);
 t_shell	*get_struc(void);
 void	check_vars(char *cmd, t_shell *shell);
@@ -136,5 +131,9 @@ void	signal_handling(void);
 int		arr_size(char **arr);
 void	free_arrarrarr(char ***arr);
 void	free_garbage(t_shell *shell, unsigned char status);
+
+//execute_utils.c
+int		modify_command(t_shell *info, int i, char *str, char *ptr);
+void	supress_operators(t_shell *shell, int i);
 
 #endif

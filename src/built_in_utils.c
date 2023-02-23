@@ -6,13 +6,13 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 07:24:49 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:13:12 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
 
-int cmp(char *cmd, char *ref, int nb)
+int	cmp(char *cmd, char *ref, int nb)
 {
 	int		i;
 	char	*hold;
@@ -24,7 +24,6 @@ int cmp(char *cmd, char *ref, int nb)
 	i = ft_strncmp(hold, ref, nb);
 	free(hold);
 	return (i);
-	
 }
 
 int	pwd(t_shell *shell, int i)

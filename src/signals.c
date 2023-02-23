@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/02/22 11:24:31 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:21:30 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	sighush(int signum)
 
 void	sigheredoc(int signum)
 {
-	t_shell *shell;
+	t_shell	*shell;
 
 	(void) signum;
 	shell = get_struc();

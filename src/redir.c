@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:05:51 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/16 13:45:42 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:20:19 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	count_redir(t_shell *shell, int singles, int doubles)
 			doubles++;
 		else if (shell->hold[i] == '\'' && doubles % 2 == 0)
 			singles++;
-		if ((shell->hold[i] == '>' || shell->hold[i] == '<') && singles % 2 == 0 && doubles % 2 == 0)
+		if ((shell->hold[i] == '>' || shell->hold[i] == '<')
+			&& singles % 2 == 0 && doubles % 2 == 0)
 		{
 			while (shell->hold[i] == '>' || shell->hold[i] == '<')
 				i++;
@@ -46,7 +47,8 @@ int	find_size(t_shell *shell, int i, int doubles, int singles)
 	size = 0;
 	if ((shell->hold[i] == '>' || shell->hold[i] == '<'))
 	{
-		while ((shell->hold[i] == '>' || shell->hold[i] == '<') && shell->hold[i++])
+		while ((shell->hold[i] == '>' || shell->hold[i] == '<')
+			&& shell->hold[i++])
 			size++;
 	}
 	else
@@ -69,11 +71,11 @@ int	find_size(t_shell *shell, int i, int doubles, int singles)
 
 void	check_redir(t_shell *shell, int row)
 {
- 	int		nb;
-	int		size;
- 	int		i;
-	int		j;
-	int		k;
+	int	nb;
+	int	size;
+	int	i;
+	int	j;
+	int	k;
 
 	nb = count_redir(shell, 0, 0);
 	i = -1;

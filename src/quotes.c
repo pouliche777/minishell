@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:24:25 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 11:05:02 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 14:01:20 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	count_nb_quotes(char *str)
 	return (nb_quotes);
 }
 
-void	supress_quotes(t_shell *shell, char *temp, int i)
+void	suppress_quotes(t_shell *shell, char *temp, int i)
 {
 	int	h;
 	int	k;
@@ -53,27 +53,16 @@ void	supress_quotes(t_shell *shell, char *temp, int i)
 		{
 			k++;
 			while (temp[k] != '\'')
-			{
-				shell->cmds_exe[i][h] = temp[k];
-				h++;
-				k++;
-			}		
+				shell->cmds_exe[i][h++] = temp[k++];
 		}
 		else if (temp[k] == '\"')
 		{
 			k++;
 			while (temp[k] != '\"')
-			{
-				shell->cmds_exe[i][h] = temp[k];
-				h++;
-				k++;
-			}	
+				shell->cmds_exe[i][h++] = temp[k++];
 		}
 		else
-		{
-			shell->cmds_exe[i][h] = temp[k];
-			h++;
-		}
+			shell->cmds_exe[i][h++] = temp[k];
 		k++;
 	}
 }
@@ -94,7 +83,7 @@ void	check_quotes(t_shell *shell)
 			free (shell->cmds_exe[i]);
 			shell->cmds_exe[i] = NULL;
 			shell->cmds_exe[i] = ft_calloc(1, ft_strlen(temp) - nb_quotes + 1);
-			supress_quotes(shell, temp, i);
+			suppress_quotes(shell, temp, i);
 			free(temp);
 		}
 		i++;

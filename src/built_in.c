@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/22 12:50:38 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:13:35 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	export(t_shell *shell, char **cmds)
 	int		i;
 
 	i = 0;
-	if (cmds[1]== NULL)
+	if (cmds[1] == NULL)
 	{
 		env(shell);
 		return (1);
@@ -72,7 +72,7 @@ int	cd_built_in(t_shell *shell, char *path)
 	old_path = ft_strjoin("OLDPWD=", old_path);
 	current_path = getcwd(buff, 1024);
 	current_path = ft_strjoin("PWD=", current_path);
-	if (path[0]== '.')
+	if (path[0] == '.')
 		add_env(shell, current_path, 0);
 	else
 		add_env(shell, current_path, 0);

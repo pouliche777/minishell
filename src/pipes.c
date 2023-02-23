@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:51:42 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 10:47:55 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:18:36 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	set_pipes(t_shell *shell)
 				close(shell->fd[i * 2 + 1]);
 				i--;
 			}
-		return (1);
+			return (1);
 		}
 		i++;
 	}

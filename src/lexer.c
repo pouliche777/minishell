@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/02/22 13:16:20 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:15:57 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parsing(int row, t_shell *shell)
 
 void	is_space(char *cmd)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (cmd[++i])
@@ -44,7 +44,7 @@ void	lexer(char *buffer, t_shell *shell)
 	i = 0;
 	if (buffer[0] == '\0')
 		return ;
-	is_space(buffer);		
+	is_space(buffer);
 	count_cmds(shell);
 	j = shell->nb_cmds;
 	shell->cmds = ft_calloc(sizeof(char **), j + 1);
@@ -59,4 +59,3 @@ void	lexer(char *buffer, t_shell *shell)
 	}
 	free(pre_c);
 }
-

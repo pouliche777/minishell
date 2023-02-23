@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:25:46 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/16 08:48:19 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:46:12 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,8 @@ char	*space_quotes(char *cmd, int doubles, int singles, int i)
 		if (cmd[i] == ' ' && singles % 2 == 0 && doubles % 2 == 0)
 		{
 			i++;
-			while (cmd[i] == ' ')
-			{
-				++i;
+			while (cmd[i++] == ' ')
 				++j;
-			}
 		}
 		if (singles % 2 == 0 && cmd[i] == '"')
 			doubles++;
@@ -80,7 +77,7 @@ char	*space_quotes(char *cmd, int doubles, int singles, int i)
 	return (cmd);
 }
 
-char *remove_spaces(char *cmd)
+char	*remove_spaces(char *cmd)
 {
 	char	*hold;
 
@@ -99,7 +96,7 @@ void	trim(t_shell *shell, int row)
 	char	*hold;
 
 	i = -1;
-	while(shell->cmds[row][++i])
+	while (shell->cmds[row][++i])
 	{
 		hold = ft_strtrim(shell->cmds[row][i], " \t");
 		free(shell->cmds[row][i]);

@@ -6,7 +6,7 @@
 #    By: bperron <bperron@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 12:36:53 by slord             #+#    #+#              #
-#    Updated: 2023/02/14 10:34:22 by bperron          ###   ########.fr        #
+#    Updated: 2023/02/23 13:42:15 by bperron          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SOURCES	=		ft_isalnum.c ft_isprint.c ft_memcmp.c ft_strlcat.c \
 				ft_memset.c ft_substr.c ft_strjoin.c ft_itoa.c ft_strtrim.c \
 				ft_striteri.c ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c \
 				ft_putendl_fd.c ft_putnbr_fd.c ft_split.c get_next_line.c get_next_line_utils.c \
-				ft_strlen_until.c free_pp.c
+				ft_strlen_until.c free_pp.c ft_strcmp.c
 
 SOURCESBONUS =	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
 				ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c

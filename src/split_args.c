@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:35:19 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/22 14:31:25 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:22:54 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	find_arg_size(char *cmd, int start)
 	int	i;
 
 	i = start;
-	while(cmd[i] != ' ' && cmd[i])
+	while (cmd[i] != ' ' && cmd[i])
 	{
 		if (cmd[i] == '"')
 		{
@@ -72,7 +72,7 @@ void	split_args(t_shell *shell, int row, int i, int j)
 	int		size2;
 	int		k;
 	int		m;
-	
+
 	size = count_args(shell->cmds[row], 1);
 	new = ft_calloc(size + 2, sizeof(char *));
 	m = 0;
@@ -99,7 +99,7 @@ int	cmd_lenght(char *cmd, int start)
 	int	i;
 
 	i = start;
-	while(cmd[i] != '|' && cmd[i])
+	while (cmd[i] != '|' && cmd[i])
 	{
 		i++;
 		if (cmd[i] == '"')
