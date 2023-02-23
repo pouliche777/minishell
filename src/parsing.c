@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/02/22 12:43:23 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/22 13:24:41 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	modify_command(t_shell *info)
 	char	*ptr;
 
 	j = 0;
+	if (access(info->cmds_exe[0], F_OK) == 0)
+		return (1);
 	get_path(info);
 	ptr = ft_strjoin("/", info->cmds_exe[0]);
 	while (info->path[j])

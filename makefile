@@ -1,3 +1,17 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: bperron <bperron@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/02/22 14:33:49 by bperron           #+#    #+#              #
+#    Updated: 2023/02/22 14:34:42 by bperron          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#valgrind --show-leak-kinds=all --trace-children=yes --track-fds=yes --leak-check=full --track-origins=yes --suppressions=supp.txt ./minishell
+
 S = src/
 O = obj/
 L = libft/

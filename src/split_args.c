@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:35:19 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/22 11:02:36 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/22 14:31:25 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	split_args(t_shell *shell, int row, int i, int j)
 	int		m;
 	
 	size = count_args(shell->cmds[row], 1);
-	new = ft_calloc(size + 1, sizeof(char *));
+	new = ft_calloc(size + 2, sizeof(char *));
 	m = 0;
 	while (size-- > 1)
 	{
