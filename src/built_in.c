@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 11:13:00 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/22 12:50:38 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	export(t_shell *shell, char **cmds)
 		add_env(shell, cmds[1], 0);
 	else
 	{
-		printf("mauvais input pour export \n");
+		shell->status = 1;
+		dprintf(2, "MiniHell: bad argument for export\n");
 		return (0);
 	}
 	return (1);
@@ -41,27 +42,6 @@ int	unset(t_shell *shell, char *cmds)
 	delete_env(shell, var_name);
 	free(var_name);
 	return (0);
-}
-
-void	exit_built_in(t_shell *shell, char *exit_arg)
-{
-	int	i;
-
-	i = 0;
-	close_fd();
-	clear_history();
-	free(shell);
-	if (!exit_arg)
-		exit(0);
-	while (ft_isdigit(exit_arg[i]))
-		i++;
-	if (exit_arg[i] == '\0')
-		exit(ft_atoi(exit_arg));
-	else
-	{
-		printf("bash: exit: dsaas: numeric argument required \n");
-		exit (255);
-	}
 }
 
 char	*get_pwd(char **env)
@@ -85,7 +65,8 @@ int	cd_built_in(t_shell *shell, char *path)
 	old_path = getcwd(buff, 1024);
 	if (chdir(path) != 0)
 	{
-		printf("cd, error \n");
+		dprintf(2, "MiniHell: Bad argument for export\n");
+		shell->status = 1;
 		return (1);
 	}
 	old_path = ft_strjoin("OLDPWD=", old_path);

@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 11:05:10 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/22 13:24:41 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	separate_cmds(t_shell *info)
 	int	i;
 
 	i = 0;
-	info->cmds = malloc(sizeof(char **) * info->nb_cmds);
+	info->cmds = ft_calloc(sizeof(char **), info->nb_cmds);
 	while (info->pre_command[i])
 	{
 		info->cmds[i] = ft_split(info->pre_command[i], ' ');
@@ -59,6 +59,8 @@ int	modify_command(t_shell *info)
 	char	*ptr;
 
 	j = 0;
+	if (access(info->cmds_exe[0], F_OK) == 0)
+		return (1);
 	get_path(info);
 	ptr = ft_strjoin("/", info->cmds_exe[0]);
 	while (info->path[j])
@@ -68,7 +70,7 @@ int	modify_command(t_shell *info)
 		{
 			info->cmds_exe[0] = NULL;
 			free(info->cmds_exe[0]);
-			info->cmds_exe[0] = ft_calloc(1, ft_strlen(str));
+			info->cmds_exe[0] = ft_calloc(2, ft_strlen(str));
 			ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
 			free(str);
 			return (1);

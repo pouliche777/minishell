@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 08:09:38 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/16 08:46:12 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 08:04:17 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	status(t_shell *shell, int i, int j, int k)
 	char	*nb;
 	char	*new;
 
-	nb = ft_itoa(shell->status);
+	nb = ft_itoa(get_struc()->status);
 	new = ft_calloc(ft_strlen(shell->hold) + ft_strlen(nb) + 1, sizeof(char));
 	while (shell->hold[++i] != '$' && shell->hold[i + 1] != '?')
 		new[++j] = shell->hold[i];

@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/21 11:02:43 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/22 13:19:13 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		check_output(t_shell *shell, int i);
 int		check_input(t_shell *shell, int i);
 void	duplicate_cmds(t_shell *shell);
 void	supress_operators(t_shell *shell, int i);
-int		echo(char **cmds);
+void	echo(char **cmds);
 t_shell	*get_struc(void);
 void	check_vars(char *cmd, t_shell *shell);
 void	modify_env(t_shell *shell, char *str);
@@ -79,7 +79,7 @@ int 	count_nb_cmds(char ***cmds);
 void	heredoc(t_shell *shell, char *cmd);
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd);
 void	check_quotes(t_shell *shell);
-void	exit_built_in(t_shell *shell, char *exit_arg);
+void	exit_built_in(t_shell *shell, char **exit_arg);
 void	close_fd(void);
 int		check_v(t_shell *shell, char *var);
 void	ft_strcpy(char *dst, const char *src);
@@ -134,5 +134,7 @@ void	signal_handling(void);
 
 //utils2.c
 int		arr_size(char **arr);
+void	free_arrarrarr(char ***arr);
+void	free_garbage(t_shell *shell, unsigned char status);
 
 #endif

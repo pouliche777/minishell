@@ -1,3 +1,4 @@
+
 {
 	leak readline
 	Memcheck:Leak 
@@ -33,4 +34,10 @@
 	Memcheck:Leak
 	...
 	fun:start
+}
+{
+	leak NXMapRemove
+	Memcheck:Leak
+	...
+	fun:NXMapRemove
 }

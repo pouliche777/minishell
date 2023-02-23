@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:13:56 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/21 10:44:38 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/22 13:18:38 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print(char **cmd, int row)
 	}
 }
 
-int	echo(char **cmd)
+void	echo(char **cmd)
 {
 	int	flags;
 	int	row;
@@ -81,5 +81,5 @@ int	echo(char **cmd)
 	}
 	else
 		print(cmd, row);
-	return (0);
+	free_garbage(get_struc(), 0);
 }
