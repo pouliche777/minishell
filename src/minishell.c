@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 09:44:24 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 10:47:02 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	children(t_shell *shell, int i)
 		signal(SIGQUIT, SIG_DFL);
 		execve(shell->cmds_exe[0], shell->cmds_exe, shell->env);
 	}
-	exit(1);
 }
 
 void	get_return_value(t_shell *shell)
@@ -54,14 +53,19 @@ void	execute(t_shell *shell)
 		check_heredoc_parent(shell, i);
 		shell->id[i] = fork();
 		if (shell->id[i] == 0)
+		{
 			children(shell, i);
+			exit(1);
+		}
 		close(shell->fd[(i * 2) + 1]);
 		if (i > 0)
 			close(shell->fd[i * 2 - 2]);
 		i++;
 	}
-	while (shell->id[++i])
-		waitpid(shell->id[i], &shell->status, 0);
+	i = -1;
+	if (shell->id)
+		while (shell->id[++i])
+			waitpid(shell->id[i], &shell->status, 0);
 	get_return_value(shell);
 }
 
