@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 13:43:58 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/23 14:31:38 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,53 +47,43 @@ typedef struct s_shell
 	int				last_var;
 }		t_shell;
 
+
 void	get_path(t_shell *info);
-void	launch_terminal(t_shell *info);
-void	separate_input(t_shell *info);
-void	separate_cmds(t_shell *info);
-void	init_env(t_shell *shell, char **env);
-void	execute(t_shell *info);
-void	count_cmds(t_shell *shell);
-void 	lexer(char *buffer, t_shell *shell);
 int 	set_pipes(t_shell *shell);
 void	change_in_and_out(t_shell *shell, int i);
-int		check_built_in(t_shell *shell, int i);
-int		pwd(t_shell *shell, int i);
-int		env(t_shell *shell);
 int		check_output(t_shell *shell, int i);
 int		check_input(t_shell *shell, int i);
 void	duplicate_cmds(t_shell *shell);
-void	echo(char **cmds);
-t_shell	*get_struc(void);
 void	check_vars(char *cmd, t_shell *shell);
 void	modify_env(t_shell *shell, char *str);
-int		export(t_shell *shell, char **cmds);
-void	check_built_in_parent(t_shell *shell, int i);
-int		unset(t_shell *shell, char *cmds);
 int 	count_nb_cmds(char ***cmds);
-void	heredoc(t_shell *shell, char *cmd);
 void	check_dollar_in_command(t_shell *shell, int i, char **cmd);
 void	check_quotes(t_shell *shell);
-void	exit_built_in(t_shell *shell, char **exit_arg);
 void	close_fd(void);
 int		check_v(t_shell *shell, char *var);
 void	ft_strcpy(char *dst, const char *src);
-void	check_dollar_in_heredoc(t_shell *shell);
-void	replace_var(t_shell *shell, char *var);
 int		count_nb_token(char **cmds);
-void	check_heredoc_parent(t_shell *shell, int i);
-int		cd_built_in(t_shell *shell, char *path);
-char	*get_pwd(char **env);
-void	add_env(t_shell *shell, char *var_line, int j);
-void	delete_env(t_shell *shell, char *var_name);
+void	replace_var(t_shell *shell, char *var);
 void	free_env(t_shell *shell);
 
-//spaces.c
-char	*rm_spaces(char *cmd, int len, int singles, int doubles);
-int		quotes_error(int singles, int doubles);
-char	*space_quotes(char *cmd, int doubles, int singles, int i);
-char	*remove_spaces(char *cmd);
-void	trim(t_shell *shell, int row);
+
+//built_in_utils.c
+int		check_built_in(t_shell *shell, int i);
+int		pwd(t_shell *shell, int i);
+int		env(t_shell *shell);
+void	check_built_in_parent(t_shell *shell, int i);
+
+//built_in.c
+int		unset(t_shell *shell, char *cmds);
+int		export(t_shell *shell, char **cmds);
+char	*get_pwd(char **env);
+int		cd_built_in(t_shell *shell, char *path);
+
+//change_var_utils.c
+int		redir_check(char *cmd, int i);
+int		end_while(t_shell *shell, int i, int j);
+int		find_var_len(t_shell *shell, int env_place);
+int		put_new_var(t_shell *shell, char *new, int var_place, int env_place);
 
 //change_var.c
 void	loop_var(t_shell *shell, int i, int doubles, int singles);
@@ -102,11 +92,62 @@ void	find_var(t_shell *shell, int i);
 void	remove_var(t_shell *shell, int var_place, int size);
 void	change_var(t_shell *shell, int var_place, int env_place, int len);
 
-//change_var_utils.c
-int		redir_check(char *cmd, int i);
-int		end_while(t_shell *shell, int i, int j);
-int		find_var_len(t_shell *shell, int env_place);
-int		put_new_var(t_shell *shell, char *new, int var_place, int env_place);
+//echo.c
+void	echo(char **cmds);
+int		check2(char **cmd, int row);
+int		check_flags(char **cmd, int *row);
+void	print(char **cmd, int row);
+
+//env_1.c
+void	init_env(t_shell *shell, char **env);
+void	delete_env(t_shell *shell, char *var_name);
+
+//env.c
+void	add_env(t_shell *shell, char *var_line, int j);
+void	get_var(t_shell *shell, char *var_line);
+void	replace_var_1(t_shell *shell, char *var_line);
+int		check_if_var_exist(t_shell *shell);
+
+//execute_utils.c
+int		count_nb_tokens(char **cmd);
+int		modify_command(t_shell *info, int i, char *str, char *ptr);
+void	supress_operators(t_shell *shell, int i);
+
+//execute.c
+void	execute(t_shell *info);
+void	get_return_value(t_shell *shell);
+void	children(t_shell *shell, int i);
+
+//exit.c
+int		check_arg(char *arg);
+void	set_status(char *arg, unsigned char *status);
+void	exit_built_in(t_shell *shell, char **exit_arg);
+
+//heredoc.c
+void	check_heredoc_parent(t_shell *shell, int i);
+void	check_dollar_in_heredoc(t_shell *shell);
+void	heredoc(t_shell *shell, char *cmd);
+void	heredoc_variable(t_shell *shell, int j);
+
+//lexer.c
+void 	lexer(char *buffer, t_shell *shell);
+void	is_space(char *cmd);
+void	parsing(int row, t_shell *shell);
+
+//minishell.c
+void	launch_terminal(t_shell *info);
+t_shell	*get_struc(void);
+
+//parsing.c
+void	separate_input(t_shell *info);
+void	count_cmds(t_shell *shell);
+void	separate_cmds(t_shell *info);
+int		skip_quote(char *buffer, char c, t_shell *info);
+
+
+
+
+
 
 //redir.c
 int		count_redir(t_shell *shell, int singles, int doubles);
@@ -120,6 +161,13 @@ void	split_args(t_shell *shell, int row, int i, int j);
 int		cmd_lenght(char *cmd, int start);
 char	**split_pipe(char *cmd, int nb);
 
+//spaces.c
+char	*rm_spaces(char *cmd, int len, int singles, int doubles);
+int		quotes_error(int singles, int doubles);
+char	*space_quotes(char *cmd, int doubles, int singles, int i);
+char	*remove_spaces(char *cmd);
+void	trim(t_shell *shell, int row);
+
 //signals.c
 void	sighandlerc(int signum);
 void	sighush(int signum);
@@ -132,8 +180,5 @@ int		arr_size(char **arr);
 void	free_arrarrarr(char ***arr);
 void	free_garbage(t_shell *shell, unsigned char status);
 
-//execute_utils.c
-int		modify_command(t_shell *info, int i, char *str, char *ptr);
-void	supress_operators(t_shell *shell, int i);
 
 #endif
