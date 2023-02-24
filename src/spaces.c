@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:25:46 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/23 13:46:12 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/24 08:45:03 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*space_quotes(char *cmd, int doubles, int singles, int i)
 	if (quotes_error(singles, doubles))
 	{
 		free(cmd);
-		return (NULL);
+		launch_terminal(get_struc());
 	}
 	cmd = rm_spaces(cmd, i - j + 1, 0, 0);
 	return (cmd);

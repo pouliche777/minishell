@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 13:17:18 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/24 08:30:52 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	launch_terminal(t_shell *shell)
 		signal_handling();
 		shell->buffer = readline("MiniHell > ");
 		if (shell->buffer == NULL)
-			exit(0);
+			exit(shell->status);
 		if (ft_strlen(shell->buffer) > 0)
 		{
 			add_history(shell->buffer);

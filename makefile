@@ -6,7 +6,7 @@
 #    By: bperron <bperron@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/22 14:33:49 by bperron           #+#    #+#              #
-#    Updated: 2023/02/23 13:37:55 by bperron          ###   ########.fr        #
+#    Updated: 2023/02/24 08:59:34 by bperron          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJS = $(SOURCES:$S%=$O%.o)
 LIB = libft/libft.a
 CC = gcc
 RM = rm -rf
-CFLAGS = -Wall -Wextra -Werror -g 
+CFLAGS = -Wall -Wextra -Werror -g
 RL = -L./include/readline -lreadline
 
 NAME = minishell
