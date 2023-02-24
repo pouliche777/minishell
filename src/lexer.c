@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 14:29:53 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/24 07:43:16 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	parsing(int row, t_shell *shell)
 	split_args(shell, row, -1, 0);
 }
 
-v
+void	is_space(char *cmd)
 {
 	int	i;
 

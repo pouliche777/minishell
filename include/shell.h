@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 14:31:38 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/24 07:45:40 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,47 +25,27 @@
 
 typedef struct s_shell
 {
-	char			**token;
-	char			***cmds;
-	char			**cmds_exe;
-	char			**env;
-	char			**path;
-	int				nb_cmds;
-	char			*buffer;
-	char			*hold;
-	char			**pre_command;
-	int				*fd;
-	int				*id;
-	char			**temp;
-	char			*var_name;
-	char			*var;
-	int				status;
-	int 			index;
-	char 			*variable;
-	char			*heredoc_input;
-	int				heredoc_fd[2];
-	int				last_var;
+	char	**token;
+	char	***cmds;
+	char	**cmds_exe;
+	char	**env;
+	char	**path;
+	int		nb_cmds;
+	char	*buffer;
+	char	*hold;
+	char	**pre_command;
+	int		*fd;
+	int		*id;
+	char	**temp;
+	char	*var_name;
+	char	*var;
+	int		status;
+	int		index;
+	char	*variable;
+	char	*heredoc_input;
+	int		heredoc_fd[2];
+	int		last_var;
 }		t_shell;
-
-
-void	get_path(t_shell *info);
-int 	set_pipes(t_shell *shell);
-void	change_in_and_out(t_shell *shell, int i);
-int		check_output(t_shell *shell, int i);
-int		check_input(t_shell *shell, int i);
-void	duplicate_cmds(t_shell *shell);
-void	check_vars(char *cmd, t_shell *shell);
-void	modify_env(t_shell *shell, char *str);
-int 	count_nb_cmds(char ***cmds);
-void	check_dollar_in_command(t_shell *shell, int i, char **cmd);
-void	check_quotes(t_shell *shell);
-void	close_fd(void);
-int		check_v(t_shell *shell, char *var);
-void	ft_strcpy(char *dst, const char *src);
-int		count_nb_token(char **cmds);
-void	replace_var(t_shell *shell, char *var);
-void	free_env(t_shell *shell);
-
 
 //built_in_utils.c
 int		check_built_in(t_shell *shell, int i);
@@ -130,7 +110,7 @@ void	heredoc(t_shell *shell, char *cmd);
 void	heredoc_variable(t_shell *shell, int j);
 
 //lexer.c
-void 	lexer(char *buffer, t_shell *shell);
+void	lexer(char *buffer, t_shell *shell);
 void	is_space(char *cmd);
 void	parsing(int row, t_shell *shell);
 
@@ -144,29 +124,26 @@ void	count_cmds(t_shell *shell);
 void	separate_cmds(t_shell *info);
 int		skip_quote(char *buffer, char c, t_shell *info);
 
+//pipes.c
+int		set_pipes(t_shell *shell);
+void	change_in_and_out(t_shell *shell, int i);
 
-
-
-
+//quotes.c
+int		count_nb_quotes(char *str);
+void	suppress_quotes(t_shell *shell, char *temp, int i);
+void	check_quotes(t_shell *shell);
 
 //redir.c
 int		count_redir(t_shell *shell, int singles, int doubles);
 int		find_size(t_shell *shell, int i, int doubles, int singles);
 void	check_redir(t_shell *shell, int row);
 
-//split_args.c
-int		count_args(char **cmd, int nb);
-int		find_arg_size(char *cmd, int start);
-void	split_args(t_shell *shell, int row, int i, int j);
-int		cmd_lenght(char *cmd, int start);
-char	**split_pipe(char *cmd, int nb);
-
-//spaces.c
-char	*rm_spaces(char *cmd, int len, int singles, int doubles);
-int		quotes_error(int singles, int doubles);
-char	*space_quotes(char *cmd, int doubles, int singles, int i);
-char	*remove_spaces(char *cmd);
-void	trim(t_shell *shell, int row);
+//redirection.c
+int		check_output(t_shell *shell, int i);
+int		check_input(t_shell *shell, int i);
+void	redirect_output_1(char *cmd);
+void	redirect_output(char *cmd);
+void	redirect_input(char *cmd);
 
 //signals.c
 void	sighandlerc(int signum);
@@ -175,10 +152,33 @@ void	sigheredoc(int signum);
 void	sigheredoc2(int signum);
 void	signal_handling(void);
 
+//spaces.c
+char	*rm_spaces(char *cmd, int len, int singles, int doubles);
+int		quotes_error(int singles, int doubles);
+char	*space_quotes(char *cmd, int doubles, int singles, int i);
+char	*remove_spaces(char *cmd);
+void	trim(t_shell *shell, int row);
+
+//split_args.c
+int		count_args(char **cmd, int nb);
+int		find_arg_size(char *cmd, int start);
+void	split_args(t_shell *shell, int row, int i, int j);
+int		cmd_lenght(char *cmd, int start);
+char	**split_pipe(char *cmd, int nb);
+
+//utils.c
+void	get_path(t_shell *info);
+int		count_nb_cmds(char ***cmds);
+int		count_nb_token(char **cmds);
+void	free_env(t_shell *shell);
+
 //utils2.c
 int		arr_size(char **arr);
 void	free_arrarrarr(char ***arr);
 void	free_garbage(t_shell *shell, unsigned char status);
 
+//variables.c
+void	ft_strcpy(char *dst, const char *src);
+int		check_v(t_shell *shell, char *var);
 
 #endif
