@@ -6,23 +6,48 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:50:22 by slord             #+#    #+#             */
-/*   Updated: 2023/02/22 11:27:35 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 11:39:56 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
 
+char	*is_quote(char *cmd, t_shell *shell)
+{
+	char	*hold;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = -1;
+	if (cmd[0] == '\'' || cmd[0] == '"')
+	{
+		shell->marde = 0;
+		hold = ft_calloc(sizeof(char), ft_strlen(cmd) - 1);
+		while (cmd[++i + 1] )
+			hold[++j] = cmd[i];
+		return (hold);
+	}
+	else
+		shell->marde = 1;
+	return (cmd);
+}
+
 void	heredoc(t_shell *shell, char *cmd)
 {
+	char *delim;
+
+	delim = is_quote(cmd, shell);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, sigheredoc);
 	shell->heredoc_input = NULL;
 	shell->heredoc_input = readline(">");
 	if (pipe(shell->heredoc_fd) < 0)
 		return ;
-	while (shell->heredoc_input && ft_strcmp(shell->heredoc_input, cmd))
+	while (shell->heredoc_input && ft_strcmp(shell->heredoc_input, delim))
 	{
-		check_dollar_in_heredoc(shell);
+		if (shell->marde)
+			check_dollar_in_heredoc(shell);
 		ft_putstr_fd(shell->heredoc_input, shell->heredoc_fd[1]);
 		ft_putchar_fd('\n', shell->heredoc_fd[1]);
 		free(shell->heredoc_input);

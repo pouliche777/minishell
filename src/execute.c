@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:16:52 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/24 10:38:47 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:52:13 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	children(t_shell *shell, int i)
 		check_quotes(shell);
 		if (modify_command(shell, 0, NULL, NULL) == 0)
 		{
-			printf("minishell: %s : command not found\n", shell->cmds[i][0]);
+			dprintf(2, "minishell: %s : command not found\n", shell->cmds[i][0]);
 			exit (127);
 		}
 		signal(SIGINT, SIG_DFL);

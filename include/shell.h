@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 09:51:27 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 11:30:00 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,22 @@ typedef struct s_shell
 	char	**cmds_exe;
 	char	**env;
 	char	**path;
-	int		nb_cmds;
-	char	*buffer;
-	char	*hold;
 	char	**pre_command;
-	int		*fd;
-	int		*id;
 	char	**temp;
+	char	*buffer;
 	char	*var_name;
+	char	*hold;
 	char	*var;
-	int		status;
-	int		index;
 	char	*variable;
 	char	*heredoc_input;
+	int		*fd;
+	int		*id;
 	int		heredoc_fd[2];
+	int		nb_cmds;
+	int		status;
+	int		index;
 	int		last_var;
+	int		marde;
 }		t_shell;
 
 //built_in_utils.c

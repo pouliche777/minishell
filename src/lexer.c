@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 10:32:15 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:47:27 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,17 @@ static void	relaunch(char *cmd)
 	launch_terminal(get_struc());
 }
 
-void	check_pipes(int i, int j, char *hold)
+void	check_pipes(int i, char *hold)
 {
+	int	j;
+
 	if (hold[0] == '|' || hold[ft_strlen(hold) - 1] == '|')
 		relaunch(hold);
 	while (hold[++i])
 	{
 		if (hold[i] == '|')
 		{
+			j = 0;
 			if (hold[++i + j] == '|')
 				relaunch(hold);
 			while ((hold[i + j] == ' ' || hold[i + j] == '\t') && hold[i + j])
@@ -72,7 +75,7 @@ void	lexer(char *buffer, t_shell *shell)
 	if (buffer[0] == '\0')
 		return ;
 	is_space(buffer);
-	check_pipes(-1, 0, ft_strtrim(buffer, " \t"));
+	check_pipes(-1, ft_strtrim(buffer, " \t"));
 	count_cmds(shell);
 	j = shell->nb_cmds;
 	shell->cmds = ft_calloc(sizeof(char **), j + 1);
