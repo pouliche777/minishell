@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 13:13:12 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:01:58 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,16 @@ int	cmp(char *cmd, char *ref, int nb)
 
 int	pwd(t_shell *shell, int i)
 {
-	char	*pwd;
+	char	pwd[2000];
 	int		j;
 
 	j = 0;
 	while (ft_strncmp(shell->env[j], "PWD=", 4))
 		j++;
-	pwd = shell->env[j] + 4;
+	getcwd(pwd, 2000);
 	printf("%s\n", pwd);
-	change_in_and_out(shell, i);
+	exit(0);
+	i = j ;
 	return (1);
 }
 
