@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:05:51 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/27 14:21:30 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 15:19:08 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	is_good_1(char **cmds, t_shell *shell)
 		if ((cmds[j][0] == '<' || cmds[j][0] == '>') && cmds[j + 1])
 		{
 			l = 1;
-			while (cmds[j + l][0] == ' ' && cmds[j + l])
+			while (cmds[j + l] && cmds[j + l][0] == ' ')
 				l++;
-			if (cmds[j + l][0] == '<' || cmds[j + l][0] == '>')
+			if (cmds[j + l] && (cmds[j + l][0] == '<' || cmds[j + l][0] == '>'))
 				relaunch(shell, cmds[j + l], 0);
 		}
 		j++;
