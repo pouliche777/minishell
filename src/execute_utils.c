@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:36:12 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/23 13:39:10 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 14:26:56 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	modify_command(t_shell *info, int j, char *str, char *ptr)
 		free(str);
 		j++;
 	}
-	free (info->path);
+	free_pp((void *) info->path);
 	return (0);
 }
 

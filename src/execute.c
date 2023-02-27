@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:16:52 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/27 14:08:47 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 14:26:42 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	children(t_shell *shell, int i)
 		if (modify_command(shell, 0, NULL, NULL) == 0)
 		{
 			dprintf(2, "minishell: %s : command not found\n", shell->cmds[i][0]);
+			free_pp((void *) shell->path);
 			exit (127);
 		}
 		signal(SIGINT, SIG_DFL);
