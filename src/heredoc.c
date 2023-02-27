@@ -6,11 +6,14 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:50:22 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 11:50:45 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/27 13:23:07 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
+
+
+
 
 void	heredoc(t_shell *shell, char *cmd)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:05:51 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/27 10:34:51 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 14:06:35 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,29 @@ void	is_good(char *cmd, t_shell *shell, int i)
 		{
 			if (cmd[i] != '<' || i > 1)
 				relaunch(shell, cmd, i);
+			if (cmd[i] != '<' || i > 1)
+				relaunch(shell, cmd, i);
 		}
+	}
+}
+void	is_good_1(char **cmds, t_shell *shell, int i)
+{
+	int j;
+	
+	j = 0;
+	while (cmds[j])
+	{
+		if (cmds[j][0] == '<' && cmds[j + 1])
+		{
+			if (cmds[j + 1][0] == '<')
+				relaunch(shell, cmds[j], i);
+		}
+		if (cmds[j][0] == '>' && cmds[j + 1])
+		{
+			if (cmds[j + 1][0] == '>')
+				relaunch(shell, cmds[j], i);
+		}
+		j++;
 	}
 }
 
@@ -120,4 +142,5 @@ void	check_redir(t_shell *shell, int row)
 		is_good(shell->cmds[row][i], shell, -1);
 		shell->status = 0;
 	}
+	is_good_1(shell->cmds[row], shell, i);
 }
