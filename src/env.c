@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tardig <tardig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:11:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 13:14:56 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/26 20:44:26 by tardig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	get_var(t_shell *shell, char *var_line)
 	shell->var = ft_strdup(var_line + i);
 }
 
-void	add_env(t_shell *shell, char *var_line, int j)
+void	add_env(t_shell *shell, char *var_line)
 {
 	int		i;
 	char	**temp;
@@ -66,7 +66,6 @@ void	add_env(t_shell *shell, char *var_line, int j)
 		return ;
 	}
 	while (shell->env[++i])
-	j = 0;
 	temp = calloc(sizeof (char *), i + 1);
 	i = -1;
 	while (shell->env[++i])

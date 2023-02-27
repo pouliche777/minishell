@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tardig <tardig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:17:48 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 13:54:19 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/26 20:43:43 by tardig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ void	ft_strcpy(char *dst, const char *src)
 int	check_v(t_shell *shell, char *var)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	free(shell->variable);
 	shell->variable = NULL;
 	while (shell->env[i])

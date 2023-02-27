@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tardig <tardig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/24 07:45:40 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/26 20:44:18 by tardig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "readline/readline.h"
 # include "readline/history.h"
 # include "sys/ioctl.h"
+# include "sys/wait.h"
 
 typedef struct s_shell
 {
@@ -83,7 +84,7 @@ void	init_env(t_shell *shell, char **env);
 void	delete_env(t_shell *shell, char *var_name);
 
 //env.c
-void	add_env(t_shell *shell, char *var_line, int j);
+void	add_env(t_shell *shell, char *var_line);
 void	get_var(t_shell *shell, char *var_line);
 void	replace_var_1(t_shell *shell, char *var_line);
 int		check_if_var_exist(t_shell *shell);
