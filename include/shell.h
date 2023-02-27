@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 12:53:20 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 13:40:13 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	exit_built_in(t_shell *shell, char **exit_arg);
 void	check_heredoc_parent(t_shell *shell, int i);
 void	check_dollar_in_heredoc(t_shell *shell);
 void	heredoc(t_shell *shell, char *cmd);
-void	heredoc_variable(t_shell *shell, int j);
+void	heredoc_variable(t_shell *shell, int j, int h, int i);
 
 //lexer.c
 void	lexer(char *buffer, t_shell *shell);

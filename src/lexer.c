@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 12:47:27 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:56:33 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	is_space(char *cmd)
 
 static void	relaunch(char *cmd)
 {
-	printf("MiniHell: parse error near '|'\n");
+	dprintf(2, "MiniHell: parse error near '|'\n");
 	free(cmd);
 	launch_terminal(get_struc());
 }

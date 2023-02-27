@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:05:51 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/27 10:34:51 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:56:11 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	find_size(t_shell *shell, int i, int doubles, int singles)
 
 static void	relaunch(t_shell *shell, char *cmd, int i)
 {
-	printf("MiniHell: parse error near '%c'\n", cmd[i]);
+	dprintf(2, "MiniHell: parse error near '%c'\n", cmd[i]);
 	free_arrarrarr(shell->cmds);
 	free(shell->hold);
 	launch_terminal(get_struc());

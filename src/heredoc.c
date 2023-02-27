@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:50:22 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 12:53:18 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 13:39:42 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*is_quote(char *cmd, t_shell *shell)
 	{
 		shell->marde = 0;
 		hold = ft_calloc(sizeof(char), ft_strlen(cmd) - 1);
-		while (cmd[++i + 1] )
+		while (cmd[++i + 1])
 			hold[++j] = cmd[i];
 		return (hold);
 	}
@@ -35,7 +35,7 @@ char	*is_quote(char *cmd, t_shell *shell)
 
 void	heredoc(t_shell *shell, char *cmd)
 {
-	char *delim;
+	char	*delim;
 
 	delim = is_quote(cmd, shell);
 	signal(SIGQUIT, SIG_IGN);
@@ -59,20 +59,17 @@ void	heredoc(t_shell *shell, char *cmd)
 	rl_replace_line("", 0);
 }
 
-void	heredoc_variable(t_shell *shell, int j)
+void	heredoc_variable(t_shell *shell, int j, int h, int i)
 {
 	char	*temp;
-	int		i;
-	int		h;
 	char	*var;
 
 	temp = ft_strdup(shell->heredoc_input);
 	free(shell->heredoc_input);
-	h = j + 1;
-	while (temp[h] != '\0' && temp[h] != ' ')
+	while (temp[h] != '\0' && temp[h] != ' '
+		&& temp[h] != '\'' && temp[h] != '"')
 		h++;
-	var = ft_substr(temp, j + 1, h);
-	i = -1;
+	var = ft_substr(temp, j + 1, h - j - 1);
 	shell->heredoc_input = ft_calloc(1, ft_strlen(temp) + check_v(shell, var));
 	while (temp[++i] != '$')
 		shell->heredoc_input[i] = temp[i];
@@ -98,7 +95,7 @@ void	check_dollar_in_heredoc(t_shell *shell)
 		if (shell->heredoc_input[j] == '$' && shell->heredoc_input[j + 1]
 			&& shell->heredoc_input[j + 1] != ' ')
 		{
-			heredoc_variable(shell, j);
+			heredoc_variable(shell, j, j + 1, -1);
 			j = -1;
 		}
 		j++;
