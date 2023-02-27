@@ -1,5 +1,5 @@
 libft.a
-*.o
+libft/*.o
 obj/*
 minishell
 old_minishell
