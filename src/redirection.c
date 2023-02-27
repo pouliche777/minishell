@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 13:42:03 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 11:54:55 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	redirect_output_1(char *cmd)
 	if (cmd)
 	{
 		file[0] = open (cmd, O_CREAT | O_APPEND | O_WRONLY, 0777);
-		file[1] = dup2(file[0], STDOUT_FILENO);
+		dup2(file[0], STDOUT_FILENO);
+		close (file[0]);
 	}
 }
 
@@ -81,6 +82,7 @@ void	redirect_input(char *cmd)
 	{
 		file[0] = open (cmd, O_RDONLY, 0777);
 		dup2(file[0], STDIN_FILENO);
+		close (file[0]);
 	}
 }
 
@@ -124,6 +126,7 @@ int	check_input(t_shell *shell, int i)
 		else if (cmd[j][0] == '<' && cmd[j][1] == '<' && cmd[j][2] == '\0')
 		{
 			dup2(shell->heredoc_fd[0], STDIN_FILENO);
+			close(shell->heredoc_fd[0]);
 			close(shell->heredoc_fd[1]);
 		}	
 		j++;

@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:50:22 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 11:39:56 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:53:18 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	heredoc(t_shell *shell, char *cmd)
 		shell->heredoc_input = readline(">");
 	}
 	close(shell->heredoc_fd[1]);
-	rl_replace_line("", 0);
 	free(shell->heredoc_input);
+	rl_replace_line("", 0);
 }
 
 void	heredoc_variable(t_shell *shell, int j)
