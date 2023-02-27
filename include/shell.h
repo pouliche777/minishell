@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 13:40:13 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 14:20:44 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,13 @@ int		count_nb_quotes(char *str);
 void	suppress_quotes(t_shell *shell, char *temp, int i);
 void	check_quotes(t_shell *shell);
 
-//redir.c
-int		count_redir(t_shell *shell, int singles, int doubles);
+//redir_utils.c
 int		find_size(t_shell *shell, int i, int doubles, int singles);
+int		count_redir(t_shell *shell, int singles, int doubles);
+
+//redir.c
+void	is_good(char *cmd, t_shell *shell, int i);
+void	is_good_1(char **cmds, t_shell *shell);
 void	check_redir(t_shell *shell, int row);
 
 //redirection.c
