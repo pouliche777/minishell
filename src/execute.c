@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:16:52 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/24 10:38:47 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 11:47:30 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	children(t_shell *shell, int i)
 		return ;
 	if (check_built_in(shell, i) == 0)
 	{
-		supress_operators(shell, i);
-		check_quotes(shell);
 		if (modify_command(shell, 0, NULL, NULL) == 0)
 		{
 			printf("minishell: %s : command not found\n", shell->cmds[i][0]);
@@ -67,5 +65,6 @@ void	execute(t_shell *shell)
 	if (shell->id)
 		while (shell->id[++i])
 			waitpid(shell->id[i], &shell->status, 0);
+	close_fds(shell);
 	get_return_value(shell);
 }

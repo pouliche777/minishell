@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 09:51:27 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 10:49:55 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void	free_env(t_shell *shell);
 int		arr_size(char **arr);
 void	free_arrarrarr(char ***arr);
 void	free_garbage(t_shell *shell, unsigned char status);
+void	close_fds(t_shell *shell);
 
 //variables.c
 void	ft_strcpy(char *dst, const char *src);

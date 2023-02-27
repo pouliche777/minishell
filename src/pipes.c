@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:51:42 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 13:18:36 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 10:51:56 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ void	change_in_and_out(t_shell *shell, int i)
 		dup2(shell->fd[i * 2 - 2], STDIN_FILENO);
 	if (i != shell->nb_cmds - 1)
 		dup2(shell->fd[i * 2 + 1], STDOUT_FILENO);
+	close_fds(shell);
 }
