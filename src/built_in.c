@@ -6,7 +6,7 @@
 /*   By: tardig <tardig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/26 20:43:30 by tardig           ###   ########.fr       */
+/*   Updated: 2023/02/26 20:48:34 by tardig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	export(t_shell *shell, char **cmds)
 	}	
 	if (ft_strchr(cmds[1], '=') != 0 && ft_isdigit(cmds[1][0]) == 0
 		&& cmds[2] == NULL)
-		add_env(shell, cmds[1], 0);
+		add_env(shell, cmds[1]);
 	else
 	{
 		shell->status = 1;
@@ -69,11 +69,7 @@ int	cd_built_in(t_shell *shell, char *path)
 	old_path = ft_strjoin("OLDPWD=", old_path);
 	current_path = getcwd(buff, 1024);
 	current_path = ft_strjoin("PWD=", current_path);
-	if (path[0] == '.')
-		add_env(shell, current_path, 0);
-	else
-		add_env(shell, current_path, 0);
-	add_env(shell, old_path, 0);
+	add_env(shell, old_path);
 	free(current_path);
 	free(old_path);
 	return (1);
