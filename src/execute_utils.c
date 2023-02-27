@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:36:12 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/27 14:26:56 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 14:43:31 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	modify_command(t_shell *info, int j, char *str, char *ptr)
 			info->cmds_exe[0] = ft_calloc(2, ft_strlen(str));
 			ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
 			free(str);
+			free_pp((void *) info->path);
 			return (1);
 		}
 		free(str);
