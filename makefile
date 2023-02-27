@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tardig <tardig@student.42.fr>              +#+  +:+       +#+         #
+#    By: bperron <bperron@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/22 14:33:49 by bperron           #+#    #+#              #
-#    Updated: 2023/02/26 20:43:52 by tardig           ###   ########.fr        #
+#    Updated: 2023/02/27 08:17:10 by bperron          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIB = libft/libft.a
 CC = gcc
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror -g
-RL = -Linclude/readline/ -lreadline -lcurses
+RL = -L./readline -lreadline
 
 NAME = minishell
 
@@ -40,7 +40,7 @@ $(OBJS): $O%.o: $S%
 
 $(NAME): $(OBJS)
 	@make -sC $(L) 
-	@$(CC) $(CFLAGS)  $^ -o $@ $(RL) $(LIB)
+	@$(CC) $(CFLAGS) $(RL) $(LIB) -lcurses $^ -o $@
 	@echo "\033[0;32m Compilation complétée"
 
 clean: 

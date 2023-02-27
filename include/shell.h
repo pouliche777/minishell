@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tardig <tardig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/26 20:44:18 by tardig           ###   ########.fr       */
+/*   Updated: 2023/02/27 09:51:27 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <dirent.h> 
 # include <errno.h>
 # include <stdlib.h>
-# include "readline/readline.h"
-# include "readline/history.h"
+# include "../readline/readline.h"
+# include "../readline/history.h"
 # include "sys/ioctl.h"
 # include "sys/wait.h"
 
@@ -155,7 +155,6 @@ void	signal_handling(void);
 
 //spaces.c
 char	*rm_spaces(char *cmd, int len, int singles, int doubles);
-int		quotes_error(int singles, int doubles);
 char	*space_quotes(char *cmd, int doubles, int singles, int i);
 char	*remove_spaces(char *cmd);
 void	trim(t_shell *shell, int row);

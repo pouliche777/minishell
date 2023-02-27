@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:25:46 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/24 08:45:03 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 09:55:02 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,6 @@ char	*rm_spaces(char *cmd, int len, int singles, int doubles)
 	return (buffer);
 }
 
-int	quotes_error(int singles, int doubles)
-{
-	if (singles % 2 == 1 || doubles % 2 == 1)
-	{
-		printf("minishell: syntax error near single or double quote\n");
-		return (1);
-	}
-	return (0);
-}
-
 char	*space_quotes(char *cmd, int doubles, int singles, int i)
 {
 	int	j;
@@ -67,11 +57,6 @@ char	*space_quotes(char *cmd, int doubles, int singles, int i)
 			doubles++;
 		else if (doubles % 2 == 0 && cmd[i] == '\'')
 			singles++;
-	}
-	if (quotes_error(singles, doubles))
-	{
-		free(cmd);
-		launch_terminal(get_struc());
 	}
 	cmd = rm_spaces(cmd, i - j + 1, 0, 0);
 	return (cmd);

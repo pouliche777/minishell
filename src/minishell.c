@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/24 08:30:52 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 10:19:14 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	launch_terminal(t_shell *shell)
 			lexer(shell->buffer, shell);
 			set_pipes(shell);
 			execute(shell);
+			free_arrarrarr(shell->cmds);
 			shell->cmds = NULL;
 		}
 	}

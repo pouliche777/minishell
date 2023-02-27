@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:05:51 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/23 13:20:19 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 10:34:51 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,34 @@ int	find_size(t_shell *shell, int i, int doubles, int singles)
 	return (size);
 }
 
+static void	relaunch(t_shell *shell, char *cmd, int i)
+{
+	printf("MiniHell: parse error near '%c'\n", cmd[i]);
+	free_arrarrarr(shell->cmds);
+	free(shell->hold);
+	launch_terminal(get_struc());
+}
+
+void	is_good(char *cmd, t_shell *shell, int i)
+{
+	if (cmd[0] == '>')
+	{
+		while (cmd[++i])
+		{		
+			if (cmd[i] != '>' || i > 1)
+				relaunch(shell, cmd, i);
+		}
+	}
+	else if (cmd[0] == '<')
+	{
+		while (cmd[++i])
+		{
+			if (cmd[i] != '<' || i > 1)
+				relaunch(shell, cmd, i);
+		}
+	}
+}
+
 void	check_redir(t_shell *shell, int row)
 {
 	int	nb;
@@ -88,5 +116,8 @@ void	check_redir(t_shell *shell, int row)
 		shell->cmds[row][++i] = ft_calloc(size + 1, sizeof(char));
 		while (size-- > 0)
 			shell->cmds[row][i][k++] = shell->hold[j++];
+		shell->status = 258;
+		is_good(shell->cmds[row][i], shell, -1);
+		shell->status = 0;
 	}
 }

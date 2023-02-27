@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/02/24 07:43:16 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/27 10:32:15 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,33 @@ void	is_space(char *cmd)
 	launch_terminal(get_struc());
 }
 
+static void	relaunch(char *cmd)
+{
+	printf("MiniHell: parse error near '|'\n");
+	free(cmd);
+	launch_terminal(get_struc());
+}
+
+void	check_pipes(int i, int j, char *hold)
+{
+	if (hold[0] == '|' || hold[ft_strlen(hold) - 1] == '|')
+		relaunch(hold);
+	while (hold[++i])
+	{
+		if (hold[i] == '|')
+		{
+			if (hold[++i + j] == '|')
+				relaunch(hold);
+			while ((hold[i + j] == ' ' || hold[i + j] == '\t') && hold[i + j])
+			{
+				if (hold[i + ++j] == '|')
+					relaunch(hold);
+			}
+		}
+	}
+	free(hold);
+}
+
 void	lexer(char *buffer, t_shell *shell)
 {
 	char	**pre_c;
@@ -45,6 +72,7 @@ void	lexer(char *buffer, t_shell *shell)
 	if (buffer[0] == '\0')
 		return ;
 	is_space(buffer);
+	check_pipes(-1, 0, ft_strtrim(buffer, " \t"));
 	count_cmds(shell);
 	j = shell->nb_cmds;
 	shell->cmds = ft_calloc(sizeof(char **), j + 1);
