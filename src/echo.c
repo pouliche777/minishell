@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tardig <tardig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:13:56 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/22 13:18:38 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/26 20:52:17 by tardig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,14 @@ void	print(char **cmd, int row)
 	int	i;
 
 	i = row - 1;
-	while (cmd[++i])
+	if (arr_size(cmd) > 1)
 	{
-		printf("%s", cmd[i]);
-		if (cmd[i + 1])
-			printf(" ");
+		while (cmd[++i])
+		{
+			printf("%s", cmd[i]);
+			if (cmd[i + 1])
+				printf(" ");
+		}
 	}
 }
 
