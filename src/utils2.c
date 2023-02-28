@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:29 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/28 13:47:37 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 15:32:20 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,26 @@ void	close_fds(t_shell *shell)
 	{
 		close(shell->fd[i]);
 		i++;
+	}
+}
+
+void	check_open_files(t_shell *shell, int i)
+{
+	char	**cmd;
+	int		j;
+
+	cmd = shell->cmds[i];
+	j = 0;
+	while (cmd[j])
+	{
+		if (cmd[j][0] == '>' && cmd[j][1] == '>' && cmd[j + 1] != NULL)
+		{
+			open(cmd[j + 1], O_WRONLY | O_CREAT, 0777);
+		}
+		else if (cmd[j][0] == '>' && cmd[j][1] == '\0' && cmd[j + 1] != NULL)
+		{
+			open(cmd[j + 1], O_WRONLY | O_CREAT, 0777);
+		}
+		j++;
 	}
 }
