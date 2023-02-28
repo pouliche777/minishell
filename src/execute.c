@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:16:52 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/28 13:20:51 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 15:30:48 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	execute(t_shell *shell)
 	set_pipes(shell);
 	while (i < shell->nb_cmds)
 	{
+		check_open_files(shell, i);
 		if (shell->nb_cmds == 1)
 			check_built_in_parent(shell, i);
 		check_heredoc_parent(shell, i);

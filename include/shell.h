@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 14:38:01 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 15:51:08 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ int		arr_size(char **arr);
 void	free_arrarrarr(char ***arr);
 void	free_garbage(t_shell *shell, unsigned char status);
 void	close_fds(t_shell *shell);
+void	check_open_files(t_shell *shell, int i);
 
 //variables.c
 void	ft_strcpy(char *dst, const char *src);
