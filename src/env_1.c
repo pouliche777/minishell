@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:29:58 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 13:07:35 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 18:34:16 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	delete_env(t_shell *shell, char *var_name)
 	j = 0;
 	while (shell->env[i])
 		i++;
-	temp = calloc(sizeof (char *), i + 1);
+	temp = ft_calloc(sizeof (char *), i + 1);
 	i = -1;
 	while (shell->env[++i])
 		temp[i] = ft_strdup(shell->env[i]);
 	free_env(shell);
-	shell->env = calloc(sizeof (char *), i + 1);
+	shell->env = ft_calloc(sizeof (char *), i + 1);
 	i = -1;
 	while (temp[++i])
 	{
