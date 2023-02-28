@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 14:20:44 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 14:38:01 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_shell
 
 //built_in_utils.c
 int		check_built_in(t_shell *shell, int i);
-int		pwd(t_shell *shell, int i);
+int		pwd(t_shell *shell);
 int		env(t_shell *shell);
 void	check_built_in_parent(t_shell *shell, int i);
 

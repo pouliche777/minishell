@@ -6,11 +6,21 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 12:42:51 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 15:17:41 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
+
+void	free_garbage2(t_shell *shell, unsigned char status)
+{
+	close_fds(shell);
+	free_env(shell);
+	if (shell->cmds)
+		free_arrarrarr(shell->cmds);
+	free(shell);
+	exit(status);
+}
 
 void	launch_terminal(t_shell *shell)
 {
@@ -22,7 +32,9 @@ void	launch_terminal(t_shell *shell)
 		signal_handling();
 		shell->buffer = readline("MiniHell > ");
 		if (shell->buffer == NULL)
-			exit(shell->status);
+		{
+			free_garbage2(shell, shell->status);
+		}
 		if (ft_strlen(shell->buffer) > 0)
 		{
 			add_history(shell->buffer);

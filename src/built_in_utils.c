@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 13:19:59 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 15:16:27 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	cmp(char *cmd, char *ref, int nb)
 	return (i);
 }
 
-int	pwd(t_shell *shell, int i)
+int	pwd(t_shell *shell)
 {
 	char	pwd[2000];
 	int		j;
@@ -36,9 +36,7 @@ int	pwd(t_shell *shell, int i)
 		j++;
 	getcwd(pwd, 2000);
 	printf("%s\n", pwd);
-	exit(0);
-	i = j ;
-	return (1);
+	return (0);
 }
 
 int	env(t_shell *shell)
@@ -51,7 +49,7 @@ int	env(t_shell *shell)
 		printf("%s\n", shell->env[j]);
 		j++;
 	}
-	return (1);
+	return (0);
 }
 
 int	check_built_in(t_shell *shell, int i)
@@ -61,7 +59,7 @@ int	check_built_in(t_shell *shell, int i)
 	if (cmp(shell->cmds[i][0], "cd", 3) == 0)
 		free_garbage(shell, cd_built_in(shell, shell->cmds[i][1]));
 	else if (cmp(shell->cmds_exe[0], "pwd", 4) == 0)
-		free_garbage(shell, pwd(shell, i));
+		free_garbage(shell, pwd(shell));
 	else if (cmp(shell->cmds_exe[0], "echo", 5) == 0)
 		echo(shell->cmds_exe);
 	else if (cmp(shell->cmds[i][0], "export", 7) == 0)
@@ -77,6 +75,7 @@ int	check_built_in(t_shell *shell, int i)
 
 void	check_built_in_parent(t_shell *shell, int i)
 {
+	supress_operators(shell, i);
 	if (cmp(shell->cmds[i][0], "export", 7) == 0)
 		export(shell, shell->cmds[0]);
 	else if (cmp(shell->cmds[i][0], "exit", 5) == 0)
@@ -86,7 +85,13 @@ void	check_built_in_parent(t_shell *shell, int i)
 	else if (cmp(shell->cmds[i][0], "cd", 2) == 0)
 		cd_built_in(shell, shell->cmds[0][1]);
 	else
+	{
+		free_pp((void *) shell->cmds_exe);
 		return ;
+	}
 	free_arrarrarr(shell->cmds);
+	free_pp((void *) shell->cmds_exe);
+	shell->cmds_exe = NULL;
+	close_fds(shell);
 	launch_terminal(shell);
 }

@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:11:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 08:19:07 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 15:34:36 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,28 @@ void	add_env(t_shell *shell, char *var_line)
 	char	**temp;
 
 	get_var(shell, var_line);
-	i = -1;
 	if (check_if_var_exist(shell) == 1)
 	{
 		replace_var_1(shell, var_line);
+		free(shell->var);
+		free(shell->var_name);
 		return ;
 	}
-	while (shell->env[++i])
-	temp = calloc(sizeof (char *), i + 2);
+	i = 0;
+	while (shell->env[i])
+		i++;
+	temp = ft_calloc(sizeof (char *), i + 2);
 	i = -1;
 	while (shell->env[++i])
 		temp[i] = ft_strdup(shell->env[i]);
 	free_env(shell);
-	shell->env = calloc(sizeof (char *), i + 2);
+	shell->env = ft_calloc(sizeof (char *), i + 2);
 	i = -1;
 	while (temp[++i])
 		shell->env[i] = ft_strdup(temp[i]);
 	shell->env[i] = ft_strdup(var_line);
 	shell->env[i + 1] = NULL;
-	free(temp);
+	free(shell->var);
+	free(shell->var_name);
+	free_pp((void *) temp);
 }

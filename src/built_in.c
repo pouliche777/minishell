@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tardig <tardig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/26 20:48:34 by tardig           ###   ########.fr       */
+/*   Updated: 2023/02/28 14:57:38 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	export(t_shell *shell, char **cmds)
 	if (cmds[1] == NULL)
 	{
 		env(shell);
-		return (1);
+		return (0);
 	}	
 	if (ft_strchr(cmds[1], '=') != 0 && ft_isdigit(cmds[1][0]) == 0
 		&& cmds[2] == NULL)
@@ -26,9 +26,9 @@ int	export(t_shell *shell, char **cmds)
 	{
 		shell->status = 1;
 		dprintf(2, "MiniHell: bad argument for export\n");
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	unset(t_shell *shell, char *cmds)
@@ -62,7 +62,7 @@ int	cd_built_in(t_shell *shell, char *path)
 	old_path = getcwd(buff, 1024);
 	if (chdir(path) != 0)
 	{
-		dprintf(2, "MiniHell: Bad argument for export\n");
+		dprintf(2, "MiniHell: Bad argument for cd\n");
 		shell->status = 1;
 		return (1);
 	}
@@ -72,5 +72,5 @@ int	cd_built_in(t_shell *shell, char *path)
 	add_env(shell, old_path);
 	free(current_path);
 	free(old_path);
-	return (1);
+	return (0);
 }
