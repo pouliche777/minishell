@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 15:16:27 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 16:02:07 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,8 @@ void	check_built_in_parent(t_shell *shell, int i)
 		free_pp((void *) shell->cmds_exe);
 		return ;
 	}
-	free_arrarrarr(shell->cmds);
 	free_pp((void *) shell->cmds_exe);
 	shell->cmds_exe = NULL;
 	close_fds(shell);
-	launch_terminal(shell);
+	shell->terminal = 1;
 }

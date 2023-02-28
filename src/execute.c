@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:16:52 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/28 15:30:48 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/28 16:25:49 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	children(t_shell *shell, int i)
 	{
 		if (modify_command(shell, 0, NULL, NULL) == 0)
 			exit (127);
-		close(shell->fd[i * 2]);
+		//close(shell->fd[i * 2]);
 		execve(shell->cmds_exe[0], shell->cmds_exe, shell->env);
 	}
 }
@@ -55,12 +55,15 @@ void	execute(t_shell *shell)
 	int	i;
 
 	i = 0;
+	shell->terminal = 0;
 	set_pipes(shell);
 	while (i < shell->nb_cmds)
 	{
 		check_open_files(shell, i);
 		if (shell->nb_cmds == 1)
 			check_built_in_parent(shell, i);
+		if (shell->terminal == 1)
+			break;
 		check_heredoc_parent(shell, i);
 		shell->id[i] = fork();
 		if (shell->id[i] == 0)
