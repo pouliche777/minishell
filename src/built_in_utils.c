@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 16:01:58 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/28 13:19:59 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,19 @@ int	check_built_in(t_shell *shell, int i)
 	supress_operators(shell, i);
 	check_quotes(shell);
 	if (cmp(shell->cmds[i][0], "cd", 3) == 0)
-		return (1);
-	if (cmp(shell->cmds_exe[0], "pwd", 4) == 0)
-		pwd(shell, i);
-	if (cmp(shell->cmds_exe[0], "echo", 5) == 0)
+		free_garbage(shell, cd_built_in(shell, shell->cmds[i][1]));
+	else if (cmp(shell->cmds_exe[0], "pwd", 4) == 0)
+		free_garbage(shell, pwd(shell, i));
+	else if (cmp(shell->cmds_exe[0], "echo", 5) == 0)
 		echo(shell->cmds_exe);
-	if (cmp(shell->cmds[i][0], "export", 7) == 0)
-		return (1);
-	if (cmp(shell->cmds_exe[0], "env", 4) == 0)
-		env(shell);
-	if (cmp(shell->cmds[i][0], "unset", 6) == 0)
-		return (1);
+	else if (cmp(shell->cmds[i][0], "export", 7) == 0)
+		free_garbage(shell, export(shell, shell->cmds[i]));
+	else if (cmp(shell->cmds_exe[0], "env", 4) == 0)
+		free_garbage(shell, env(shell));
+	else if (cmp(shell->cmds[i][0], "unset", 6) == 0)
+		free_garbage(shell, unset(shell, shell->cmds[i][1]));
+	else if (cmp(shell->cmds[i][0], "exit", 4) == 0)
+		exit_built_in(shell, shell->cmds[i]);
 	return (0);
 }
 
@@ -77,10 +79,14 @@ void	check_built_in_parent(t_shell *shell, int i)
 {
 	if (cmp(shell->cmds[i][0], "export", 7) == 0)
 		export(shell, shell->cmds[0]);
-	if (cmp(shell->cmds[i][0], "exit", 5) == 0)
+	else if (cmp(shell->cmds[i][0], "exit", 5) == 0)
 		exit_built_in(shell, shell->cmds[0]);
-	if (cmp(shell->cmds[i][0], "unset", 6) == 0)
+	else if (cmp(shell->cmds[i][0], "unset", 6) == 0)
 		unset(shell, shell->cmds[i][1]);
-	if (cmp(shell->cmds[i][0], "cd", 2) == 0)
+	else if (cmp(shell->cmds[i][0], "cd", 2) == 0)
 		cd_built_in(shell, shell->cmds[0][1]);
+	else
+		return ;
+	free_arrarrarr(shell->cmds);
+	launch_terminal(shell);
 }

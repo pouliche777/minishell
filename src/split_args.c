@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:35:19 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/23 13:22:54 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 13:01:51 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int	cmd_lenght(char *cmd, int start)
 	i = start;
 	while (cmd[i] != '|' && cmd[i])
 	{
-		i++;
 		if (cmd[i] == '"')
 		{
 			i++;
@@ -114,6 +113,7 @@ int	cmd_lenght(char *cmd, int start)
 			while (cmd[i] != '\'' && cmd[i])
 				i++;
 		}
+		i++;
 	}
 	return (i - start);
 }

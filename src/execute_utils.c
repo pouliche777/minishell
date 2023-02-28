@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:36:12 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/27 14:43:31 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/28 10:36:28 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,31 @@ int	count_nb_tokens(char **cmd)
 	return (i);
 }
 
+int	is_dir(char *file)
+{
+	struct stat	path;
+
+	if (access(file, F_OK) == -1)
+		return (1);
+	stat(file, &path);
+	if (S_ISREG(path.st_mode) == 0)
+		dprintf(2, "minishell: %s : is a directory\n", file);
+	return (S_ISREG(path.st_mode));
+}
+
 int	modify_command(t_shell *info, int j, char *str, char *ptr)
 {
-	if (access(info->cmds_exe[0], F_OK) == 0)
+	if (is_dir(info->cmds_exe[0]) == 0)
+		return (0);
+	if ((access(info->cmds_exe[0], F_OK) == 0))
 		return (1);
 	get_path(info);
 	ptr = ft_strjoin("/", info->cmds_exe[0]);
 	while (info->path[j])
 	{
-		str = ft_strjoin(info->path[j], ptr);
+		str = ft_strjoin(info->path[j++], ptr);
 		if (access(str, F_OK) == 0)
 		{
-			info->cmds_exe[0] = NULL;
 			free(info->cmds_exe[0]);
 			info->cmds_exe[0] = ft_calloc(2, ft_strlen(str));
 			ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
@@ -44,8 +57,8 @@ int	modify_command(t_shell *info, int j, char *str, char *ptr)
 			return (1);
 		}
 		free(str);
-		j++;
 	}
+	dprintf(2, "minishell: %s : command not found\n", info->cmds_exe[0]);
 	free_pp((void *) info->path);
 	return (0);
 }
