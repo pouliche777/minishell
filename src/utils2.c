@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:29 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/27 11:21:50 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/28 13:47:37 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	free_arrarrarr(char ***arr)
 	int	j;
 
 	i = -1;
-	j = -1;
 	while (arr[++i])
 	{
+		j = -1;
 		while (arr[i][++j])
 			free(arr[i][j]);
 		free(arr[i]);
@@ -43,6 +43,7 @@ void	free_garbage(t_shell *shell, unsigned char status)
 	free_env(shell);
 	if (shell->cmds)
 		free_arrarrarr(shell->cmds);
+	(void) shell;
 	exit(status);
 }
 

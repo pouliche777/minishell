@@ -52,10 +52,10 @@ void	free_env(t_shell *shell)
 	i = 0;
 	while (shell->env[i])
 	{
-		shell->env[i] = NULL;
 		free(shell->env[i]);
+		shell->env[i] = NULL;
 		i++;
 	}
-	shell->env = NULL;
 	free(shell->env);
+	shell->env = NULL;
 }
