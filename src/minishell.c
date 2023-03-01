@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 15:17:41 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 08:05:04 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	launch_terminal(t_shell *shell)
 {
 	while (1)
 	{
+		shell->error = 0;
 		if (shell->buffer)
 			free(shell->buffer);
 		shell->buffer = NULL;
@@ -41,7 +42,8 @@ void	launch_terminal(t_shell *shell)
 			signal(SIGQUIT, sighush);
 			signal(SIGINT, sighush);
 			lexer(shell->buffer, shell);
-			execute(shell);
+			if (shell->error == 0)
+				execute(shell);
 			shell->cmds = NULL;
 		}
 	}

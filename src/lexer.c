@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 12:56:33 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 08:04:45 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,29 @@ void	parsing(int row, t_shell *shell)
 		return ;
 	loop_var(shell, -1, 0, 0);
 	check_redir(shell, row);
-	trim(shell, row);
-	split_args(shell, row, -1, 0);
+	if (shell->error == 0)
+	{
+		trim(shell, row);
+		split_args(shell, row, -1, 0);
+	}
 }
 
-void	is_space(char *cmd)
+int	is_space(char *cmd)
 {
 	int	i;
 
 	i = -1;
 	while (cmd[++i])
 		if (cmd[i] != ' ')
-			return ;
-	launch_terminal(get_struc());
+			return (1);
+	return (0);
 }
 
 static void	relaunch(char *cmd)
 {
 	dprintf(2, "MiniHell: parse error near '|'\n");
 	free(cmd);
-	launch_terminal(get_struc());
+	get_struc()->error = 1;
 }
 
 void	check_pipes(int i, char *hold)
@@ -74,19 +77,24 @@ void	lexer(char *buffer, t_shell *shell)
 	i = 0;
 	if (buffer[0] == '\0')
 		return ;
-	is_space(buffer);
-	check_pipes(-1, ft_strtrim(buffer, " \t"));
-	count_cmds(shell);
-	j = shell->nb_cmds;
-	shell->cmds = ft_calloc(sizeof(char **), j + 1);
-	pre_c = split_pipe(buffer, j + 1);
-	while (j-- > 0)
+	if (is_space(buffer) == 1)
 	{
-		shell->hold = pre_c[i];
-		parsing(i, shell);
-		free(shell->hold);
-		shell->hold = NULL;
-		i++;
+		check_pipes(-1, ft_strtrim(buffer, " \t"));
+		if (shell->error == 0)
+		{
+			count_cmds(shell);
+			j = shell->nb_cmds;
+			shell->cmds = ft_calloc(sizeof(char **), j + 1);
+			pre_c = split_pipe(buffer, j + 1);
+			while (j-- > 0 && shell->error == 0)
+			{
+				shell->hold = pre_c[i];
+				parsing(i, shell);
+				free(shell->hold);
+				shell->hold = NULL;
+				i++;
+			}
+			free(pre_c);
+		}
 	}
-	free(pre_c);
 }

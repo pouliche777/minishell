@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 15:57:28 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 07:48:37 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_shell
 	int		last_var;
 	int		marde;
 	int		terminal;
+	int		error;
 }		t_shell;
 
 //built_in_utils.c
@@ -114,7 +115,7 @@ void	heredoc_variable(t_shell *shell, int j, int h, int i);
 
 //lexer.c
 void	lexer(char *buffer, t_shell *shell);
-void	is_space(char *cmd);
+int		is_space(char *cmd);
 void	parsing(int row, t_shell *shell);
 
 //minishell.c

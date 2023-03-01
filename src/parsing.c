@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:31:33 by slord             #+#    #+#             */
-/*   Updated: 2023/02/23 13:39:05 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 07:47:42 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	skip_quote(char *buffer, char c, t_shell *info)
 		i++;
 	}
 	printf("MiniHell: parse error near '\\%c'\n", c);
-	launch_terminal(info);
+	info->error = 1;
 	return (0);
 }
 
@@ -64,7 +64,7 @@ void	count_cmds(t_shell *info)
 	j = 0;
 	i = 0;
 	info->nb_cmds = 1;
-	while (info->buffer[i])
+	while (info->buffer[i] && info->error == 0)
 	{
 		if (info->buffer[i] == '\'')
 		{

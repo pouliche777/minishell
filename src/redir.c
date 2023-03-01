@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:05:51 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/28 18:16:33 by slord            ###   ########.fr       */
+/*   Updated: 2023/03/01 10:37:43 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 static void	relaunch(t_shell *shell, char *cmd, int i)
 {
 	dprintf(2, "MiniHell: parse error near '%c'\n", cmd[i]);
-	free_arrarrarr(shell->cmds);
-	free(shell->hold);
-	launch_terminal(get_struc());
+	if (shell->cmds)
+		free_arrarrarr(shell->cmds);
+	shell->status = 258;
+	shell->error = 1;
 }
 
 void	is_good(char *cmd, t_shell *shell, int i)
@@ -62,6 +63,19 @@ void	is_good_1(char **cmds, t_shell *shell)
 	}
 }
 
+void	first_redir(t_shell *shell)
+{
+	if (shell->hold[0] == '<' || shell->hold[0] == '>')
+	{
+		if (ft_strlen(shell->hold) >= 3)
+		{
+			if (shell->hold[0] == '<' && shell->hold[1] == '<')
+				return ;
+		}
+		relaunch(shell, shell->hold, 0);
+	}
+}
+
 void	check_redir(t_shell *shell, int row)
 {
 	int	nb;
@@ -73,17 +87,19 @@ void	check_redir(t_shell *shell, int row)
 	nb = count_redir(shell, 0, 0);
 	i = -1;
 	j = 0;
-	shell->cmds[row] = ft_calloc(nb + 1, sizeof(char *));
-	while (nb-- > 0)
+	first_redir(shell);
+	if (shell->error == 0)
 	{
-		k = 0;
-		size = find_size(shell, j, 0, 0);
-		shell->cmds[row][++i] = ft_calloc(size + 1, sizeof(char));
-		while (size-- > 0)
-			shell->cmds[row][i][k++] = shell->hold[j++];
-		shell->status = 258;
-		is_good(shell->cmds[row][i], shell, -1);
-		shell->status = 0;
+		shell->cmds[row] = ft_calloc(nb + 1, sizeof(char *));
+		while (nb-- > 0)
+		{
+			k = 0;
+			size = find_size(shell, j, 0, 0);
+			shell->cmds[row][++i] = ft_calloc(size + 1, sizeof(char));
+			while (size-- > 0)
+				shell->cmds[row][i][k++] = shell->hold[j++];
+			is_good(shell->cmds[row][i], shell, -1);
+		}
+		is_good_1(shell->cmds[row], shell);
 	}
-	is_good_1(shell->cmds[row], shell);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 19:00:45 by slord            ###   ########.fr       */
+/*   Updated: 2023/03/01 10:44:29 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@ int	cmp(char *cmd, char *ref, int nb)
 	char	*hold;
 
 	i = -1;
-	hold = strdup(cmd);
-	while (cmd[++i])
-		hold[i] = ft_tolower(hold[i]);
-	i = ft_strncmp(hold, ref, nb);
-	free(hold);
+	if (cmd)
+	{
+		hold = strdup(cmd);
+		while (cmd[++i])
+			hold[i] = ft_tolower(hold[i]);
+		i = ft_strncmp(hold, ref, nb);
+		free(hold);
+	}
 	return (i);
 }
 
@@ -56,6 +59,8 @@ int	check_built_in(t_shell *shell, int i)
 {
 	supress_operators(shell, i);
 	check_quotes(shell);
+	if (!shell->cmds_exe[0])
+		return (1);
 	if (cmp(shell->cmds_exe[0], "cd", 3) == 0)
 		free_garbage(shell, cd_built_in(shell, shell->cmds[i][1]));
 	else if (cmp(shell->cmds_exe[0], "pwd", 4) == 0)

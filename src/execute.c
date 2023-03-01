@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:16:52 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/28 16:25:49 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 10:53:58 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	children(t_shell *shell, int i)
 	{
 		if (modify_command(shell, 0, NULL, NULL) == 0)
 			exit (127);
-		//close(shell->fd[i * 2]);
+		if (shell->nb_cmds > 1)
+			close(shell->fd[i - 1 * 2]);
 		execve(shell->cmds_exe[0], shell->cmds_exe, shell->env);
 	}
 }
@@ -60,20 +61,23 @@ void	execute(t_shell *shell)
 	while (i < shell->nb_cmds)
 	{
 		check_open_files(shell, i);
+		check_heredoc_parent(shell, i);
 		if (shell->nb_cmds == 1)
 			check_built_in_parent(shell, i);
 		if (shell->terminal == 1)
 			break;
-		check_heredoc_parent(shell, i);
 		shell->id[i] = fork();
 		if (shell->id[i] == 0)
 		{
 			children(shell, i);
 			exit(1);
 		}
-		close(shell->fd[(i * 2) + 1]);
-		if (i > 0)
-			close(shell->fd[i * 2 - 2]);
+		if (shell->nb_cmds > 1)
+		{
+			close(shell->fd[(i * 2) + 1]);
+			if (i > 0)
+				close(shell->fd[i * 2 - 2]);
+		}
 		i++;
 	}
 	wait_child(shell);

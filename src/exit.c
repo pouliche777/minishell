@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 13:12:46 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/28 13:27:44 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 08:23:20 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ void	exit_built_in(t_shell *shell, char **cmd)
 		shell->status = 7;
 		perror("Minishell: exit");
 		launch_terminal(shell);
-	}
-	if (shell->nb_cmds == 1)
-	{
-		close(shell->fd[0]);
-		close(shell->fd[1]);
-		free(shell->fd);
 	}
 	free_garbage(shell, status);
 }
