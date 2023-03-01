@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 14:57:38 by bperron          ###   ########.fr       */
+/*   Updated: 2023/02/28 19:41:16 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
+
+int	alpha_num(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i] && cmd[i] != '=')
+	{
+		if (cmd[i] != '_' && !ft_isalnum(cmd[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	export(t_shell *shell, char **cmds)
 {
@@ -20,7 +34,7 @@ int	export(t_shell *shell, char **cmds)
 		return (0);
 	}	
 	if (ft_strchr(cmds[1], '=') != 0 && ft_isdigit(cmds[1][0]) == 0
-		&& cmds[2] == NULL)
+		&& cmds[2] == NULL && alpha_num(cmds[1]) == 1)
 		add_env(shell, cmds[1]);
 	else
 	{
