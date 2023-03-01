@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:51:42 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 10:55:21 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 11:04:07 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,22 @@ int	set_pipes(t_shell *shell)
 	int	i;
 
 	i = 0;
+	shell->fd = ft_calloc(shell->nb_cmds * 2, sizeof(int));
 	shell->id = ft_calloc(shell->nb_cmds + 1, sizeof(int));
-	if (shell->nb_cmds > 1)
+	while (i < shell->nb_cmds)
 	{
-		shell->fd = ft_calloc(shell->nb_cmds - 1 * 2, sizeof(int));
-		while (i < shell->nb_cmds - 1)
+		if (pipe(shell->fd + i * 2) == -1)
 		{
-			if (pipe(shell->fd + i * 2) == -1)
+			perror("Error: ");
+			while (i >= 0)
 			{
-				perror("Error: ");
-				while (i >= 0)
-				{
-					close (shell->fd[i * 2]);
-					close(shell->fd[i * 2 + 1]);
-					i--;
-				}
-				return (1);
+				close (shell->fd[i * 2]);
+				close(shell->fd[i * 2 + 1]);
+				i--;
 			}
-			i++;
+			return (1);
 		}
+		i++;
 	}
 	return (0);
 }

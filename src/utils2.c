@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:29 by bperron           #+#    #+#             */
-/*   Updated: 2023/03/01 10:46:51 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 10:58:38 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	close_fds(t_shell *shell)
 	i = -1;
 	if (shell->fd)
 	{
-		while (++i < (shell->nb_cmds - 1) * 2)
+		while (++i < (shell->nb_cmds) * 2)
 			close(shell->fd[i]);
 		free(shell->fd);
 		shell->fd = NULL;
