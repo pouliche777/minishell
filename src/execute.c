@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:16:52 by bperron           #+#    #+#             */
-/*   Updated: 2023/03/01 14:02:50 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:51:53 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	execute(t_shell *shell)
 	set_pipes(shell);
 	while (i < shell->nb_cmds)
 	{
+		shell->heredoc = 0;
 		check_open_files(shell, i);
 		if (shell->nb_cmds == 1)
 			check_built_in_parent(shell, i);
@@ -80,6 +81,8 @@ void	execute(t_shell *shell)
 		close(shell->fd[(i * 2) + 1]);
 		if (i > 0)
 			close(shell->fd[i * 2 - 2]);
+		if (shell->heredoc == 1)
+			close(shell->heredoc_fd[0]);
 		i++;
 	}
 	wait_child(shell);

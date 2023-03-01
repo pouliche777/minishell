@@ -6,13 +6,13 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 14:13:46 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:34:27 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
 
-//ls > out > lol > allo
+//signal dans heredoc qui fait du weird
 
 void	free_garbage2(t_shell *shell, unsigned char status)
 {

@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 12:43:56 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:36:01 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_shell
 	int		marde;
 	int		terminal;
 	int		error;
+	int		heredoc;
 }		t_shell;
 
 //built_in_utils.c

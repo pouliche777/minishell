@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 13:19:30 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:56:09 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	is_space(char *cmd)
 	return (0);
 }
 
-static void	relaunch()
+static void	relaunch(void)
 {
 	dprintf(2, "MiniHell: parse error near '|'\n");
 	get_struc()->error = 1;
@@ -58,7 +58,8 @@ void	check_pipes(int i, char *hold)
 			j = 0;
 			if (hold[++i + j] == '|')
 				relaunch();
-			while ((hold[i + j] == ' ' || hold[i + j] == '\t') && hold[i + j] && get_struc()->error == 0)
+			while ((hold[i + j] == ' ' || hold[i + j] == '\t') && hold[i + j]
+				&& get_struc()->error == 0)
 			{
 				if (hold[i + ++j] == '|')
 					relaunch();

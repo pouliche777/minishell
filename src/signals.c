@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 11:30:41 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:50:41 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	sighandlerc(int signum)
 		if (signum == SIGINT)
 		{
 			get_struc()->status = 1;
-			write(1, "\n", 1);
+			printf("\n");
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();

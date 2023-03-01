@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 14:13:25 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:29:22 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,23 @@ int	cd_built_in(t_shell *shell, char *path)
 	char	*old_path;
 	char	buff[1024];
 
-	old_path = getcwd(buff, 1024);
-	if (chdir(path) != 0)
+	if (path)
 	{
-		dprintf(2, "MiniHell: Bad argument for cd\n");
-		shell->status = 1;
-		return (1);
+		old_path = getcwd(buff, 1024);
+		if (chdir(path) != 0)
+		{
+			dprintf(2, "MiniHell: Bad argument for cd\n");
+			shell->status = 1;
+			return (1);
+		}
+		old_path = ft_strjoin("OLDPWD=", old_path);
+		current_path = getcwd(buff, 1024);
+		current_path = ft_strjoin("PWD=", current_path);
+		add_env(shell, old_path, 0, NULL);
+		add_env(shell, current_path, 0, NULL);
+		free(current_path);
+		free(old_path);
+		return (0);
 	}
-	old_path = ft_strjoin("OLDPWD=", old_path);
-	current_path = getcwd(buff, 1024);
-	current_path = ft_strjoin("PWD=", current_path);
-	add_env(shell, old_path, 0, NULL);
-	add_env(shell, current_path, 0, NULL);
-	free(current_path);
-	free(old_path);
-	return (0);
+	return (1);
 }

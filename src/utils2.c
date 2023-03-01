@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:29 by bperron           #+#    #+#             */
-/*   Updated: 2023/03/01 11:51:25 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:58:28 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	close_fds(t_shell *shell)
 	i = -1;
 	if (shell->fd)
 	{
-		while (++i < (shell->nb_cmds) * 2)
+		while (++i < shell->nb_cmds * 2)
 			close(shell->fd[i]);
 		free(shell->fd);
 		shell->fd = NULL;
@@ -77,6 +77,7 @@ void	check_open_files(t_shell *shell, int i)
 {
 	char	**cmd;
 	int		j;
+	int		fd;
 
 	cmd = shell->cmds[i];
 	j = 0;
@@ -84,11 +85,13 @@ void	check_open_files(t_shell *shell, int i)
 	{
 		if (cmd[j][0] == '>' && cmd[j][1] == '>' && cmd[j + 1] != NULL)
 		{
-			open(cmd[j + 1], O_WRONLY | O_CREAT, 0777);
+			fd = open(cmd[j + 1], O_WRONLY | O_CREAT, 0777);
+			close (fd);
 		}
 		else if (cmd[j][0] == '>' && cmd[j][1] == '\0' && cmd[j + 1] != NULL)
 		{
-			open(cmd[j + 1], O_WRONLY | O_CREAT, 0777);
+			fd = open(cmd[j + 1], O_WRONLY | O_CREAT, 0777);
+			close (fd);
 		}
 		j++;
 	}
