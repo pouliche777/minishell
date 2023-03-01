@@ -17,11 +17,17 @@ void	get_path(t_shell *info)
 	int		i;
 	char	*str;
 
-	i = 0;
-	while (ft_strncmp(info->env[i], "PATH=", 5) != 0)
-		i++;
-	str = info->env[i] + 5;
-	info->path = ft_split(str, ':');
+	i = -1;
+	while (info->env[++i])
+		if (ft_strncmp(info->env[i], "PATH=", 5) == 0)
+			break ;
+	if (i < arr_size(info->env))
+	{
+		str = info->env[i] + 5;
+		info->path = ft_split(str, ':');
+	}
+	else
+		info->path = NULL;
 }
 
 int	count_nb_cmds(char ***cmds)

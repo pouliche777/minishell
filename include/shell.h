@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 07:48:37 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 12:43:56 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	init_env(t_shell *shell, char **env);
 void	delete_env(t_shell *shell, char *var_name);
 
 //env.c
-void	add_env(t_shell *shell, char *var_line);
+void	add_env(t_shell *shell, char *var_line, int i, char **cmd);
 void	get_var(t_shell *shell, char *var_line);
 void	replace_var_1(t_shell *shell, char *var_line);
 int		check_if_var_exist(t_shell *shell);
@@ -114,7 +114,7 @@ void	heredoc(t_shell *shell, char *cmd);
 void	heredoc_variable(t_shell *shell, int j, int h, int i);
 
 //lexer.c
-void	lexer(char *buffer, t_shell *shell);
+void	lexer(char *buffer, t_shell *shell, int i, int j);
 int		is_space(char *cmd);
 void	parsing(int row, t_shell *shell);
 

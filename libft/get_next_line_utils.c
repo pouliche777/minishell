@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tardig <tardig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:16:00 by slord             #+#    #+#             */
-/*   Updated: 2023/02/25 16:24:43 by tardig           ###   ########.fr       */
+/*   Updated: 2023/03/01 11:50:19 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	ft_bzero1(void *ptr, size_t n)
 
 void	*ft_calloc1(size_t count, size_t size)
 {
-	
 	char	*ptr;
 
 	ptr = malloc(count * size);

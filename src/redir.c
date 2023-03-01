@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:05:51 by bperron           #+#    #+#             */
-/*   Updated: 2023/03/01 10:37:43 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:45:53 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,21 @@ void	is_good(char *cmd, t_shell *shell, int i)
 	}
 }
 
-void	is_good_1(char **cmds, t_shell *shell)
+void	is_good_1(char **cmd, t_shell *shell)
 {
-	int	j;
-	int	l;
+	int	i;
 
-	j = 0;
-	while (cmds[j])
+	i = -1;
+	while(cmd[++i])
 	{
-		if ((cmds[j][0] == '<' || cmds[j][0] == '>') && cmds[j + 1])
+		if (cmd[i][0] == '<' || cmd[i][0] == '>')
 		{
-			l = 1;
-			while (cmds[j + l] && cmds[j + l][0] == ' ')
-				l++;
-			if (cmds[j + l] && (cmds[j + l][0] == '<' || cmds[j + l][0] == '>'))
-				relaunch(shell, cmds[j + l], 0);
+			if (cmd[i + 1])
+			{
+				if (cmd[i + 1][0] == '>' || cmd[i][0] == '<')
+					relaunch(shell, cmd[i + 1], 0);
+			}
 		}
-		j++;
 	}
 }
 

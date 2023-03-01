@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:13:30 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 19:41:16 by slord            ###   ########.fr       */
+/*   Updated: 2023/03/01 14:13:25 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	export(t_shell *shell, char **cmds)
 	}	
 	if (ft_strchr(cmds[1], '=') != 0 && ft_isdigit(cmds[1][0]) == 0
 		&& cmds[2] == NULL && alpha_num(cmds[1]) == 1)
-		add_env(shell, cmds[1]);
+		add_env(shell, cmds[1], 0, NULL);
 	else
 	{
 		shell->status = 1;
@@ -49,9 +49,12 @@ int	unset(t_shell *shell, char *cmds)
 {
 	char	*var_name;
 
-	var_name = ft_strjoin(cmds, "=");
-	delete_env(shell, var_name);
-	free(var_name);
+	if (cmds)
+	{
+		var_name = ft_strjoin(cmds, "=");
+		delete_env(shell, var_name);
+		free(var_name);
+	}
 	return (0);
 }
 
@@ -83,7 +86,8 @@ int	cd_built_in(t_shell *shell, char *path)
 	old_path = ft_strjoin("OLDPWD=", old_path);
 	current_path = getcwd(buff, 1024);
 	current_path = ft_strjoin("PWD=", current_path);
-	add_env(shell, old_path);
+	add_env(shell, old_path, 0, NULL);
+	add_env(shell, current_path, 0, NULL);
 	free(current_path);
 	free(old_path);
 	return (0);

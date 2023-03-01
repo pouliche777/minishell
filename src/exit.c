@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 13:12:46 by bperron           #+#    #+#             */
-/*   Updated: 2023/03/01 11:07:35 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 13:13:18 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	exit_built_in(t_shell *shell, char **cmd)
 	else
 	{
 		errno = 7;
-		shell->status = 7;
+		shell->status = 256;
 		perror("Minishell: exit");
 	}
 }

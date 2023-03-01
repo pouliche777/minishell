@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:57 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 08:04:45 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 13:19:30 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ int	is_space(char *cmd)
 
 	i = -1;
 	while (cmd[++i])
-		if (cmd[i] != ' ')
+		if (cmd[i] != ' ' && cmd[i] != '\t')
 			return (1);
+	get_struc()->error = 1;
 	return (0);
 }
 
-static void	relaunch(char *cmd)
+static void	relaunch()
 {
 	dprintf(2, "MiniHell: parse error near '|'\n");
-	free(cmd);
 	get_struc()->error = 1;
 }
 
@@ -50,31 +50,28 @@ void	check_pipes(int i, char *hold)
 	int	j;
 
 	if (hold[0] == '|' || hold[ft_strlen(hold) - 1] == '|')
-		relaunch(hold);
-	while (hold[++i])
+		relaunch();
+	while (hold[++i] && get_struc()->error == 0)
 	{
 		if (hold[i] == '|')
 		{
 			j = 0;
 			if (hold[++i + j] == '|')
-				relaunch(hold);
-			while ((hold[i + j] == ' ' || hold[i + j] == '\t') && hold[i + j])
+				relaunch();
+			while ((hold[i + j] == ' ' || hold[i + j] == '\t') && hold[i + j] && get_struc()->error == 0)
 			{
 				if (hold[i + ++j] == '|')
-					relaunch(hold);
+					relaunch();
 			}
 		}
 	}
 	free(hold);
 }
 
-void	lexer(char *buffer, t_shell *shell)
+void	lexer(char *buffer, t_shell *shell, int i, int j)
 {
 	char	**pre_c;
-	int		i;
-	int		j;
 
-	i = 0;
 	if (buffer[0] == '\0')
 		return ;
 	if (is_space(buffer) == 1)

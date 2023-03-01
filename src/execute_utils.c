@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:36:12 by bperron           #+#    #+#             */
-/*   Updated: 2023/03/01 11:33:13 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:01:23 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,22 @@ int	modify_command(t_shell *info, int j, char *str, char *ptr)
 		return (1);
 	get_path(info);
 	ptr = ft_strjoin("/", info->cmds_exe[0]);
-	while (info->path[j])
+	if (info->path)
 	{
-		str = ft_strjoin(info->path[j++], ptr);
-		if (access(str, F_OK) == 0)
+		while (info->path[j])
 		{
-			free(info->cmds_exe[0]);
-			info->cmds_exe[0] = ft_calloc(sizeof(char), ft_strlen(str) + 1);
-			ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
+			str = ft_strjoin(info->path[j++], ptr);
+			if (access(str, F_OK) == 0)
+			{
+				free(info->cmds_exe[0]);
+				info->cmds_exe[0] = ft_calloc(sizeof(char), ft_strlen(str) + 1);
+				ft_strlcpy(info->cmds_exe[0], str, ft_strlen(str) + 1);
+				free(str);
+				free_pp((void *) info->path);
+				return (1);
+			}
 			free(str);
-			free_pp((void *) info->path);
-			return (1);
 		}
-		free(str);
 	}
 	return (0);
 }

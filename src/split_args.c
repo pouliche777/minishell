@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:35:19 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/28 18:54:42 by slord            ###   ########.fr       */
+/*   Updated: 2023/03/01 13:48:09 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ int	cmd_lenght(char *cmd, int start)
 	int	i;
 
 	i = start;
-	while (cmd[i] != '|' && cmd[i])
+	while (cmd[i])
 	{
+		if (cmd[i] == '|')
+			break ;
 		if (cmd[i] == '"')
 		{
 			i++;

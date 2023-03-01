@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 10:44:29 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 11:50:48 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	check_built_in(t_shell *shell, int i)
 	return (0);
 }
 
-void	check_built_in_parent(t_shell *shell, int i) 
+void	check_built_in_parent(t_shell *shell, int i)
 {
 	supress_operators(shell, i);
 	check_quotes(shell);

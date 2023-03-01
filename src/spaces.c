@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:25:46 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/27 09:55:02 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 13:41:11 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ char	*space_quotes(char *cmd, int doubles, int singles, int i)
 	{
 		if (cmd[i] == ' ' && singles % 2 == 0 && doubles % 2 == 0)
 		{
-			i++;
-			while (cmd[i++] == ' ')
+			while (cmd[++i] == ' ')
 				++j;
 		}
 		if (singles % 2 == 0 && cmd[i] == '"')
@@ -58,7 +57,7 @@ char	*space_quotes(char *cmd, int doubles, int singles, int i)
 		else if (doubles % 2 == 0 && cmd[i] == '\'')
 			singles++;
 	}
-	cmd = rm_spaces(cmd, i - j + 1, 0, 0);
+	cmd = rm_spaces(cmd, i - j, 0, 0);
 	return (cmd);
 }
 

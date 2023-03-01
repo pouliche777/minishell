@@ -6,11 +6,13 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:39:06 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 08:05:04 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:13:46 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/shell.h"
+
+//ls > out > lol > allo
 
 void	free_garbage2(t_shell *shell, unsigned char status)
 {
@@ -41,7 +43,7 @@ void	launch_terminal(t_shell *shell)
 			add_history(shell->buffer);
 			signal(SIGQUIT, sighush);
 			signal(SIGINT, sighush);
-			lexer(shell->buffer, shell);
+			lexer(shell->buffer, shell, 0, 0);
 			if (shell->error == 0)
 				execute(shell);
 			shell->cmds = NULL;
