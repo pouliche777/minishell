@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:29:58 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 18:34:16 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/28 18:52:57 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	delete_env(t_shell *shell, char *var_name)
 	j = 0;
 	while (shell->env[i])
 		i++;
-	temp = ft_calloc(sizeof (char *), i + 1);
+	temp = ft_calloc(sizeof (char *), i + 2);
 	i = -1;
 	while (shell->env[++i])
 		temp[i] = ft_strdup(shell->env[i]);
@@ -48,7 +48,7 @@ void	init_env(t_shell *shell, char **env)
 	while (env[j])
 		j++;
 	j--;
-	shell->env = ft_calloc((j + 2), sizeof(char *));
+	shell->env = ft_calloc(j + 2, sizeof(char *));
 	while (j >= 0)
 	{
 		shell->env[j] = ft_strdup(env[j]);

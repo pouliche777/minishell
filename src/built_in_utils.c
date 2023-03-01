@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:38:44 by slord             #+#    #+#             */
-/*   Updated: 2023/02/28 18:07:47 by slord            ###   ########.fr       */
+/*   Updated: 2023/02/28 19:00:45 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	check_built_in_parent(t_shell *shell, int i)
 		export(shell, shell->cmds_exe);
 	else if (cmp(shell->cmds_exe[0], "exit", 5) == 0)
 		exit_built_in(shell, shell->cmds_exe);
-	else if (cmp(shell->cmds_exe[0], "unset", 6) == 0)
+	else if (shell->cmds_exe[1] && cmp(shell->cmds_exe[0], "unset", 6) == 0)
 		unset(shell, shell->cmds_exe[1]);
 	else if (cmp(shell->cmds_exe[0], "cd", 2) == 0)
 		cd_built_in(shell, shell->cmds_exe[1]);
