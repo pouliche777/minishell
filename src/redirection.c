@@ -6,7 +6,7 @@
 /*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 19:11:43 by slord             #+#    #+#             */
-/*   Updated: 2023/02/27 11:54:55 by slord            ###   ########.fr       */
+/*   Updated: 2023/03/01 14:15:42 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	redirect_output(char *cmd)
 	if (cmd)
 	{
 		file[0] = open(cmd, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		file[1] = dup2(file[0], STDOUT_FILENO);
+		dup2(file[0], STDOUT_FILENO);
+		close (file[0]);
 	}
 }
 
