@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 13:12:46 by bperron           #+#    #+#             */
-/*   Updated: 2023/03/01 08:23:20 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 11:07:35 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,18 @@ void	exit_built_in(t_shell *shell, char **cmd)
 	status = 0;
 	printf("exit\n");
 	args = arr_size(cmd);
-	if (args == 2)
-		set_status(cmd[1], &status);
-	else if (args == 1)
-		status = shell->status;
+	if (args <= 2)
+	{
+		if (args == 2)
+			set_status(cmd[1], &status);
+		else if (args == 1)
+			status = shell->status;
+		free_garbage(shell, status);
+	}
 	else
 	{
 		errno = 7;
 		shell->status = 7;
 		perror("Minishell: exit");
-		launch_terminal(shell);
 	}
-	free_garbage(shell, status);
 }

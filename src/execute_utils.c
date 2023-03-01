@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:36:12 by bperron           #+#    #+#             */
-/*   Updated: 2023/02/28 16:27:42 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 11:33:13 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int	modify_command(t_shell *info, int j, char *str, char *ptr)
 		}
 		free(str);
 	}
-	dprintf(2, "minishell: %s : command not found\n", info->cmds_exe[0]);
-	free_pp((void *) info->path);
 	return (0);
 }
 

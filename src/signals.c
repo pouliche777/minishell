@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 07:40:47 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/01 11:30:41 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	sighush(int signum)
 void	sigheredoc(int signum)
 {
 	t_shell	*shell;
+	int		i;
 
 	(void) signum;
 	shell = get_struc();
@@ -52,6 +53,11 @@ void	sigheredoc(int signum)
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
+	close_fds(shell);
+	i = -1;
+	if (shell->nb_cmds > 1)
+		while (shell->id[++i])
+			kill(shell->id[i], SIGKILL);
 	launch_terminal(shell);
 }
 
