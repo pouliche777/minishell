@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/03/02 11:32:39 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 12:34:37 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ void	check_heredoc_parent(t_shell *shell, int i);
 void	check_dollar_in_heredoc(t_shell *shell);
 void	heredoc(t_shell *shell, char *cmd);
 void	heredoc_variable(t_shell *shell, int j, int h, int i);
+
+//heredoc.c
+void	heredoc_1(t_shell *shell, char *delim);
 
 //lexer.c
 void	lexer(char *buffer, t_shell *shell, int i, int j);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bperron <bperron@student.42.fr>            +#+  +:+       +#+         #
+#    By: slord <slord@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/22 14:33:49 by bperron           #+#    #+#              #
-#    Updated: 2023/02/27 14:20:54 by bperron          ###   ########.fr        #
+#    Updated: 2023/03/02 12:33:10 by slord            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ S = src/
 O = obj/
 L = libft/
 
-SOURCES = $Sredir_utils.c $Sexecute_utils.c $Sexecute.c $Sexit.c $Sheredoc.c $Sutils2.c $Secho.c $Ssplit_args.c $Sredir.c $Sspaces.c $Schange_var.c $Schange_var_utils.c $Sminishell.c $Sutils.c $Sparsing.c $Slexer.c $Spipes.c $Sbuilt_in_utils.c $Sbuilt_in.c $Sredirection.c $Ssignals.c $Svariables.c $Squotes.c $Senv.c $Senv_1.c 
+SOURCES = $Sredir_utils.c $Sexecute_utils.c $Sexecute.c $Sexit.c $Sheredoc.c $Sutils2.c $Secho.c $Ssplit_args.c $Sredir.c $Sspaces.c $Schange_var.c $Schange_var_utils.c $Sminishell.c $Sutils.c $Sparsing.c $Slexer.c $Spipes.c $Sbuilt_in_utils.c $Sbuilt_in.c $Sredirection.c $Ssignals.c $Svariables.c $Squotes.c $Senv.c $Senv_1.c $Sheredoc_utils.c
 
 OBJS = $(SOURCES:$S%=$O%.o)
 

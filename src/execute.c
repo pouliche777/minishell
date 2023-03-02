@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:16:52 by bperron           #+#    #+#             */
-/*   Updated: 2023/03/02 11:38:24 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 12:07:49 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,15 @@ void	wait_child(t_shell *shell)
 	get_return_value(shell);
 }
 
+void	close_exe(t_shell *shell, int i)
+{
+	close(shell->fd[(i * 2) + 1]);
+	if (i > 0)
+		close(shell->fd[i * 2 - 2]);
+	if (shell->heredoc == 1)
+		close(shell->heredoc_fd[0]);
+}
+
 void	execute(t_shell *shell)
 {
 	int	i;
@@ -72,17 +81,13 @@ void	execute(t_shell *shell)
 		if (shell->terminal == 1)
 			break ;
 		check_heredoc_parent(shell, i);
-		shell->id[i] = fork(); 
+		shell->id[i] = fork();
 		if (shell->id[i] == 0)
 		{
 			children(shell, i);
 			exit(1);
 		}
-		close(shell->fd[(i * 2) + 1]);
-		if (i > 0)
-			close(shell->fd[i * 2 - 2]);
-		if (shell->heredoc == 1)
-			close(shell->heredoc_fd[0]);
+		close_exe(shell, i);
 		i++;
 	}
 	wait_child(shell);

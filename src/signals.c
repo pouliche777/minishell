@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/03/02 11:36:43 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 13:01:24 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	sighush(int signum)
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	
 	return ;
 }
+
 void	sighush2(int signum)
 {
 	(void) signum;
@@ -47,7 +47,7 @@ void	sigheredoc(int signum)
 	int		i;
 
 	(void) signum;
-	 shell = get_struc();
+	shell = get_struc();
 	if (shell->heredoc_input)
 		free(shell->heredoc_input);
 	rl_on_new_line();
@@ -55,8 +55,6 @@ void	sigheredoc(int signum)
 	i = -1;
 	close(shell->heredoc_fd[1]);
 	close(shell->heredoc_fd[0]);
-//	while (++i < shell->nb_cmds)
-//	kill(shell->id[i], SIGINT);
 	close_fds(shell);
 	exit(130);
 }
