@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 15:50:41 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 11:36:43 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,12 @@
 
 void	sighandlerc(int signum)
 {
-	int	pid;
-
-	pid = getpid();
-	if (pid == 0)
-		exit (0);
-	else
-	{
-		if (signum == SIGINT)
-		{
-			get_struc()->status = 1;
-			printf("\n");
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
-	}
+	(void) signum;
+	get_struc()->status = 1;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 void	sighush(int signum)
@@ -38,6 +28,16 @@ void	sighush(int signum)
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
+	
+	return ;
+}
+void	sighush2(int signum)
+{
+	(void) signum;
+	printf("ilhblihblhib\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	exit (130);
 	return ;
 }
 
@@ -47,18 +47,18 @@ void	sigheredoc(int signum)
 	int		i;
 
 	(void) signum;
-	shell = get_struc();
+	 shell = get_struc();
 	if (shell->heredoc_input)
 		free(shell->heredoc_input);
-	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	close_fds(shell);
 	i = -1;
-	if (shell->nb_cmds > 1)
-		while (shell->id[++i])
-			kill(shell->id[i], SIGKILL);
-	launch_terminal(shell);
+	close(shell->heredoc_fd[1]);
+	close(shell->heredoc_fd[0]);
+//	while (++i < shell->nb_cmds)
+//	kill(shell->id[i], SIGINT);
+	close_fds(shell);
+	exit(130);
 }
 
 void	signal_handling(void)

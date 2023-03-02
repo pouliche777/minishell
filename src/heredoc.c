@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:50:22 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 15:48:13 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 11:38:13 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,34 @@ char	*is_quote(char *cmd, t_shell *shell)
 void	heredoc(t_shell *shell, char *cmd)
 {
 	char	*delim;
+	pid_t	pid;
 
 	delim = is_quote(cmd, shell);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, sigheredoc);
 	shell->heredoc = 1;
-	shell->heredoc_input = NULL;
-	shell->heredoc_input = readline(">");
 	if (pipe(shell->heredoc_fd) < 0)
 		return ;
-	while (shell->heredoc_input && ft_strcmp(shell->heredoc_input, delim))
+	pid = fork();
+	if (pid == 0)
 	{
-		if (shell->marde)
-			check_dollar_in_heredoc(shell);
-		ft_putstr_fd(shell->heredoc_input, shell->heredoc_fd[1]);
-		ft_putchar_fd('\n', shell->heredoc_fd[1]);
-		free(shell->heredoc_input);
+		signal(SIGINT, sigheredoc);
+		signal(SIGQUIT, SIG_IGN);
 		shell->heredoc_input = NULL;
 		shell->heredoc_input = readline(">");
+		while (shell->heredoc_input && ft_strcmp(shell->heredoc_input, delim))
+		{
+			if (shell->marde)
+				check_dollar_in_heredoc(shell);
+			ft_putstr_fd(shell->heredoc_input, shell->heredoc_fd[1]);
+			ft_putchar_fd('\n', shell->heredoc_fd[1]);
+			free(shell->heredoc_input);
+			shell->heredoc_input = NULL;
+			shell->heredoc_input = readline(">");
+		}
+		free(shell->heredoc_input);
+		exit (0);
 	}
+	waitpid(pid, &shell->status, 0);
 	close(shell->heredoc_fd[1]);
-	free(shell->heredoc_input);
 	rl_replace_line("", 0);
 }
 

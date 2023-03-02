@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/03/01 15:36:01 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 11:32:39 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_shell
 	char	*variable;
 	char	*heredoc_input;
 	int		*fd;
-	int		*id;
+	pid_t		*id;
 	int		heredoc_fd[2];
 	int		nb_cmds;
 	int		status;
@@ -160,6 +160,7 @@ void	sighush(int signum);
 void	sigheredoc(int signum);
 void	sigheredoc2(int signum);
 void	signal_handling(void);
+void	sighush2(int signum);
 
 //spaces.c
 char	*rm_spaces(char *cmd, int len, int singles, int doubles);

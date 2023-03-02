@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:16:52 by bperron           #+#    #+#             */
-/*   Updated: 2023/03/01 15:51:53 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 11:38:24 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	children(t_shell *shell, int i)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	change_in_and_out(shell, i);
 	if (!check_output(shell, i))
 		return ;
 	if (!check_input(shell, i))
 		return ;
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	if (check_built_in(shell, i) == 0)
 	{
 		if (modify_command(shell, 0, NULL, NULL) == 0)
@@ -72,7 +72,7 @@ void	execute(t_shell *shell)
 		if (shell->terminal == 1)
 			break ;
 		check_heredoc_parent(shell, i);
-		shell->id[i] = fork();
+		shell->id[i] = fork(); 
 		if (shell->id[i] == 0)
 		{
 			children(shell, i);
