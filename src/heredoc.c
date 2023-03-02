@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:50:22 by slord             #+#    #+#             */
-/*   Updated: 2023/03/02 11:38:13 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 13:01:04 by slord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,7 @@ void	heredoc(t_shell *shell, char *cmd)
 		signal(SIGQUIT, SIG_IGN);
 		shell->heredoc_input = NULL;
 		shell->heredoc_input = readline(">");
-		while (shell->heredoc_input && ft_strcmp(shell->heredoc_input, delim))
-		{
-			if (shell->marde)
-				check_dollar_in_heredoc(shell);
-			ft_putstr_fd(shell->heredoc_input, shell->heredoc_fd[1]);
-			ft_putchar_fd('\n', shell->heredoc_fd[1]);
-			free(shell->heredoc_input);
-			shell->heredoc_input = NULL;
-			shell->heredoc_input = readline(">");
-		}
+		heredoc_1(shell, delim);
 		free(shell->heredoc_input);
 		exit (0);
 	}

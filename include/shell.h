@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:35:06 by slord             #+#    #+#             */
-/*   Updated: 2023/03/02 11:32:39 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 13:04:29 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_shell
 	char	*variable;
 	char	*heredoc_input;
 	int		*fd;
-	pid_t		*id;
+	pid_t	*id;
 	int		heredoc_fd[2];
 	int		nb_cmds;
 	int		status;
@@ -114,6 +114,9 @@ void	check_dollar_in_heredoc(t_shell *shell);
 void	heredoc(t_shell *shell, char *cmd);
 void	heredoc_variable(t_shell *shell, int j, int h, int i);
 
+//heredoc.c
+void	heredoc_1(t_shell *shell, char *delim);
+
 //lexer.c
 void	lexer(char *buffer, t_shell *shell, int i, int j);
 int		is_space(char *cmd);
@@ -158,9 +161,7 @@ void	redirect_input(char *cmd);
 void	sighandlerc(int signum);
 void	sighush(int signum);
 void	sigheredoc(int signum);
-void	sigheredoc2(int signum);
 void	signal_handling(void);
-void	sighush2(int signum);
 
 //spaces.c
 char	*rm_spaces(char *cmd, int len, int singles, int doubles);

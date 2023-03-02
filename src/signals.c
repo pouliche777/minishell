@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/03/02 11:55:19 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 13:03:41 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,6 @@ void	sighush(int signum)
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	
-	return ;
-}
-void	sighush2(int signum)
-{
-	(void) signum;
-	printf("ilhblihblhib\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	exit (130);
 	return ;
 }
 
@@ -47,7 +37,7 @@ void	sigheredoc(int signum)
 	int		i;
 
 	(void) signum;
-	 shell = get_struc();
+	shell = get_struc();
 	if (shell->heredoc_input)
 		free(shell->heredoc_input);
 	rl_on_new_line();
