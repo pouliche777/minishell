@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slord <slord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:50:22 by slord             #+#    #+#             */
-/*   Updated: 2023/03/02 13:01:04 by slord            ###   ########.fr       */
+/*   Updated: 2023/03/02 13:26:05 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ void	heredoc(t_shell *shell, char *cmd)
 		shell->heredoc_input = readline(">");
 		heredoc_1(shell, delim);
 		free(shell->heredoc_input);
+		close_fds(shell);
+		close(shell->heredoc_fd[0]);
+		close(shell->heredoc_fd[1]);
 		exit (0);
 	}
 	waitpid(pid, &shell->status, 0);
