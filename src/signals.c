@@ -6,7 +6,7 @@
 /*   By: bperron <bperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 19:39:46 by slord             #+#    #+#             */
-/*   Updated: 2023/03/02 11:36:43 by bperron          ###   ########.fr       */
+/*   Updated: 2023/03/02 11:55:19 by bperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ void	sigheredoc(int signum)
 	i = -1;
 	close(shell->heredoc_fd[1]);
 	close(shell->heredoc_fd[0]);
-//	while (++i < shell->nb_cmds)
-//	kill(shell->id[i], SIGINT);
 	close_fds(shell);
 	exit(130);
 }
